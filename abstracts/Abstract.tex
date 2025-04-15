@@ -1,7 +1,10 @@
 \chapter*{\hfill Abstract \hfill}
 
-Brain tumors are among the most serious neurological disorders, requiring accurate and timely diagnosis. This thesis presents an automated system for brain tumor detection using deep learning and machine learning techniques. A U-Net model is trained for semantic segmentation of brain MRI scans (FLAIR modality), identifying tumor regions. Extracted radiomic features—such as area, intensity, and shape—are used to classify tumors into High-Grade Glioma (HGG) or Low-Grade Glioma (LGG) using a Support Vector Machine (SVM). The system addresses class imbalance using SMOTE and demonstrates promising results on the BraTS2020 dataset. This hybrid approach offers a practical tool for tumor analysis and classification.
+Brain tumors, particularly gliomas, are among the most prevalent and aggressive types of brain tumors. Accurate diagnosis and classification of gliomas are crucial for effective treatment planning and patient management.
+
+In this thesis we are focusing on the development of a hybrid model capable of detecting brain tumors and classifying them from MRI images. The model is designed to perform two main tasks: tumor segmentation and tumor grade classification.  leveraging the BraTS2020 dataset, which provides a comprehensive collection of MRI scans with annotated tumor regions and corresponding grades. The model integrates a U-Net architecture for precise segmentation of tumor regions in MRI scans and a Support Vector Machine (SVM) classifier for determining tumor grades as High-Grade or Low-Grade Gliomas. The U-Net model is trained to accurately segment the tumor regions from the surrounding healthy brain tissue, while the SVM classifier is trained to classify the segmented tumors into their respective grades based on features extracted from the segmented images.
+
 
 \noindent\rule{\textwidth}{0.2pt}
-\textbf{Keywords:} Brain Tumor, Deep Learning, Machine Learning, MRI, U-Net, Semantic Segmentation, Radiomics, SVM, SMOTE, BraTS.\\
+\textbf{Keywords:} Brain Tumor, Glioma,  U-Net, SVM, MRI, BraTS, Tumor Segmentation, Grade Classification.\\
 \noindent\rule{\textwidth}{0.2pt}
