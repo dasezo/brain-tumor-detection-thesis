@@ -1,8 +1,41 @@
-\chapter{Introduction Générale}
-Chaque rapport doit commencer par une introduction générale dans laquelle le contexte du projet est clairement expliqué. Cette introduction devrait également inclure l'objectif du projet et le plan du reste du rapport. Cette introduction ne devrait pas dépasser 2 pages. Soyez concis et clair, et écrivez uniquement ce qui est nécessaire à écrire.
+\chapter{General Introduciton}
 
-\section{Contexte}
-...
+\section{Introduction}
+
+Traditionally, radiologists rely on \glsxtrshort{mri} scans to detect brain tumors, While this method is effective, it also has limitations analyzing hundreds of scans manually is time consuming and prone to human error. That is where technology comes in. With recent advances in artificial intelligence, especially deep learning, we now have powerful tools that can learn from medical images and help with faster and more accurate diagnosis.
+
+In this project, we focus on building a hybrid system to detect brain tumors and determine whether they are low-grade or high-grade. We use a \glsxtrshort{unet} model for segmenting the tumor regions in MRI images. After identifying these regions, we extract important features and feed them into a Support Vector Machine (\glsxtrshort{svm}) classifier to make the final prediction.
+
+We use the BraTS2020 dataset, focusing on T2-weighted FLAIR images, to train and test our system. Our goal is to create a pipeline that is not only technically sound but also practical and helpful for medical professionals in real-world settings.
+
+\section{What is a Brain Tumor?}
+
+A \textbf{brain tumor} is an abnormal mass of tissue in which cells grow and multiply uncontrollably, without the mechanisms that regulate normal cell behavior. Brain tumors can be broadly categorized into \textit{benign} (non-cancerous) and \textit{malignant} (cancerous) forms, each with varying levels of severity and progression~\cite{cancer_gov}.
+
+Brain tumors are generally divided into two main categories:
+
+\begin{itemize}
+  \item \textbf{Primary brain tumors:} These originate in the brain and include common types such as:
+        \begin{itemize}
+          \item \textit{Gliomas} – tumors arising from glial cells, which provide support and insulation to neurons~\cite{louis2016who}.
+          \item \textit{Meningiomas} – tumors that form in the membranes surrounding the brain and spinal cord~\cite{mayo_clinic}.
+          \item \textit{Pituitary adenomas} – tumors that develop in the pituitary gland~\cite{mayo_clinic}.
+          \item \textit{Medulloblastomas} – fast-growing tumors more commonly seen in children~\cite{cancer_gov}.
+        \end{itemize}
+
+  \item \textbf{Secondary (metastatic) brain tumors:} These originate from cancers elsewhere in the body (such as the lungs or breast) and spread to the brain~\cite{cancer_gov}.
+\end{itemize}
+
+Among gliomas, two major clinical subtypes are often considered for diagnostic and prognostic purposes~\cite{louis2016who}:
+
+\begin{itemize}
+  \item \textbf{Low-Grade Gliomas (\glsxtrshort{lgg}):} Slow-growing tumors that often have a better prognosis.
+  \item \textbf{High-Grade Gliomas (\glsxtrshort{hgg}):} Aggressive tumors with rapid progression and poor prognosis.
+\end{itemize}
+
+Accurate detection and classification of these tumor types are essential for clinical decision-making, which has led to the integration of artificial intelligence (AI) and deep learning (DL) methods into medical imaging workflows.
+
+
 \section{Objectifs}
 ...
 \section{Méthodologie et résultats }
