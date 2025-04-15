@@ -1,0 +1,44 @@
+# LaTeX temporary files
+*.aux
+*.log
+*.toc
+*.lof
+*.lot
+*.loa
+*.out
+*.dvi
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+*.bbl
+*.blg
+
+# Glossaries/acronyms
+*.acn
+*.acr
+*.alg
+*.glg
+*.glo
+*.gls
+*.ist
+
+# Backup files
+*~
+*.bak
+*.backup
+
+# Build directory
+/build/
+
+# PDF output (optional, you may want to include the final PDF)
+# *.pdf
+
+# Editor specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS specific files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,185 @@
+\documentclass[12pt,a4paper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[numbers]{natbib}
+\usepackage[arabic,english,french]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{anyfontsize}
+\usepackage{fancyhdr}
+\usepackage[skip=10pt plus1pt, indent]{parskip}
+\usepackage[acronym]{glossaries}
+\usepackage[automake]{glossaries-extra}
+\usepackage{hyperref}
+\usepackage[ruled, linesnumbered]{algorithm2e}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{mathptmx}
+
+
+%*****************************************************************************
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+    
+\urlstyle{same}
+
+%*****************************************************************************
+\setstretch{1.5}
+%*****************************************************************************
+
+%*****************************************************************************
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{2}
+%*****************************************************************************
+
+%*****************************************************************************
+\usepackage{indentfirst}
+\addto\captionsfrench{%
+\renewcommand*\contentsname{\hfill Table des matières \hfill}
+}
+
+\addto\captionsfrench{\renewcommand{\bibname}{Références}}
+%*****************************************************************************
+
+%*****************************************************************************
+\newgeometry{left=2.54cm,right=2.54cm,top=2.54cm,bottom=2.54cm}
+%*****************************************************************************
+
+%*****************************************************************************
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \fancyfoot[R]{\thepage}%
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
+
+\pagestyle{fancy}
+\fancyhead{}
+\fancyfoot{}
+\fancyfoot[R]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+%*****************************************************************************
+
+%*****************************************************************************
+\makeglossaries
+\newacronym{mi}{MI}{Math et Informatique}
+\newacronym{ia}{IA}{Intelligence Artificielle}
+%*****************************************************************************
+
+%*****************************************************************************
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    keywordstyle=\color{blue},
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+%*****************************************************************************
+
+% \usepackage{titlesec}
+% \titleformat{\chapter}[hang]{\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter:}{1em}{}
+
+%*****************************************************************************
+
+\renewcommand{\labelenumii}{\arabic{enumi}.\arabic{enumii}}
+\renewcommand{\labelenumiii}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}}
+\renewcommand{\labelenumiv}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}.\arabic{enumiv}}
+
+%*****************************************************************************
+
+\DeclareRobustCommand{\timesr}{\fontfamily{artimes}\selectfont}
+\let\times\relax
+\DeclareMathSymbol{\times}{\mathbin}{symbols}{"02}
+
+\AtBeginDocument{\def\labelitemi{$\bullet$}}
+
+
+
+\begin{document}
+
+
+
+\input{page_de_garde}
+
+\pagenumbering{roman}
+
+\input{Dedications}
+\input{abstracts/Abstract}
+\input{abstracts/French_Abstract}
+
+\begin{otherlanguage}{arabic}
+  \input{abstracts/Arabic_Abstract}
+\end{otherlanguage}
+
+
+\tableofcontents
+
+\cleardoublepage
+\addcontentsline{toc}{chapter}{List of abbreviations}
+\printglossary[type=\acronymtype, title={List of abbreviations}, nonumberlist]
+\noindent
+(Cette liste est optionnelle, voici un exemple)
+
+
+\cleardoublepage
+\addcontentsline{toc}{chapter}{Liste des figures}
+\listoffigures
+
+\cleardoublepage
+\addcontentsline{toc}{chapter}{Liste des tableaux}
+\listoftables
+
+\cleardoublepage
+\addcontentsline{toc}{chapter}{Liste des Algorithmes}
+\listofalgorithms
+
+\cleardoublepage
+
+\setcounter{page}{1}
+\pagenumbering{arabic}
+
+\input{Chapters/Introduction}
+\input{Chapters/Chapter_1}
+\input{Chapters/Chapter_2}
+\input{Chapters/Chapter_3}
+\input{Chapters/Conclusion}
+
+\addcontentsline{toc}{chapter}{Références}
+\bibliographystyle{IEEEtranN}
+\bibliography{bibliography}
+
+
+\appendix
+
+% \input{AnnexeA}
+% \input{AnnexeB}
+
+
+\end{document}
