@@ -5,6 +5,7 @@
 \usepackage[arabic,english,french]{babel}
 \usepackage{geometry}
 \usepackage{graphicx}
+\usepackage{float}
 \usepackage{setspace}
 \usepackage{anyfontsize}
 \usepackage{fancyhdr}
@@ -74,12 +75,13 @@
 %*****************************************************************************
 \makeglossaries
 \newacronym{svm}{SVM}{Support Vector Machine}
-\newacronym{brats}{BraTS}{Brain Tumor Segmentation}
+\newacronym{brats}{BraTS}{Brain Tumor Segmentation dataset}
 \newacronym{lgg}{LGG}{Low-Grade Glioma}
 \newacronym{hgg}{HGG}{High-Grade Glioma}
 \newacronym{mri}{MRI}{Magnetic Resonance Imaging}
 \newacronym{cnn}{CNN}{Convolutional Neural Network}
 \newacronym{dl}{DL}{Deep Learning}
+\newacronym{ml}{ML}{Machine Learning}
 \newacronym{flair}{FLAIR}{Fluid Attenuated Inversion Recovery}
 \newacronym{t1}{T1}{T1-weighted}
 \newacronym{t2}{T2}{T2-weighted}
@@ -178,9 +180,9 @@
 \addcontentsline{toc}{chapter}{Liste des tableaux}
 \listoftables
 
-\cleardoublepage
-\addcontentsline{toc}{chapter}{Liste des Algorithmes}
-\listofalgorithms
+% \cleardoublepage
+% \addcontentsline{toc}{chapter}{Liste des Algorithmes}
+% \listofalgorithms
 
 \cleardoublepage
 
@@ -193,7 +195,7 @@
 \input{Chapters/Chapter_3}
 \input{Chapters/Conclusion}
 
-\addcontentsline{toc}{chapter}{Références}
+\addcontentsline{toc}{chapter}{bibliography}
 \bibliographystyle{IEEEtranN}
 \bibliography{bibliography}
 
