@@ -1,0 +1,5 @@
+patient_id: 83
+prediction: HGG
+probability: 0.9360268357012622
+actual_label: HGG
+correct: True

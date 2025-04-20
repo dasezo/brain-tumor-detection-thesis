@@ -1,0 +1,21 @@
+Classification Report:
+              precision    recall  f1-score   support
+
+         LGG       0.11      0.33      0.16        15
+         HGG       0.63      0.29      0.40        59
+
+    accuracy                           0.30        74
+   macro avg       0.37      0.31      0.28        74
+weighted avg       0.52      0.30      0.35        74
+
+
+Metrics Summary:
+accuracy: 0.2973
+precision: 0.6296
+recall: 0.2881
+f1: 0.3953
+roc_auc: 0.6633
+
+Confusion Matrix:
+[[ 5, 10],
+ [42, 17]]
