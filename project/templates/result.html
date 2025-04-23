@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detection Results | Brain Tumor Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Brain Tumor Detection</h1>
+            <p>Advanced hybrid model for brain tumor segmentation and classification</p>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="back-link">
+                <a href="{{ url_for('index') }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    Back to Upload
+                </a>
+            </div>
+
+            <section class="results-section">
+                <h2>Analysis Results</h2>
+                
+                {% if not has_tumor %}
+                    <div class="no-tumor-result">
+                        <div class="result-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                            </svg>
+                        </div>
+                        <h3>No Tumor Detected</h3>
+                        <p>{{ message }}</p>
+                        
+                        <div class="image-container">
+                            <img src="{{ url_for('static', filename=original.replace('static/', '')) }}" alt="Original Brain Image" class="result-image">
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="tumor-result">
+                        <div class="result-header">
+                            <div class="result-title">
+                                <h3>Tumor Detected</h3>
+                            </div>
+                            <div class="result-grade {{ 'high-grade' if tumor_grade == 'HGG' else 'low-grade' }}">
+                                <span class="grade-label">{{ tumor_grade }}</span>
+                                <span class="grade-description">{{ "High-Grade Glioma" if tumor_grade == "HGG" else "Low-Grade Glioma" }}</span>
+                                <span class="confidence">Confidence: {{ confidence }}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="result-images">
+                            <div class="image-toggle">
+                                <button class="toggle-btn active" data-view="side-by-side">Side by Side</button>
+                                <button class="toggle-btn" data-view="overlay">Overlay View</button>
+                            </div>
+                            
+                            <div class="image-container side-by-side">
+                                <div class="image-card">
+                                    <h4>Original Image</h4>
+                                    <img src="{{ url_for('static', filename=original.replace('static/', '')) }}" alt="Original Brain Image" class="result-image">
+                                </div>
+                                <div class="image-card">
+                                    <h4>Tumor Segmentation</h4>
+                                    <img src="{{ url_for('static', filename=segmented.replace('static/', '')) }}" alt="Segmented Tumor" class="result-image">
+                                </div>
+                            </div>
+                            
+                            <div class="image-container overlay hidden">
+                                <div class="image-card full-width">
+                                    <h4>Tumor Overlay</h4>
+                                    <img src="{{ url_for('static', filename=overlay.replace('static/', '')) }}" alt="Tumor Overlay" class="result-image">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="segmentation-legend">
+                            <h4>Tumor Components</h4>
+                            <ul class="legend-items">
+                                <li>
+                                    <span class="color-box necrotic"></span>
+                                    <span class="legend-text">Necrotic/Core (Red)</span>
+                                </li>
+                                <li>
+                                    <span class="color-box edema"></span>
+                                    <span class="legend-text">Edema (Green)</span>
+                                </li>
+                                <li>
+                                    <span class="color-box enhancing"></span>
+                                    <span class="legend-text">Enhancing (Blue)</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                {% endif %}
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 Brain Tumor Detection System | Advanced Medical Imaging Analysis</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Image view toggle
+            const toggleBtns = document.querySelectorAll('.toggle-btn');
+            const sideByView = document.querySelector('.image-container.side-by-side');
+            const overlayView = document.querySelector('.image-container.overlay');
+            
+            if (toggleBtns.length > 0) {
+                toggleBtns.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        // Update button states
+                        toggleBtns.forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+                        
+                        // Show selected view
+                        const view = this.getAttribute('data-view');
+                        if (view === 'side-by-side') {
+                            sideByView.classList.remove('hidden');
+                            overlayView.classList.add('hidden');
+                        } else {
+                            sideByView.classList.add('hidden');
+                            overlayView.classList.remove('hidden');
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
