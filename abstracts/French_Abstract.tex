@@ -1,9 +1,7 @@
 \chapter*{\hfill Résumé \hfill}
 
-Les tumeurs cérébrales, en particulier les gliomes, comptent parmi les types de tumeurs cérébrales les plus répandus et les plus agressifs. Un diagnostic précis et une classification des gliomes sont essentiels pour une planification efficace du traitement et une gestion optimale des patients.
-
-Dans cette thèse, nous nous concentrons sur le développement d'un modèle hybride capable de détecter les tumeurs cérébrales et de les classifier à partir d'images IRM. Le modèle est conçu pour effectuer deux tâches principales : la segmentation des tumeurs et la classification de leur grade. En s'appuyant sur la base de données BraTS2020, qui fournit une collection complète d'IRM avec des régions tumorales annotées et leurs grades correspondants, le modèle intègre une architecture U-Net pour une segmentation précise des régions tumorales dans les IRM et un classificateur SVM (Support Vector Machine) pour déterminer les grades des tumeurs en gliomes de haut grade ou de bas grade. Le modèle U-Net est entraîné pour segmenter avec précision les régions tumorales du tissu cérébral sain environnant, tandis que le classificateur SVM est entraîné pour classifier les tumeurs segmentées en fonction des caractéristiques extraites des images segmentées.
+Les tumeurs cérébrales, en particulier les gliomes, posent un défi clinique important, nécessitant à la fois une localisation précise et un classement précis pour guider le traitement. Dans ce projet, nous présentons un cadre hybride qui segmente d’abord les régions tumorales dans l’imagerie par résonance magnétique (IRM) du cerveau en utilisant un modèle U-Net formé sur l’ensemble de données de segmentation des tumeurs cérébrales (BraTS2020)  et classe ensuite ces régions comme faibleGliomes de grade ou de haut grade avec un modèle SVM (Support Vector Machine) basé sur les caractéristiques extraites des masques segmentés. Sur l’ensemble de test non exécuté, notre U-Net a atteint une précision de 99,3\%, tandis que le classificateur SVM a fourni une précision globale de 93\%.
 
 \noindent\rule{\textwidth}{0.2pt}
-\textbf{Mots-clés:} Tumeur cérébrale, Gliome, U-Net, SVM, IRM, BraTS, Segmentation des tumeurs, Classification des grades.\\
+\textbf{Mots-clés:} Tumeur cérébrale, U-Net, SVM, IRM, BraTS, Segmentation.\\
 \noindent\rule{\textwidth}{0.2pt}

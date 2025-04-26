@@ -26,4 +26,6 @@ dist-ssr
 venv/
 
 results/*
+app/static/uploads/*
+app/static/results/*
 uploads/*
