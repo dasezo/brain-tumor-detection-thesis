@@ -190,3 +190,57 @@ Pooling layers are utilized to reduce the spatial dimensions of feature maps whi
 \subsubsection{Fully Connected Layer}
 
 after the convolution and pooling layers, the high-level reasoning in the neural network is done in fully connected layers. The output of flattening is the input of FC layers which are the same as artificial neural networks and carry out the same mathematical operations. The last fully-connected layer uses an activation function such as sigmoid or softmax to get probabilities of the outputs.
+
+\subsection{U-Net Architecture}
+U-Net is a convolutional neural network architecture specifically designed for biomedical image segmentation. Introduced by Ronneberger et al. in 2015, U-Net features a symmetric encoder-decoder structure: the contracting path (encoder) captures image context through successive convolution and pooling operations, while the expansive path (decoder) enables precise localization via upsampling and concatenation with high-resolution features from the encoder. This architecture allows U-Net to achieve accurate segmentation even with limited annotated data by leveraging extensive data augmentation. U-Net has demonstrated superior performance in various biomedical segmentation challenges, notably outperforming previous methods in tasks such as neuronal structure segmentation in electron microscopy images and cell tracking in light microscopy \cite{ronneberger2015u}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{Images/Chapter1/unet2.png}
+  \caption{U-Net Architecture.}
+  \label{fig:unet}
+\end{figure}
+
+\subsubsection{Key Components of a U-Net Architecture}
+
+\begin{itemize}
+  \item \textbf{Contracting Path (Encoder):} \\
+        This path is responsible for extracting contextual features from the input image. It consists of repeated blocks of two $3\times3$ convolutional layers (with ReLU activation), followed by a $2\times2$ max pooling operation for downsampling. With each downsampling step, the number of feature channels is doubled, allowing the network to capture increasingly abstract representations of the input.
+
+  \item \textbf{Bottleneck:} \\
+        Located at the deepest part of the network, the bottleneck consists of convolutional layers without pooling. It serves as the bridge between the encoder and decoder, capturing the most condensed and abstract features of the input.
+
+  \item \textbf{Expansive Path (Decoder):} \\
+        This path reconstructs the spatial resolution of the feature maps and enables precise localization. Each step in the decoder involves upsampling the feature map (often via transposed convolution or up-convolution), concatenating it with the corresponding feature map from the encoder (skip connection), and then applying two $3\times3$ convolutions (with ReLU activation). The number of feature channels is halved at each upsampling step.
+
+  \item \textbf{Skip Connections:} \\
+        At each level, feature maps from the encoder are concatenated with the upsampled feature maps in the decoder. These skip connections help retain high-resolution spatial information that might otherwise be lost during downsampling, improving the accuracy of segmentation boundaries.
+
+  \item \textbf{Final Output Layer:} \\
+        The last layer is typically a $1\times1$ convolution that maps each feature vector to the desired number of output classes, producing a pixel-wise classification map for segmentation tasks.
+\end{itemize}
+
+This U-shaped design enables U-Net to effectively combine global context with fine-grained localization, making it highly effective for precise image segmentation tasks.
+
+\subsection{Megnatic Resonance Imaging (MRI)}
+\label{sec:mri}
+Magnetic resonance imaging (MRI) uses a powerful magnetic field and radio waves to
+generate detailed and high-resolution images of organs and tissues inside the human body, as
+depicted in Figure \ref{fig:mri}. This non-invasive imaging method offers significant advantages in
+visualizing intricate details of the brain, spinal cord, joints, and soft tissues. MRI plays a vital
+role in diagnosing and evaluating a wide range of medical conditions, such as tumors,
+neurological disorders, and musculoskeletal injuries. Its ability to produce precise and detailed
+images aids healthcare professionals in accurately identifying and assessing these conditions,
+enabling effective treatment planning and optimal patient care \cite{verywell_mri}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.6\textwidth]{Images/Chapter1/mri.png}
+  \caption{Magnetic Resonance Imaging (MRI).}
+  \label{fig:mri}
+\end{figure}
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+In this chapter, we established the theoretical foundation necessary for our study on brain tumor analysis using artificial intelligence techniques. We first explored the fundamental concepts of artificial intelligence, machine learning, and deep learning, emphasizing their significance in the medical imaging domain. We discussed the various machine learning approaches, highlighting the principles and applications of Support Vector Machines (SVMs) for classification tasks. Furthermore, we introduced deep learning methodologies, focusing on Convolutional Neural Networks (CNNs) and their components, including convolutional, pooling, and fully connected layers. Finally, we presented the U-Net architecture, a specialized CNN model for biomedical image segmentation, which plays a crucial role in the segmentation phase of our proposed hybrid approach. This theoretical background sets the stage for the practical implementation and evaluation of our models in the following chapters.
