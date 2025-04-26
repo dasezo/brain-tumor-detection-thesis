@@ -1,2 +1,155 @@
-\chapter{Le format}
+\chapter{State of the Art}
 
+\section{Medical Imaging in Brain Tumor Diagnosis}
+
+Magnetic Resonance Imaging (MRI) has emerged as the gold standard for brain tumor diagnosis due to its superior soft tissue contrast, high spatial resolution, and non-invasive nature \cite{Bauer2013}. Unlike other imaging modalities such as CT scans, MRI provides detailed structural information without exposing patients to ionizing radiation, making it particularly valuable for serial monitoring and treatment planning \cite{Menze2015}.
+
+The multimodal nature of MRI is especially useful in brain tumor assessment, with each sequence highlighting different aspects of the tumor \cite{Bakas2018}:
+
+\begin{itemize}
+  \item \textbf{T1-weighted (T1)}: Provides excellent anatomical detail and clearly delineates boundaries between gray and white matter. Tumors typically appear hypointense (darker) compared to surrounding tissue.
+
+        \begin{minipage}{\linewidth}
+          \centering
+          \includegraphics[width=0.4\textwidth]{./Images/Chapter2/t1.png}
+          \captionsetup{hypcap=false}
+          \captionof{figure}{Example of T1-weighted MRI sequence.}
+          \label{fig:t1}
+        \end{minipage}
+        \vspace{\baselineskip}
+
+  \item \textbf{T1 with contrast enhancement (T1ce)}: After gadolinium administration, areas with disrupted blood-brain barrier (characteristic of high-grade tumors) enhance, appearing hyperintense and revealing the active tumor core.
+
+        \begin{minipage}{\linewidth}
+          \centering
+          \includegraphics[width=0.4\textwidth]{./Images/Chapter2/t1ce.png}
+          \captionsetup{hypcap=false}
+          \captionof{figure}{Example of T1-weighted contrast-enhanced MRI sequence.}
+          \label{fig:t1ce}
+        \end{minipage}
+        \vspace{\baselineskip}
+
+  \item \textbf{T2-weighted (T2)}: Highlights areas with increased water content, making it valuable for identifying edema and infiltrative tumor components. Tumors and surrounding edema appear hyperintense.
+
+        \begin{minipage}{\linewidth}
+          \centering
+          \includegraphics[width=0.4\textwidth]{./Images/Chapter2/t2.png}
+          \captionsetup{hypcap=false}
+          \captionof{figure}{Example of T2-weighted MRI sequence.}
+          \label{fig:t2}
+        \end{minipage}
+        \vspace{\baselineskip}
+
+  \item \textbf{Fluid-Attenuated Inversion Recovery (FLAIR)}: Suppresses cerebrospinal fluid signals, enhancing the visibility of periventricular lesions and edema associated with tumors.
+
+        \begin{minipage}{\linewidth}
+          \centering
+          \includegraphics[width=0.4\textwidth]{./Images/Chapter2/flair.png}
+          \captionsetup{hypcap=false}
+          \captionof{figure}{Example of FLAIR MRI sequence.}
+          \label{fig:t2-flair}
+        \end{minipage}
+        \vspace{\baselineskip}
+\end{itemize}
+
+
+Traditionally, neuroradiologists diagnose brain tumors by visually inspecting these multiple MRI sequences, mentally integrating information across modalities to determine tumor boundaries, assess grade, and identify critical structures \cite{DeAngelis2001}. This process is inherently subjective, time-consuming, and susceptible to inter-observer variability, with studies reporting considerable disagreement even among experienced radiologists  These limitations have driven significant interest in developing computational approaches for automated and semi-automated tumor analysis.
+
+\section{The BraTS Dataset}
+
+The Brain Tumor Segmentation (BraTS) challenge and dataset represent a landmark initiative in standardizing the evaluation of brain tumor segmentation algorithms \cite{Menze2015, Bakas2018}. Since its inception in 2012, BraTS has evolved into the most widely adopted benchmark for algorithm development and performance assessment in this domain \cite{Bakas2019}.
+
+The BraTS dataset is particularly valuable due to its:
+
+\begin{itemize}
+  \item \textbf{Multimodal approach}: Each case includes four co-registered MRI sequences (T1, T1ce, T2, and FLAIR), enabling algorithms to leverage complementary information \cite{Bakas2017}.
+  \item \textbf{Standardized preprocessing}: All images undergo skull-stripping, resampling to isotropic 1mm³ voxels, and registration to a common anatomical template, reducing technical variability \cite{Bakas2018}.
+  \item \textbf{Expert annotations}: Each tumor is manually segmented by experienced neuroradiologists following a standardized protocol, with additional verification to ensure quality \cite{Menze2015}.
+  \item \textbf{Multi-institutional data}: Images are acquired from multiple institutions using different scanners and protocols, promoting the development of robust algorithms \cite{Bakas2019}.
+\end{itemize}
+
+\begin{enumerate}
+  \item \textbf{Enhancing Tumor (ET)}: Areas showing hyperintensity in T1ce relative to T1
+  \item \textbf{Tumor Core (TC)}: Encompassing the ET, necrotic components, and non-enhancing tumor
+  \item \textbf{Whole Tumor (WT)}: Including all tumor tissues and surrounding edema
+\end{enumerate}
+
+This hierarchical annotation structure enables the evaluation of algorithms at multiple levels of detail, from gross tumor detection to fine-grained sub-region delineation \cite{Bakas2018}. The BraTS datasets and associated challenges have catalyzed significant methodological advances, with performance metrics improving consistently year over year \cite{Isensee2021}.
+
+\section{Traditional Machine Learning Approaches}
+
+Before the deep learning revolution, brain tumor segmentation and classification relied heavily on traditional machine learning techniques coupled with handcrafted feature extraction \cite{Gordillo2013}. These approaches typically followed a pipeline of preprocessing, feature extraction, and classification using conventional machine learning algorithms.
+
+\textbf{Support Vector Machines (\glsxtrshort{svm})} were particularly popular for brain tumor classification and segmentation due to their strong theoretical foundations and effectiveness with high-dimensional data \cite{Bauer2011}. Zacharaki et al.\ \cite{Zacharaki2009} developed an \glsxtrshort{svm}-based system that extracted 161 features including intensity, texture, and shape characteristics from multi-parametric \glsxtrshort{mri}, achieving 85\% accuracy in discriminating between different tumor types. Similarly, Reza and Iftekharuddin \cite{Reza2013} combined texture features with fractal analysis and \glsxtrshort{svm} classification to segment brain tumors, demonstrating competitive performance on earlier \glsxtrshort{brats} datasets.
+
+\textbf{Random Forest (\glsxtrshort{rf})} classifiers also showed promise due to their robustness to overfitting and ability to handle multi-class problems efficiently. Zikic et al.\ \cite{Zikic2012} employed \glsxtrshort{rf} with context-aware features for brain tumor segmentation, while Festa et al.\ \cite{Festa2013} achieved strong results in the BraTS 2013 challenge using RF with handcrafted features. Tustison et al.\ \cite{Tustison2015} further refined this approach by incorporating an extensive feature set derived from multiple MRI sequences, winning the BraTS 2013 challenge.
+
+\textbf{K-Nearest Neighbors (\glsxtrshort{knn})} algorithms were explored by Simi and Joseph \cite{Simi2014}, who combined texture features with k-NN classification for tumor segmentation. Huang et al.\ \cite{Huang2014} also investigated k-NN for brain tumor classification using multispectral MRI features.
+
+Despite their success, these traditional approaches faced significant limitations:
+
+\begin{itemize}
+  \item \textbf{Dependence on handcrafted features}: Their performance was heavily contingent on the quality of manually designed features, requiring substantial domain expertise \cite{Pandit2019}.
+  \item \textbf{Limited contextual understanding}: Most methods struggled to incorporate broader spatial context, often relying on voxel-wise or small-patch features \cite{Havaei2017}.
+  \item \textbf{Computational inefficiency}: Sequential processing of feature extraction followed by classification led to lengthy processing times impractical for clinical settings \cite{Sompong2017}.
+  \item \textbf{Suboptimal performance on heterogeneous tumors}: The high variability in tumor appearance often challenged these methods, particularly for complex or atypical cases \cite{Menze2015}.
+\end{itemize}
+
+These limitations ultimately paved the way for the adoption of deep learning techniques, which could learn hierarchical features directly from data and better capture the complex patterns present in brain tumor images.
+
+\section{Deep Learning in Brain Tumor Segmentation}
+
+The adoption of deep learning, particularly Convolutional Neural Networks (\glsxtrshort{cnn}), has revolutionized brain tumor segmentation by enabling automatic hierarchical feature learning directly from imaging data \cite{Havaei2017}. This paradigm shift has eliminated the need for handcrafted features, and led to improving segmentation accuracy and robustness.
+
+Among deep learning architectures, U-Net has emerged as the cornerstone for medical image segmentation, including brain tumor analysis \cite{Ronneberger2015}. Its distinctive encoder-decoder structure with skip connections effectively combines localization and contextual information, preserving fine details while capturing broader tumor patterns. Urban et al.\ \cite{Urban2014} were among the first to apply CNNs to brain tumor segmentation, while Pereira et al.\ \cite{Pereira2016} demonstrated that carefully designed CNN architectures could outperform traditional methods on the BraTS challenge.
+
+Several U-Net variants have been developed specifically for brain tumor segmentation:
+
+\begin{itemize}
+  \item \textbf{3D U-Net}: Çiçek et al.\ \cite{Cicek2016} extended the original 2D architecture to process volumetric data, better capturing the three-dimensional nature of tumors. Isensee et al.\ \cite{Isensee2018} further refined this approach, achieving top ranking in the BraTS 2018 challenge with a 3D U-Net variant.
+
+  \item \textbf{U-Net++}: Zhou et al.\ \cite{Zhou2019} proposed a nested architecture with redesigned skip pathways to bridge the semantic gap between encoder and decoder features. Experimental results showed improved performance on several medical segmentation tasks, including brain tumors.
+
+  \item \textbf{Attention U-Net}: Oktay et al.\ \cite{Oktay2018} incorporated attention gates to highlight relevant features and suppress irrelevant regions, improving segmentation accuracy particularly at tumor boundaries. Schlemper et al.\ \cite{Schlemper2019} demonstrated the effectiveness of this approach for multi-class tumor segmentation.
+\end{itemize}
+
+The performance of these deep learning models on BraTS challenges has improved consistently over time. In BraTS 2018, Myronenko \cite{Myronenko2018} achieved exceptional results with an encoder-decoder architecture incorporating variational components. McKinley et al.\ \cite{McKinley2019} further advanced the field with an ensemble of 3D U-Nets, achieving Dice scores of 0.91, 0.83, and 0.78 for whole tumor, tumor core, and enhancing tumor, respectively. The BraTS 2020 challenge saw even more impressive results, with top-performing methods consistently achieving Dice scores above 0.90 for whole tumor segmentation \cite{Isensee2021}.
+
+Despite these advancements, challenges remain in achieving clinically acceptable performance across diverse patient populations and imaging protocols, driving continuous innovation in the field.
+
+\section{Tumor Classification Using Deep Features}
+
+While segmentation delineates tumor boundaries, classification determines tumor type and characteristics—a critical aspect of diagnosis and treatment planning. Modern approaches increasingly leverage deep features, either independently or in conjunction with traditional machine learning classifiers like Support Vector Machines (SVMs).
+
+Pretrained Convolutional Neural Networks (CNNs) have proven extremely effective as feature extractors for brain tumor classification. Afshar et al.\ \cite{Afshar2019} employed a modified ResNet architecture to extract deep features from brain MRI, achieving 93.68\% accuracy in classifying tumors into different grades. Similarly, Deepak and Ameer \cite{Deepak2019} utilized DenseNet for feature extraction followed by SVM classification, reporting improved performance compared to traditional methods. Sajjad et al.\ \cite{Sajjad2019} extended this approach by fine-tuning VGG-19 on brain tumor images, extracting features from intermediate layers for subsequent classification.
+
+\section{Multiclass Tumor Region Segmentation}
+
+Accurate delineation of different tumor sub-regions represents one of the most challenging aspects of brain tumor analysis, requiring discrimination between biologically distinct components that may appear visually similar \cite{Bakas2018}. The BraTS challenge specifically evaluates algorithms on their ability to segment three tumor sub-components: Enhancing Tumor (ET), Tumor Core (TC), and Whole Tumor (WT).
+
+Multi-class tumor segmentation approaches have evolved significantly in recent years. Zhao et al.\ \cite{Zhao2018} proposed a multi-scale CNN architecture specifically designed to address the hierarchical nature of tumor sub-regions, achieving meaningful improvements in enhancing tumor segmentation. Wang et al.\ \cite{Wang2017} developed a cascaded approach where initial whole tumor segmentation guided subsequent sub-region delineation, reducing false positives in non-tumor regions. Kamnitsas et al.\ \cite{Kamnitsas2017} introduced DeepMedic, a dual-pathway 3D CNN architecture that simultaneously processed input at different resolutions, effectively capturing both fine details and broader contextual information.
+
+The continued advancement of multi-class tumor segmentation approaches promises to improve diagnostic accuracy and treatment planning by providing more detailed characterization of tumor heterogeneity.
+
+\section{Challenges in the Field}
+
+Despite the significant progress, several persistent challenges continue to impact the development and clinical translation of automated brain tumor analysis systems.
+
+\textbf{Class imbalance} remains a fundamental issue in both segmentation and classification tasks. Brain tumors typically occupy less than 1\% of the total brain volume, creating extreme imbalance that can bias models toward the majority (healthy tissue) class \cite{Pereira2016}. While techniques such as patch-based training \cite{Havaei2017}, specialized loss functions \cite{Isensee2018}, and data augmentation \cite{Wang2019} have partially addressed this issue, performance on smaller tumor sub-regions (particularly enhancing tumor) continues to lag behind whole tumor segmentation.
+
+The \textbf{interpretability of deep models} presents another significant hurdle, particularly for clinical adoption. The "black box" nature of deep learning approaches creates reluctance among clinicians to trust automated segmentations without understanding the underlying decision process \cite{Holzinger2017}. Recent work by Natekar et al.\ \cite{Natekar2020} has explored visualization techniques to highlight features influencing segmentation decisions, while Lucieri et al.\ \cite{Lucieri2020} demonstrated the value of attention maps for explaining tumor classification outcomes. However, creating truly interpretable deep learning systems remains an open challenge.
+
+\textbf{Generalization across different MRI scanners and patients} continues to limit clinical applicability. Models trained on specific datasets often experience performance degradation when applied to images acquired with different hardware, field strengths, or acquisition parameters \cite{Menze2015}. Zech et al.\ \cite{Zech2018} documented this domain shift problem in medical imaging, while Kamnitsas et al.\ \cite{Kamnitsas2017} proposed domain adaptation techniques to mitigate its effects. More recently, Shaw et al.\ \cite{Shaw2020} explored adversarial domain adaptation specifically for brain tumor segmentation, showing promising results in cross-scanner generalization.
+
+The \textbf{lack of labeled data} remains a fundamental limitation, particularly for rare tumor types or unusual presentations. While the BraTS dataset has grown substantially, it still represents a fraction of the true biological variability of brain tumors \cite{Bakas2019}. Semi-supervised approaches by Sedai et al.\ \cite{Sedai2019} leverage unlabeled data to improve generalization, while Zhao et al.\ \cite{Zhao2019b} demonstrated promising results with data-efficient few-shot learning techniques. Transfer learning approaches by Ghafoorian et al.\ \cite{Ghafoorian2017} have also shown potential in adapting pre-trained models to limited target datasets.
+
+Additional challenges include:
+
+\begin{itemize}
+  \item \textbf{Computational efficiency}: 3D deep learning models often require substantial computational resources beyond what's available in many clinical settings \cite{Kamnitsas2017}.
+  \item \textbf{Longitudinal analysis}: Most current approaches treat each time point independently, missing the opportunity to leverage temporal information in patient monitoring \cite{Weninger2018}.
+  \item \textbf{Integration with other data types}: Combining imaging with clinical, genomic, and pathological data remains challenging despite its potential to improve diagnostic accuracy \cite{Bakas2019}.
+  \item \textbf{Clinically relevant evaluation metrics}: Standard technical metrics like Dice coefficients may not directly translate to clinical utility, creating a disconnect between research advances and clinical impact \cite{MaierHein2018}.
+\end{itemize}
+
+Addressing these challenges will require multidisciplinary collaboration between computer scientists, medical imaging experts, and clinicians to develop solutions that are not only technically sophisticated but also clinically relevant and practically deployable.
