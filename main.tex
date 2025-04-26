@@ -2,7 +2,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[numbers]{natbib}
-\usepackage[arabic,english,french]{babel}
+\usepackage[arabic, french, english]{babel}
 \usepackage{geometry}
 \usepackage{graphicx}
 \usepackage{float}
@@ -46,11 +46,12 @@
 
 %*****************************************************************************
 \usepackage{indentfirst}
-\addto\captionsfrench{%
-\renewcommand*\contentsname{\hfill Table des matières \hfill}
+\addto\captionsenglish{
+\renewcommand*\contentsname{Table of Contents}
+\renewcommand*\bibname{Bibliography}
+\renewcommand*\listfigurename{List of Figures}
+\renewcommand*\listtablename{List of Tables}
 }
-
-\addto\captionsfrench{\renewcommand{\bibname}{Références}}
 %*****************************************************************************
 
 %*****************************************************************************
@@ -173,6 +174,7 @@
 
 
 \setcounter{tocdepth}{3}
+\contentsname{Table of Contents}
 \tableofcontents
 
 \cleardoublepage
@@ -182,16 +184,13 @@
 
 
 \cleardoublepage
-\addcontentsline{toc}{chapter}{Liste des figures}
+\addcontentsline{toc}{chapter}{List of Figures}
 \listoffigures
 
 \cleardoublepage
-\addcontentsline{toc}{chapter}{Liste des tableaux}
+\addcontentsline{toc}{chapter}{List of Tables}
 \listoftables
 
-% \cleardoublepage
-% \addcontentsline{toc}{chapter}{Liste des Algorithmes}
-% \listofalgorithms
 
 \cleardoublepage
 
