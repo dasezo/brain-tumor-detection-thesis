@@ -74,16 +74,187 @@ To visually interpret these segmentations, we map the categorical labels to a cu
   \label{fig:tclass}
 \end{figure}
 
-\subsection{Preprocessing}
+\subsection{Dataset Splitting}
+To train and evaluate our model effectively, we need to partition our dataset into three subsets:
+\begin{itemize}
+  \item \textbf{Training Set (70\%):} Used to learn the model parameters.
+  \item \textbf{Validation Set (approximately 20\%):} Used for tuning hyperparameters and preventing overfitting.
+  \item \textbf{Test Set (10\%):} Used for assessing the final model’s performance on unseen data.
+\end{itemize}
+This split can be done randomly or in a stratified manner (to preserve the class distribution), which is especially useful when dealing with imbalanced datasets. Properly splitting the dataset is crucial for building a robust model that generalizes well to new data.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{Images/Chapter3/data_distribution.png}
+  \caption{Distribution of the training, validation, and test sets.}
+  \label{fig:data_distribution}
+\end{figure}
+
+
+\subsection{Data Preprocessing}
+\label{sec:contribution-preprocessing}
+
+Before feeding MR volumes into our models, we apply a series of standardized preprocessing steps to ensure consistency and improve model robustness. Our pipeline operates on 2D axial slices extracted from 3D volumes, as follows:
+
 \begin{enumerate}
-  \item \textbf{Slice Selection:} Extract 100 axial slices per volume, starting at slice index 22 to avoid low‐information regions.
-  \item \textbf{Resizing:}
+  \item \textbf{Slice Extraction.}
+        For each patient volume, we select 100 consecutive axial slices starting at index 22. This avoids initial and final slices that contain little anatomical information.
+
+  \item \textbf{Resizing.}
         \begin{itemize}
-          \item MRI slices $\to$ \texttt{128$\times$128} for U-Net input.
-          \item Segmentation masks $\to$ \texttt{240$\times$240} before one‐hot encoding.
+          \item \emph{Image Slices:} Each extracted slice is resized to \texttt{128$\times$128} pixels to match the U-Net input dimensions.
+          \item \emph{Segmentation Masks:} Corresponding ground-truth masks are first resized to \texttt{240$\times$240} (to preserve label fidelity) and later downsampled alongside images during one-hot encoding.
         \end{itemize}
-  \item \textbf{Normalization:} Intensity values scaled by the global maximum per volume.
-  \item \textbf{Augmentation:} Random flips (horizontal, vertical) and rotations (0°, 90°, 180°, 270°) applied on-the-fly during training.
+
+  \item \textbf{Intensity Normalization.}
+        All pixel intensities in a slice are divided by the global maximum value of that volume, scaling inputs to the \([0,1]\) range. This step harmonizes contrast across patients and modalities.
+
+  \item \textbf{Augmentation.}
+        To increase effective training diversity, random geometric transformations are applied during batch generation:
+        \begin{itemize}
+          \item Horizontal and vertical flips (each with 50\% probability).
+          \item Rotations by multiples of 90° (randomly chosen among 0°, 90°, 180°, 270°).
+        \end{itemize}
 \end{enumerate}
 
-% No new BibTeX entries beyond those in the Introduction.
+These preprocessing routines standardize input dimensions, normalize intensity distributions, and inject variability—laying a solid foundation for both segmentation and classification tasks.
+
+\section{Segmentation Module}
+\label{sec:contribution-segmentation}
+
+The segmentation module is responsible for delineating tumor subregions in MR slices. It consists of a U-Net–based convolutional network for mask prediction.
+
+
+\subsection{U-Net Architecture}
+Our U-Net follows the standard encoder–decoder pattern with skip connections:
+\begin{itemize}
+  \item \textbf{Encoder:} Four downsampling blocks, each with two \texttt{Conv2D} layers (kernel size 3×3, \texttt{ReLU} activation) followed by \texttt{MaxPooling2D}.
+  \item \textbf{Bottleneck:} Two \texttt{Conv2D} layers at the lowest resolution, with a dropout of 0.2 to reduce overfitting.
+  \item \textbf{Decoder:} Four upsampling blocks, each using \texttt{UpSampling2D} + \texttt{Conv2D (2×2)} and concatenation with the corresponding encoder feature map.
+  \item \textbf{Output:} A final \texttt{Conv2D} layer with a 1×1 kernel and \texttt{softmax} activation to produce a four-channel segmentation mask.
+\end{itemize}
+
+\subsection{Evaluation Metrics for Segmentation}
+\label{sec:segmentation-metrics}
+
+In segmentation tasks, \emph{accuracy} measures the overall proportion of correctly classified pixels. However, in datasets like BraTS2020—where the background (non‐tumor) pixels vastly outnumber tumor pixels—accuracy can be misleading. Therefore, we employ the following metrics for a more balanced evaluation:
+
+\begin{itemize}
+  \item \textbf{Precision} (Positive Predictive Value)
+        Measures the fraction of predicted tumor pixels that are truly tumor:
+        \[
+          \text{Precision} \;=\; \frac{\text{TP}}{\text{TP} + \text{FP}}
+        \]
+        where
+        \begin{itemize}
+          \item \(\text{TP}\) = number of true positive pixels,
+          \item \(\text{FP}\) = number of false positive pixels.
+        \end{itemize}
+
+  \item \textbf{Sensitivity} (Recall or True Positive Rate)
+        Measures the fraction of actual tumor pixels correctly identified:
+        \[
+          \text{Sensitivity} \;=\; \frac{\text{TP}}{\text{TP} + \text{FN}}
+        \]
+        where
+        \begin{itemize}
+          \item \(\text{FN}\) = number of false negative pixels.
+        \end{itemize}
+
+  \item \textbf{Specificity} (True Negative Rate)
+        Measures the fraction of non‐tumor pixels correctly classified:
+        \[
+          \text{Specificity} \;=\; \frac{\text{TN}}{\text{TN} + \text{FP}}
+        \]
+        where
+        \begin{itemize}
+          \item \(\text{TN}\) = number of true negative pixels.
+        \end{itemize}
+  \item \textbf{Intersection over Union (IoU)}
+        Also known as the Jaccard index, IoU measures overlap between prediction and ground truth:
+        \[
+          \text{IoU} \;=\; \frac{\text{TP}}{\text{TP} + \text{FP} + \text{FN}}.
+        \]
+        We report the \emph{mean IoU} (mIoU) averaged over the four classes.
+
+  \item \textbf{Dice Coefficient} (F1 Score)
+        The Dice coefficient emphasizes overlap and is defined as:
+        \[
+          \text{Dice} \;=\; \frac{2\,\text{TP}}{2\,\text{TP} + \text{FP} + \text{FN}}.
+        \]
+        We compute both the \emph{overall Dice} (averaged across classes) and \emph{per‐class Dice} for necrotic/core, edema, and enhancing tissue.
+\end{itemize}
+
+\subsection{Segmentation Results}
+\label{sec:segmentation-results}
+In this section, we present the results of our U-Net segmentation model on the BraTS2020 dataset. The model was trained for 50 epochs with a batch size of 16, we will discuss the end results of the training and validation process, including loss and accuracy metrics.
+
+\subsubsection{Accuracy}
+The model achieved an impressive pixel-level accuracy of 99.3\%, indicating that the vast majority of pixels were correctly classified. This high accuracy is particularly important in medical imaging, where even small errors can have significant implications.
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.6\textwidth]{Images/Chapter3/unet_acc.png}
+  \caption{Segmentation accuracy over epochs.}
+  \label{fig:unet-acc}
+\end{figure}
+
+\subsubsection{Loss}
+The loss function used during training was the categorical cross-entropy loss, which measures the dissimilarity between the predicted and true distributions. The model converged to a low loss of 0.0231, indicating that the predictions were closely aligned with the ground truth.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.6\textwidth]{Images/Chapter3/unet_loss.png}
+  \caption{Segmentation loss over epochs.}
+  \label{fig:unet-loss}
+\end{figure}
+
+\subsubsection{Dice Coefficient}
+The Dice coefficient is a measure of overlap between the predicted and true segmentation masks. The overall Dice coefficient achieved was 58.98\%, indicating a good level of agreement between the predicted and true tumor regions. The per-class Dice coefficients were also calculated, providing insights into the model's performance on different tumor subregions.
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.6\textwidth]{Images/Chapter3/unet_dice.png}
+  \caption{Segmentation Dice coefficient over epochs.}
+  \label{fig:unet-dice}
+\end{figure}
+
+\subsubsection{Mean IoU}
+The mean Intersection over Union (IoU) was calculated to assess the model's performance across all classes. The mean IoU achieved was 74.66\%, indicating a good level of overlap between the predicted and true segmentation masks. This metric is particularly useful in medical imaging, where accurate delineation of tumor boundaries is crucial for treatment planning.
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.6\textwidth]{Images/Chapter3/unet_iou.png}
+  \caption{Segmentation mean IoU over epochs.}
+  \label{fig:unet-iou}
+\end{figure}
+
+Table~\ref{tab:segmentation-results} summarizes the quantitative performance, and Figure~\ref{fig:segmentation-example} shows a representative qualitative result.
+\begin{table}[ht]
+  \centering
+  \caption{Segmentation performance on the test set}
+  \label{tab:segmentation-results}
+  \begin{tabular}{l r}
+    \hline
+    \textbf{Metric}            & \textbf{Value} \\
+    \hline
+    Loss                       & 0.0231         \\
+    Accuracy                   & 99.30\,\%      \\
+    Mean IoU                   & 74.66\,\%      \\
+    Dice Coefficient (overall) & 58.98\,\%      \\
+    Precision                  & 99.37\,\%      \\
+    Sensitivity                & 99.08\,\%      \\
+    Specificity                & 99.79\,\%      \\
+    \hline
+  \end{tabular}
+\end{table}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.9\textwidth]{Images/Chapter3/seg.png}
+  \caption{Example of segmentation results.}
+  \label{fig:segmentation-example}
+\end{figure}
+
+
+
+
+Overall, the model converged to a low loss (0.0231) and achieved excellent pixel‐level accuracy (99.3 \%), demonstrating strong background discrimination (specificity = 99.8 \%). The mean IoU of 74.7 \% and overall Dice of 59.0 \% indicate reliable overlap between prediction and ground truth also confirms that tumor regions are both accurately and comprehensively detected.
+
+
