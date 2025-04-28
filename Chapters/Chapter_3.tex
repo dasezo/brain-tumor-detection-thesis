@@ -258,3 +258,138 @@ Table~\ref{tab:segmentation-results} summarizes the quantitative performance, an
 Overall, the model converged to a low loss (0.0231) and achieved excellent pixel‐level accuracy (99.3 \%), demonstrating strong background discrimination (specificity = 99.8 \%). The mean IoU of 74.7 \% and overall Dice of 59.0 \% indicate reliable overlap between prediction and ground truth also confirms that tumor regions are both accurately and comprehensively detected.
 
 
+\section{Classification Module}
+\label{sec:contribution-classification}
+
+The classification module distinguishes high‐grade gliomas (HGG) from low‐grade gliomas (LGG) using handcrafted features extracted from the segmented tumor regions and a support vector machine (SVM) classifier.
+
+\subsection{Feature Extraction}
+From each segmented case, we compute the following feature categories:
+\begin{itemize}
+  \item \textbf{Volume Features:} Volumes of necrotic/core (NCR), edema (ED), enhancing tumor (ET), tumor core (TC), and whole tumor (WT), plus their ratios (e.g., TC/WT, ET/TC).
+  \item \textbf{Intensity Statistics:} Mean, standard deviation, minimum, maximum, median, 10th/90th percentiles, and range of voxel intensities for each modality (FLAIR, T1, T1CE, T2) within each tumor component.
+  \item \textbf{Texture Features:} Histogram of oriented gradients (HOG)–based descriptors computed on each component.
+  \item \textbf{Shape Features:} Extents along each axis, elongation, flatness, and sphericity of the whole tumor mask.
+  \item \textbf{Heterogeneity Features:} Contrast between core and edema, and between enhancing and necrotic regions for each modality.
+\end{itemize}
+
+\subsection{Feature Selection}
+\begin{itemize}
+  \item Fit a Random Forest classifier on the training split to compute feature importances.
+  \item Select the top 30 most important features for downstream classification.
+\end{itemize}
+
+\subsection{SVM Model Training}
+\begin{itemize}
+  \item \textbf{Data Split:} 80\% training, 20\% test (stratified by grade).
+  \item \textbf{Scaling:} Standardize features to zero mean and unit variance.
+  \item \textbf{Hyperparameter Search:} Grid search over
+        \(\{C \in [0.1,1,10,100]\}\), \(\gamma \in \{\mathrm{scale},\mathrm{auto},0.01,0.1\}\), and \(\{\kern-0.1em\mathrm{rbf},\mathrm{linear},\mathrm{poly}\}\) kernels, using 5-fold CV.
+  \item \textbf{Final Model:} Best‐estimator SVM retrained on full training set.
+\end{itemize}
+
+\subsection{Evaluation Metrics for Classification}
+We assess performance on the held‐out test set using:
+\begin{itemize}
+  \item \textbf{Accuracy:} Fraction of correctly classified patients.
+        \[
+          \text{Accuracy} \;=\; \frac{\text{TP} + \text{TN}}{\text{TP} + \text{TN} + \text{FP} + \text{FN}}
+        \]
+  \item \textbf{Precision, Recall, F1-Score:} Computed per class and averaged.
+        \[
+          \text{Precision} \;=\; \frac{\text{TP}}{\text{TP} + \text{FP}}, \qquad
+          \text{Recall} \;=\; \frac{\text{TP}}{\text{TP} + \text{FN}}, \qquad
+          \text{F1} \;=\; \frac{2 \cdot \text{TP}}{2 \cdot \text{TP} + \text{FP} + \text{FN}}
+        \]
+  \item \textbf{Confusion Matrix:} Counts of true vs.\ predicted labels.
+  \item \textbf{ROC AUC:} Area under the receiver operating characteristic curve.
+        \[
+          \text{AUC} \;=\; \frac{1}{2} \sum_{i=1}^{n} (\text{TPR}_{i} + \text{TPR}_{i-1}) \cdot (\text{FPR}_{i} - \text{FPR}_{i-1})
+        \]
+        where $n$ is the number of thresholds and $\text{TPR}_i$ and $\text{FPR}_i$ are the true positive and false positive rates at the $i$th threshold.
+\end{itemize}
+
+\subsection{Classification Results}
+\label{sec:classification-results}
+
+The SVM classifier was optimized via grid search, yielding the following best hyperparameters:
+\begin{itemize}
+  \item \(C = 1\), \(\gamma = \text{scale}\), Kernel = \texttt{linear}
+\end{itemize}
+On the held‐out test set (74 patients), the model achieved an overall accuracy of 93.24\,\%.
+
+
+\begin{table}[ht]
+  \centering
+  \caption{Classification report}
+  \label{tab:svm-report}
+  \begin{tabular}{lcccc}
+    \hline
+    Class        & Precision                     & Recall & F1-Score & Support \\
+    \hline
+    LGG (0)      & 86\,\%                        & 80\,\% & 83\,\%   & 15      \\
+    HGG (1)      & 95\,\%                        & 97\,\% & 96\,\%   & 59      \\
+    \hline
+    Accuracy     & \multicolumn{4}{c}{93.24\,\%}                               \\
+    Macro avg    & 90\,\%                        & 88\,\% & 89\,\%   & 74      \\
+    Weighted avg & 93\,\%                        & 93\,\% & 93\,\%   & 74      \\
+    \hline
+  \end{tabular}
+\end{table}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.6\textwidth]{Images/Chapter3/confusion.png}
+  \caption{Confusion matrix for the SVM classifier.}
+  \label{fig:confusion}
+\end{figure}
+
+\paragraph{Example Inference}
+On a new patient (ID 083), the pipeline predicted:
+\begin{itemize}
+  \item \textbf{Prediction:} HGG
+  \item \textbf{Probability of HGG:} 93.60\,\%
+  \item \textbf{Actual Grade:} HGG (correct)
+\end{itemize}
+
+\section{Application Demo}
+\label{sec:contribution-demo}
+
+To illustrate end‐user interaction, we developed a lightweight demo application that integrates our trained U-Net and SVM models into a single GUI. The application  consists of two main pages:
+
+\subsection{Upload Page}
+\label{sec:contribution-demo-upload}
+
+Presents an HTML form where the user can select and upload a brain tumor image (2D slice).
+Upon submission, the form sends a POST request to the \texttt{/results} route.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\textwidth]{Images/Chapter3/app_interface.png}
+  \caption{Upload page of the application demo.}
+  \label{fig:demo-upload}
+\end{figure}
+
+\subsection{Results Page}
+\label{sec:contribution-demo-results}
+
+Receives the uploaded image, runs the preprocessing, segmentation (U-Net), feature extraction, and classification (SVM) pipeline, and then renders:
+\begin{itemize}
+  \item The original input image.
+  \item The segmentation mask overlaid on the input.
+  \item The predicted tumor grade (LGG/HGG) with its confidence score.
+\end{itemize}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\textwidth]{Images/Chapter3/app_result.png}
+  \caption{Results page of the application demo.}
+  \label{fig:demo-results}
+\end{figure}
+
+\section{Conclusion}
+\label{sec:contribution-conclusion}
+
+In this chapter, we have presented a comprehensive methodology for automated brain tumor detection and classification using MR images. Our approach integrates a U-Net-based segmentation model with an SVM classifier, achieving high accuracy and robust performance across multiple evaluation metrics. The segmentation module demonstrated reliable delineation of tumor subregions, while the classification module effectively distinguished between high-grade and low-grade gliomas. Additionally, we showcased the practical application of our framework through a user-friendly demo application, highlighting its potential for real-world clinical use. These contributions underscore the effectiveness of combining deep learning and classical machine learning techniques in addressing complex medical imaging challenges. Future work could explore further optimization of the pipeline, incorporation of additional data modalities, and validation on larger, more diverse datasets.
+
+
+

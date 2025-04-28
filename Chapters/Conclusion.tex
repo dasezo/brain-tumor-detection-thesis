@@ -1,2 +1,13 @@
-\chapter{Conclusion générale (2 pages max)}
+\chapter*{General Conclusion}
 
+This thesis has explored the development of a hybrid framework for automated brain tumor detection and classification using Magnetic Resonance Imaging (MRI). By integrating deep learning and classical machine learning techniques, we have demonstrated a robust and effective approach to addressing the challenges of brain tumor analysis.
+
+The study began with a comprehensive review of the theoretical foundations, including artificial intelligence, machine learning, and deep learning, with a particular focus on Convolutional Neural Networks (CNNs) and the U-Net architecture. These concepts provided the basis for the segmentation and classification modules of our framework.
+
+The methodology was built upon the BraTS dataset, a benchmark in brain tumor segmentation and classification. We employed a U-Net-based segmentation model to delineate tumor subregions and a Support Vector Machine (SVM) classifier to distinguish between high-grade and low-grade gliomas. The segmentation module achieved an impressive pixel-level accuracy of 99.3\%, a mean Intersection over Union (IoU) of 74.66\%, and an overall Dice coefficient of 58.98\%. These metrics highlight the model's ability to accurately and comprehensively detect tumor regions. The classification module demonstrated strong performance with an overall accuracy of 93.24\%.
+
+A key contribution of this work is the integration of these modules into an end-to-end pipeline, capable of processing raw MRI slices to produce segmentation masks and tumor grade predictions. This pipeline was further encapsulated in a user-friendly demo application, showcasing its potential for real-world clinical use.
+
+Despite the promising results, challenges remain. The segmentation module, while accurate, could benefit from further optimization to improve the Dice coefficient and IoU for smaller tumor subregions. Similarly, the classification module could be enhanced by incorporating additional features or exploring alternative machine learning models. Future work could also focus on expanding the dataset to include more diverse cases, improving generalization across different MRI scanners, and integrating multimodal data for a more comprehensive analysis.
+
+In conclusion, this thesis has demonstrated the feasibility and effectiveness of combining deep learning and classical machine learning techniques for brain tumor analysis. The proposed framework not only advances the state of the art but also lays the groundwork for future research aimed at improving diagnostic accuracy and clinical outcomes in neuro-oncology.
