@@ -1,18 +1,18 @@
-\chapter{Theoretical Work Background}
+\chapter{Deep Learning and Machine Learning}
 
 \section{Introduction}
 \label{sec:intro}
 Artificial intelligence (AI) has become indispensable in medical imaging, offering tools that can assist—and in some cases outperform—radiologists in detecting and characterizing pathologies. In the context of brain tumors, AI-driven methods enable rapid and accurate identification of tumor boundaries and grading, directly impacting treatment planning and patient outcomes.
 
-In this chapter, we lay the theoretical groundwork for our hybrid approach to brain tumor analysis. We begin with the fundamentals of digital image processing in medical contexts, then review classical machine-learning methods such as Support Vector Machines (SVM). Next, we introduce deep learning, focusing on convolutional neural networks (CNNs) and their encoder–decoder variants, culminating with the U-Net architecture that underpins our segmentation stage. Along the way, we discuss key concepts—loss functions, optimization, regularization, and evaluation metrics—that guide the design and assessment of both our segmentation and classification models.
+In this chapter,
 
 
-\section{What Is Artificial Intelligence?}
+\section{What is Artificial Intelligence?}
 
 Artificial Intelligence (\glsxtrshort{ai}) is a multidisciplinary field focused on developing machines and computer programs capable of performing tasks that typically require human intelligence, such as visual perception, reasoning, decision making, and language understanding. According to \cite{sciencedirect_ai_overview}, AI is defined as:
 
 \begin{quotation}
-  the science and engineering of creating intelligent machines, particularly intelligent computer programs that can perform tasks requiring human intelligence, such as visual perception, decision making, and language translation.
+  "the science and engineering of creating intelligent machines, particularly intelligent computer programs that can perform tasks requiring human intelligence, such as visual perception, decision making, and language translation."
 \end{quotation}
 
 In other words, AI includes both the study of human cognition—how people perceive, learn, reason, and decide—and the development of algorithms and systems that can perform tasks requiring “intelligence,” such as visual recognition or decision making. While some AI techniques draw inspiration from biological processes (e.g. neural networks), the field also embraces purely mathematical and statistical methods.
@@ -20,7 +20,7 @@ In other words, AI includes both the study of human cognition—how people perce
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.6\textwidth]{Images/Chapter1/ai.jpg}
-  \caption{Relationship between AI, machine learning, and deep learning.}
+  \caption{Differences between AI, machine learning, and deep learning. \cite{thakkar2020aivsmlvsdl}}
   \label{fig:ai}
 \end{figure}
 

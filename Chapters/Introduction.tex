@@ -1,6 +1,5 @@
-\chapter{General Introduciton}
-
-\section{Introduction}
+\chapter*{General Introduction}
+\addcontentsline{toc}{chapter}{General Introduction}
 
 Traditionally, radiologists rely on \glsxtrshort{mri} scans to detect brain tumors, While this method is effective, it also has limitations analyzing hundreds of scans manually is time consuming and prone to human error. That is where technology comes in. With recent advances in artificial intelligence, especially deep learning, we now have powerful tools that can learn from medical images and help with faster and more accurate diagnosis.
 
@@ -8,70 +7,3 @@ In this project, we focus on building a hybrid system to detect brain tumors and
 
 We use the BraTS2020 dataset, focusing on T2-weighted FLAIR images, to train and test our system. Our goal is to create a pipeline that is not only technically sound but also practical and helpful for medical professionals in real-world settings.
 
-\section{What is a Brain Tumor?}
-
-A \textbf{brain tumor} is an abnormal mass of tissue in which cells grow and multiply uncontrollably, without the mechanisms that regulate normal cell behavior. Brain tumors can be broadly categorized into \textit{benign} (non-cancerous) and \textit{malignant} (cancerous) forms, each with varying levels of severity and progression~\cite{cancer_gov}.
-
-Brain tumors are generally divided into two main categories:
-
-\begin{itemize}
-	\item \textbf{Primary brain tumors:} These originate in the brain and include common types such as:
-	      \begin{itemize}
-		      \item \textit{Gliomas} – tumors arising from glial cells, which provide support and insulation to neurons~\cite{louis2016who}.
-		      \item \textit{Meningiomas} – tumors that form in the membranes surrounding the brain and spinal cord~\cite{mayo_clinic}.
-		      \item \textit{Pituitary adenomas} – tumors that develop in the pituitary gland~\cite{mayo_clinic}.
-		      \item \textit{Medulloblastomas} – fast-growing tumors more commonly seen in children~\cite{cancer_gov}.
-	      \end{itemize}
-
-	\item \textbf{Secondary (metastatic) brain tumors:} These originate from cancers elsewhere in the body (such as the lungs or breast) and spread to the brain~\cite{cancer_gov}.
-\end{itemize}
-
-Among gliomas, two major clinical subtypes are often considered for diagnostic and prognostic purposes~\cite{louis2016who}:
-
-\begin{itemize}
-	\item \textbf{Low-Grade Gliomas (\glsxtrshort{lgg}):} Slow-growing tumors that often have a better prognosis.
-	\item \textbf{High-Grade Gliomas (\glsxtrshort{hgg}):} Aggressive tumors with rapid progression and poor prognosis.
-\end{itemize}
-
-Accurate detection and classification of these tumor types are essential for clinical decision-making, which has led to the integration of artificial intelligence (\glsxtrshort{ai}) and deep learning (\glsxtrshort{dl}) methods into medical imaging workflows.
-
-
-\section{Problem Statement}
-Despite the advancements in medical imaging, the accurate identification and classification processes of the brain tumors in \glsxtrshort{mri} scans remains a challenging task. Also the manual segmentation is time-consuming, not forgetting the human error, and the need fo expert knowledge. Existing automated methods often struggle with inconsistent tumor boundaries and data imbalance, especially when distinguishing between low-grade and high-grade gliomas.
-
-There is a clear need for a robust and efficient system that can both segment brain tumors accurately and classify their grade reliably. This project aims to address that gap by combining \glsxtrshort{dl} for tumor segmentation with classical \glsxtrshort{ml} for tumor grade classification providing a practical hybrid solution that balances performance and .
-
-\section{Objectives}
-\subsection{General Objective}
-
-To develop an automated system for brain tumor detection, segmentation, and classification using \glsxtrshort{dl} and \glsxtrshort{ml} techniques on \glsxtrshort{mri} scans.
-
-\subsection{Specific Objectives}
-
-\begin{enumerate}
-	\item Explore and preprocess the \glsxtrshort{brats} dataset, focusing on T2-weighted \glsxtrshort{mri} images.
-	\item Train a U-Net model for precise segmentation of brain structures, including tumor regions.
-	\item Extract tumor regions from the segmentation masks and classify them as low-grade or high-grade gliomas using an \glsxtrshort{svm} classifier.
-	\item Evaluate the performance of the segmentation and classification models using appropriate metrics.
-	\item Build a simple application that integrates both models for real-time inference and visualization.
-\end{enumerate}
-
-\section{ Motivation }
-
-The potential of using \glsxtrshort{dl} and \glsxtrshort{ml} in brain tumor detection and classification is truly remarkable. It can help reduce the time required for diagnosis, which is life saving on  early intervention. Moreover, it offers the promise of improved accuracy and consistency in medical decisions by minimizing the subjectivity and fatigue that can affect human experts.
-
-Through this project, we aimed to contribute to that goal by building an automated system that segments brain tumors from \glsxtrshort{mri} scans and classifies them into Low-Grade Glioma (\glsxtrshort{lgg}) or High-Grade Glioma (\glsxtrshort{hgg}). We used a U-Net architecture for precise segmentation of tumor regions, followed by a \glsxtrshort{svm} classifier to determine the tumor type. This combination ensures both spatial understanding of the tumor and a robust classification mechanism.
-
-Our motivation stems from the desire to support the medical community with practical \glsxtrshort{ai} tools that can speed up diagnosis and reduce the burden on healthcare professionals, especially in regions where access to experienced radiologists may be limited.
-
-\section{ Contributions }
-
-This project presents a complete pipeline that combines \glsxtrshort{dl} and \glsxtrshort{ml} techniques for brain tumor detection and classification using \glsxtrshort{mri} scans. The primary goal was to build an accurate and practical system that can assist in identifying and distinguishing between Low-Grade Gliomas (\glsxtrshort{lgg}) and High-Grade Gliomas (\glsxtrshort{hgg}).
-
-The key contributions of this work are as follows:
-
-\begin{itemize}
-	\item \textbf{Tumor Segmentation with U-Net}: We  trained a U-Net model to segment brain tumors from T2-weighted \glsxtrshort{mri} images. This architecture was chosen for its proven effectiveness in biomedical image segmentation, allowing us to extract precise tumor regions. \cite{ronneberger2015u}
-	\item \textbf{Tumor Classification using \glsxtrshort{svm}}: After segmentation, we extracted features from the segmented tumor areas and used them to train a \glsxtrshort{svm} classifier. This model classifies the tumor as either \glsxtrshort{lgg} or \glsxtrshort{hgg}, offering a straightforward yet powerful method for diagnosis.
-	\item \textbf{Dataset Utilization and Visualization}: We utilized the \glsxtrshort{brats} dataset \cite{brats2020}, specifically T2 modality images, and developed custom visualizations to help evaluate model predictions. These visualizations include overlays and individual class masks to clearly demonstrate the model's performance.
-\end{itemize}
