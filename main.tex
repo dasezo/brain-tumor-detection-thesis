@@ -30,7 +30,7 @@
     linkcolor=black,
     filecolor=magenta,      
     urlcolor=cyan,
-    pdftitle={Overleaf Example},
+    pdftitle={Brain Tumor Detection},
     pdfpagemode=FullScreen,
     }
     
@@ -42,7 +42,7 @@
 
 %*****************************************************************************
 \setcounter{secnumdepth}{3}
-\setcounter{tocdepth}{2}
+\setcounter{tocdepth}{3}
 %*****************************************************************************
 
 %*****************************************************************************
@@ -82,6 +82,8 @@
 \newacronym{hgg}{HGG}{High-Grade Glioma}
 \newacronym{mri}{MRI}{Magnetic Resonance Imaging}
 \newacronym{cnn}{CNN}{Convolutional Neural Network}
+\newacronym{rnn}{RNN}{Recurrent Neural Network}
+\newacronym{dnn}{DNN}{Deep Neural Network}
 \newacronym{dl}{DL}{Deep Learning}
 \newacronym{ml}{ML}{Machine Learning}
 \newacronym{flair}{FLAIR}{Fluid Attenuated Inversion Recovery}
@@ -105,6 +107,7 @@
 \newacronym{lr}{LR}{Linear Regression}
 \newacronym{dt}{DT}{Decision Tree}
 \newacronym{nn}{NN}{Neural Network}
+\newacronym{nade}{NADE}{Neural Autoregressive Distribution Estimator}
 %*****************************************************************************
 
 %*****************************************************************************
@@ -174,8 +177,8 @@
 \end{otherlanguage}
 
 
-\setcounter{tocdepth}{3}
-\contentsname{Table of Contents}
+% \setcounter{tocdepth}{3}
+% \contentsname{Table of Contents}
 \tableofcontents
 
 \cleardoublepage
@@ -199,6 +202,7 @@
 \pagenumbering{arabic}
 
 \input{Chapters/Introduction}
+\input{Chapters/Chapter_0}
 \input{Chapters/Chapter_1}
 \input{Chapters/Chapter_2}
 \input{Chapters/Chapter_3}
