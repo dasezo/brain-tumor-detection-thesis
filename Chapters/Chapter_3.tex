@@ -1,4 +1,4 @@
-\chapter{Methodology and Contribution}
+\chapter{Contribution}
 
 \section{Introduction}
 \label{sec:contribution-introduction}
@@ -125,6 +125,35 @@ The segmentation module is responsible for delineating tumor subregions in MR sl
 
 
 \subsection{U-Net Architecture}
+U-Net is a convolutional neural network architecture specifically designed for biomedical image segmentation. Introduced by Ronneberger et al. in 2015, U-Net features a symmetric encoder-decoder structure: the contracting path (encoder) captures image context through successive convolution and pooling operations, while the expansive path (decoder) enables precise localization via upsampling and concatenation with high-resolution features from the encoder. This architecture allows U-Net to achieve accurate segmentation even with limited annotated data by leveraging extensive data augmentation. U-Net has demonstrated superior performance in various biomedical segmentation challenges, notably outperforming previous methods in tasks such as neuronal structure segmentation in electron microscopy images and cell tracking in light microscopy \cite{ronneberger2015u}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{Images/Chapter1/unet2.png}
+  \caption{U-Net Architecture.}
+  \label{fig:unet}
+\end{figure}
+
+\subsubsection{Key Components of a U-Net Architecture}
+
+\begin{itemize}
+  \item \textbf{Contracting Path (Encoder):} \\
+        This path is responsible for extracting contextual features from the input image. It consists of repeated blocks of two $3\times3$ convolutional layers (with ReLU activation), followed by a $2\times2$ max pooling operation for downsampling. With each downsampling step, the number of feature channels is doubled, allowing the network to capture increasingly abstract representations of the input.
+
+  \item \textbf{Bottleneck:} \\
+        Located at the deepest part of the network, the bottleneck consists of convolutional layers without pooling. It serves as the bridge between the encoder and decoder, capturing the most condensed and abstract features of the input.
+
+  \item \textbf{Expansive Path (Decoder):} \\
+        This path reconstructs the spatial resolution of the feature maps and enables precise localization. Each step in the decoder involves upsampling the feature map (often via transposed convolution or up-convolution), concatenating it with the corresponding feature map from the encoder (skip connection), and then applying two $3\times3$ convolutions (with ReLU activation). The number of feature channels is halved at each upsampling step.
+
+  \item \textbf{Skip Connections:} \\
+        At each level, feature maps from the encoder are concatenated with the upsampled feature maps in the decoder. These skip connections help retain high-resolution spatial information that might otherwise be lost during downsampling, improving the accuracy of segmentation boundaries.
+
+  \item \textbf{Final Output Layer:} \\
+        The last layer is typically a $1\times1$ convolution that maps each feature vector to the desired number of output classes, producing a pixel-wise classification map for segmentation tasks.
+\end{itemize}
+
+This U-shaped design enables U-Net to effectively combine global context with fine-grained localization, making it highly effective for precise image segmentation tasks.
 Our U-Net follows the standard encoder–decoder pattern with skip connections:
 \begin{itemize}
   \item \textbf{Encoder:} Four downsampling blocks, each with two \texttt{Conv2D} layers (kernel size 3×3, \texttt{ReLU} activation) followed by \texttt{MaxPooling2D}.
@@ -262,6 +291,36 @@ Overall, the model converged to a low loss (0.0231) and achieved excellent pixel
 \label{sec:contribution-classification}
 
 The classification module distinguishes high‐grade gliomas (HGG) from low‐grade gliomas (LGG) using handcrafted features extracted from the segmented tumor regions and a support vector machine (SVM) classifier.
+\subsection{Support Vector Machines (SVM)}
+\label{sec:svm}
+Support Vector Machines (SVMs) are supervised machine learning models widely used for classification and regression tasks. The core idea of SVM is to find an optimal hyperplane that separates data points of different classes with the maximum possible margin, which enhances the model’s ability to generalize to unseen data. SVMs can efficiently handle both linear and non-linear classification problems by employing the kernel trick, which implicitly maps input data into a higher-dimensional feature space where a linear separation becomes possible. The theoretical foundation of SVMs is based on the Structural Risk Minimization (SRM) principle, which aims to minimize an upper bound on the generalization error, offering advantages over traditional Empirical Risk Minimization approaches. Originally developed by Vapnik and colleagues in the 1990s, SVMs have become popular due to their strong empirical performance and robustness to overfitting, especially in high-dimensional spaces \cite{Gunn1998SupportVM}.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.4\textwidth]{Images/Chapter1/svm.png}
+  \caption{Support Vector Machine.}
+  \label{fig:svm}
+\end{figure}
+The fundamental formula defining the decision boundary of a Support Vector Machine (SVM) is a hyperplane expressed as:
+\begin{equation}
+  \mathbf{w}^\top \mathbf{x} + b = 0
+\end{equation}
+where $\mathbf{w}$ is the weight vector normal to the hyperplane, $\mathbf{x}$ is the input feature vector, and $b$ is the bias term.
+
+For binary classification with labels $y_i \in \{+1, -1\}$, the SVM enforces the following constraints on each training point $(\mathbf{x}_i, y_i)$:
+\begin{equation}
+  y_i \bigl(\mathbf{w}^\top \mathbf{x}_i + b\bigr) \;\ge\; 1,
+  \quad \forall\,i.
+\end{equation}
+
+The margin width (the distance between the closest points of each class to the hyperplane) is given by $\tfrac{2}{\|\mathbf{w}\|_2}$.  Maximizing this margin is therefore equivalent to minimizing $\|\mathbf{w}\|_2$, leading to the following convex optimization problem:
+
+\begin{align}
+  \min_{\mathbf{w},\,b} \quad & \frac{1}{2} \|\mathbf{w}\|_2^2,                             \\
+  \text{subject to} \quad     & y_i \bigl(\mathbf{w}^\top \mathbf{x}_i + b\bigr) \;\ge\; 1,
+  \quad \forall\,i.
+\end{align}
+
+For non-linearly separable data, slack variables and kernel functions can be introduced, but the core formulation remains centered on maximizing the margin around this hyperplane.
 
 \subsection{Feature Extraction}
 From each segmented case, we compute the following feature categories:
