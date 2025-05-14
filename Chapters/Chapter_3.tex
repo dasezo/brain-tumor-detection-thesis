@@ -3,7 +3,7 @@
 \section{Introduction}
 \label{sec:contribution-introduction}
 
-In this chapter, we present the core contributions of our work on automated brain tumor detection in magnetic resonance (MR) images. Building upon the BraTS benchmark dataset \cite{Menze2015}, our pipeline integrates a deep learning–based segmentation module with a classical machine learning classifier and culminates in a user‐friendly demo application. The main objectives of this chapter are:
+In this chapter, we present the core contributions of our work on automated brain tumor detection in magnetic resonance images. Building upon the BraTS benchmark dataset \cite{Menze2015}, our pipeline integrates a deep learning–based segmentation module with a classical machine learning classifier and culminates in a user‐friendly demo application. The main objectives of this chapter are:
 \begin{itemize}
   \item To describe a tailored U-Net–based segmentation pipeline for delineating tumor subregions in MRI slices.
   \item To detail a feature‐extraction and SVM classification scheme that distinguishes high‐grade from low‐grade gliomas using volumetric, intensity, texture, and shape descriptors.
@@ -17,7 +17,7 @@ The remainder of this chapter is organized as follows. In Section~\ref{sec:contr
 In this section, we look at our proposed fremework from a systematic perspective. The framework is designed to perform end-to-end brain tumor segmentation and classification. We will discuss the design of the final pipeline and the training workflow to achieve the desired results.
 
 \subsection{End-to-End Inference Pipeline}
-The purpose of our project is to have an end-to-end inference pipeline accepts a raw MR image as input, applies preprocessing steps, performs segmentation of the tumor region using the trained U-Net model, classifies the tumor grade via the SVM classifier, and finally outputs the original image overlaid with the segmentation mask along with the predicted grade.
+The purpose of our project is to have an end-to-end inference pipeline accepts a raw MR image as input, applies preprocessing steps, performs segmentation of the tumor region using the trained U-Net model, classifies the tumor grade via the SVM classifier, and finally outputs the original image overlaid with the segmentation mask along with the predicted grade as shown in Figure~\ref{fig:pipeline}.
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{Images/Chapter3/pipeline.png}
@@ -27,7 +27,7 @@ The purpose of our project is to have an end-to-end inference pipeline accepts a
 
 
 \subsection{Model Training Workflow}
-The training workflow begins with the BraTS dataset. After preprocessing and augmentation, the data is split into training, validation, and test sets. We then train the U-Net segmentation model in parallel with feature extraction followed by SVM classifier training, yielding two standalone models for inference.
+As shown in Figure~\ref{fig:training}, The training workflow begins with the BraTS dataset. After preprocessing and augmentation, the data is split into training, validation, and test sets. We then train the U-Net segmentation model in parallel with feature extraction followed by SVM classifier training, yielding two standalone models for inference.
 
 \begin{figure}[H]
   \centering
@@ -41,13 +41,12 @@ The training workflow begins with the BraTS dataset. After preprocessing and aug
 In order to train our hybrid model we used the Brain Tumor Segmentation (BraTS) 2020 dataset, which is a collection of multimodal Magnetic Resonance Imaging (MRI) scans used for the segmentation of brain tumors.
 
 \subsection{BraTS Dataset Description}
-The dataset includes MRI scans from glioma patients, providing four different MRI modalities per patient:
+The dataset includes MRI scans (Figure~\ref{fig:modalities}) from glioma patients, providing four different MRI modalities per patient:
 \begin{enumerate}
-  \item \textbf{Native (T1)}
-  \item \textbf{Post-contrast T1-weighted (T1ce - contrast enhanced)}
-  \item \textbf{T2-weighted (T2)}
-  \item \textbf{T2-FLAIR (T2 - Fluid Attenuated Inversion Recovery)}
-  \item \textbf{Tumor Segmentation Mask}
+  \item \textbf{Native (T1)}: Reveals detailed anatomical structures and tissue composition, aiding in the identification of tumors, cysts, and other abnormalities.
+  \item \textbf{Post-contrast T1-weighted (T1ce)}: Enhances tumor visibility using a gadolinium-based contrast agent, which accentuates abnormal vascularity and lesion boundaries.
+  \item \textbf{T2-weighted (T2)}: Highlights fluid content within brain tissues, which is useful for detecting edema but can sometimes obscure lesions.
+  \item \textbf{T2-FLAIR (Fluid Attenuated Inversion Recovery)}: Suppresses the high signal from fluids (e.g., cerebrospinal fluid), making lesions in the white matter more conspicuous.
 \end{enumerate}
 \begin{figure}[H]
   \centering
@@ -56,7 +55,7 @@ The dataset includes MRI scans from glioma patients, providing four different MR
   \label{fig:modalities}
 \end{figure}
 
-These scans come with expert-annotated segmentation masks that delineate the tumor into various sub-regions, such as the necrotic and non-enhancing tumor core, the peritumoral edema, and the enhancing tumor. Research has demonstrated that accurate segmentation is linked to improved prognostic assessments and treatment outcomes.
+These scans (Figure~\ref{fig:modalities}) come with expert-annotated segmentation masks that delineate the tumor into various sub-regions, such as the necrotic and non-enhancing tumor core, the peritumoral edema, and the enhancing tumor. Research has demonstrated that accurate segmentation is linked to improved prognostic assessments and treatment outcomes.
 
 \begin{itemize}
   \item \textbf{Class 0 (Not Tumor):} This class represents normal brain tissue or background, where no tumor tissue is present.
@@ -65,7 +64,7 @@ These scans come with expert-annotated segmentation masks that delineate the tum
   \item \textbf{Class 4 (Enhancing Tumor):} This class captures the actively enhancing parts of the tumor, visible after the administration of a contrast agent. These regions often indicate aggressive tumor tissue with increased blood flow and permeability.
 \end{itemize}
 
-To visually interpret these segmentations, we map the categorical labels to a custom colormap. In our example, we use four distinct colors to represent:
+To visually interpret these segmentations, we map the categorical labels to a custom colormap. In our example (Figure~\ref{fig:tclass}), we use four distinct colors to represent:
 
 \begin{figure}[H]
   \centering
@@ -85,7 +84,7 @@ This split can be done randomly or in a stratified manner (to preserve the class
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{Images/Chapter3/data_distribution.png}
-  \caption{Distribution of the training, validation, and test sets.}
+  \caption{Dataset splitting: training, validation, and test sets.}
   \label{fig:data_distribution}
 \end{figure}
 
@@ -130,11 +129,11 @@ U-Net is a convolutional neural network architecture specifically designed for b
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{Images/Chapter1/unet2.png}
-  \caption{U-Net Architecture.}
+  \caption{U-Net Architecture Illustrating the Encoding and Decoding Arms with Skip Connections. \cite{zefs}}
   \label{fig:unet}
 \end{figure}
 
-\subsubsection{Key Components of a U-Net Architecture}
+\paragraph*{Key Components of a U-Net Architecture}
 
 \begin{itemize}
   \item \textbf{Contracting Path (Encoder):} \\
@@ -153,14 +152,6 @@ U-Net is a convolutional neural network architecture specifically designed for b
         The last layer is typically a $1\times1$ convolution that maps each feature vector to the desired number of output classes, producing a pixel-wise classification map for segmentation tasks.
 \end{itemize}
 
-This U-shaped design enables U-Net to effectively combine global context with fine-grained localization, making it highly effective for precise image segmentation tasks.
-Our U-Net follows the standard encoder–decoder pattern with skip connections:
-\begin{itemize}
-  \item \textbf{Encoder:} Four downsampling blocks, each with two \texttt{Conv2D} layers (kernel size 3×3, \texttt{ReLU} activation) followed by \texttt{MaxPooling2D}.
-  \item \textbf{Bottleneck:} Two \texttt{Conv2D} layers at the lowest resolution, with a dropout of 0.2 to reduce overfitting.
-  \item \textbf{Decoder:} Four upsampling blocks, each using \texttt{UpSampling2D} + \texttt{Conv2D (2×2)} and concatenation with the corresponding encoder feature map.
-  \item \textbf{Output:} A final \texttt{Conv2D} layer with a 1×1 kernel and \texttt{softmax} activation to produce a four-channel segmentation mask.
-\end{itemize}
 
 \subsection{Evaluation Metrics for Segmentation}
 \label{sec:segmentation-metrics}
@@ -218,42 +209,46 @@ In segmentation tasks, \emph{accuracy} measures the overall proportion of correc
 In this section, we present the results of our U-Net segmentation model on the BraTS2020 dataset. The model was trained for 50 epochs with a batch size of 16, we will discuss the end results of the training and validation process, including loss and accuracy metrics.
 
 \subsubsection{Accuracy}
-The model achieved an impressive pixel-level accuracy of 99.3\%, indicating that the vast majority of pixels were correctly classified. This high accuracy is particularly important in medical imaging, where even small errors can have significant implications.
+The model achieved an impressive pixel-level accuracy of 99.3\%, indicating that the vast majority of pixels were correctly classified. This high accuracy is particularly important in medical imaging, where even small errors can have significant implications. The overall results shown in Figure~\ref{fig:unet-acc} provide a clear picture of the training and validation accuracy over the course of the training process.
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.6\textwidth]{Images/Chapter3/unet_acc.png}
-  \caption{Segmentation accuracy over epochs.}
+  \includegraphics[width=0.7\textwidth]{Images/Chapter3/unet_acc.png}
+  \caption{Training and Validation Accuracy over Epochs for the U-Net Segmentation Model}
   \label{fig:unet-acc}
 \end{figure}
-
+\\
+\\
 \subsubsection{Loss}
-The loss function used during training was the categorical cross-entropy loss, which measures the dissimilarity between the predicted and true distributions. The model converged to a low loss of 0.0231, indicating that the predictions were closely aligned with the ground truth.
+The loss function used during training was the categorical cross-entropy loss, which measures the dissimilarity between the predicted and true distributions. The model converged to a low loss of 0.0231, indicating that the predictions were closely aligned with the ground truth. The loss curve shown in Figure~\ref{fig:unet-loss} provides a clear picture of the training and validation loss over the course of the training process.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.6\textwidth]{Images/Chapter3/unet_loss.png}
-  \caption{Segmentation loss over epochs.}
+  \includegraphics[width=0.7\textwidth]{Images/Chapter3/unet_loss.png}
+  \caption{Training and Validation Loss over Epochs for the U-Net Segmentation Model}
   \label{fig:unet-loss}
 \end{figure}
 
 \subsubsection{Dice Coefficient}
-The Dice coefficient is a measure of overlap between the predicted and true segmentation masks. The overall Dice coefficient achieved was 58.98\%, indicating a good level of agreement between the predicted and true tumor regions. The per-class Dice coefficients were also calculated, providing insights into the model's performance on different tumor subregions.
+The Dice coefficient is a measure of overlap between the predicted and true segmentation masks. The overall Dice coefficient achieved was 58.98\%, indicating a good level of agreement between the predicted and true tumor regions. The per-class Dice coefficients were also calculated, providing insights into the model's performance on different tumor subregions. The results shown in Figure~\ref{fig:unet-dice} provide a clear picture of the training and validation Dice Coefficient over the course of the training process.
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.6\textwidth]{Images/Chapter3/unet_dice.png}
-  \caption{Segmentation Dice coefficient over epochs.}
+  \includegraphics[width=0.7\textwidth]{Images/Chapter3/unet_dice.png}
+  \caption{Training and Validation Dice Coefficient over Epochs for the U-Net Segmentation Model}
   \label{fig:unet-dice}
 \end{figure}
 
+
 \subsubsection{Mean IoU}
-The mean Intersection over Union (IoU) was calculated to assess the model's performance across all classes. The mean IoU achieved was 74.66\%, indicating a good level of overlap between the predicted and true segmentation masks. This metric is particularly useful in medical imaging, where accurate delineation of tumor boundaries is crucial for treatment planning.
+The mean Intersection over Union (IoU) was calculated to assess the model's performance across all classes. The mean IoU achieved was 74.66\%, indicating a good level of overlap between the predicted and true segmentation masks. This metric is particularly useful in medical imaging, where accurate delineation of tumor boundaries is crucial for treatment planning. The results shown in Figure~\ref{fig:unet-iou} provide a clear picture of the training and validation Mean IoU over the course of the training process.
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.6\textwidth]{Images/Chapter3/unet_iou.png}
-  \caption{Segmentation mean IoU over epochs.}
+  \includegraphics[width=0.7\textwidth]{Images/Chapter3/unet_iou.png}
+  \caption{Training and Validation Mean IoU over Epochs for the U-Net Segmentation Model}
   \label{fig:unet-iou}
 \end{figure}
-
+\\
+\\
+\subsubsection{Summary}
 Table~\ref{tab:segmentation-results} summarizes the quantitative performance, and Figure~\ref{fig:segmentation-example} shows a representative qualitative result.
 \begin{table}[ht]
   \centering
@@ -277,7 +272,7 @@ Table~\ref{tab:segmentation-results} summarizes the quantitative performance, an
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.9\textwidth]{Images/Chapter3/seg.png}
-  \caption{Example of segmentation results.}
+  \caption{Sample of a Predicted tumor segmentation masks.}
   \label{fig:segmentation-example}
 \end{figure}
 
@@ -296,8 +291,8 @@ The classification module distinguishes high‐grade gliomas (HGG) from low‐gr
 Support Vector Machines (SVMs) are supervised machine learning models widely used for classification and regression tasks. The core idea of SVM is to find an optimal hyperplane that separates data points of different classes with the maximum possible margin, which enhances the model’s ability to generalize to unseen data. SVMs can efficiently handle both linear and non-linear classification problems by employing the kernel trick, which implicitly maps input data into a higher-dimensional feature space where a linear separation becomes possible. The theoretical foundation of SVMs is based on the Structural Risk Minimization (SRM) principle, which aims to minimize an upper bound on the generalization error, offering advantages over traditional Empirical Risk Minimization approaches. Originally developed by Vapnik and colleagues in the 1990s, SVMs have become popular due to their strong empirical performance and robustness to overfitting, especially in high-dimensional spaces \cite{Gunn1998SupportVM}.
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.4\textwidth]{Images/Chapter1/svm.png}
-  \caption{Support Vector Machine.}
+  \includegraphics[width=0.5\textwidth]{Images/Chapter1/svm.png}
+  \caption{Support Vector Machine (SVM) Decision Boundary Visualization}
   \label{fig:svm}
 \end{figure}
 The fundamental formula defining the decision boundary of a Support Vector Machine (SVM) is a hyperplane expressed as:
@@ -338,14 +333,21 @@ From each segmented case, we compute the following feature categories:
   \item Select the top 30 most important features for downstream classification.
 \end{itemize}
 
-\subsection{SVM Model Training}
-\begin{itemize}
-  \item \textbf{Data Split:} 80\% training, 20\% test (stratified by grade).
-  \item \textbf{Scaling:} Standardize features to zero mean and unit variance.
-  \item \textbf{Hyperparameter Search:} Grid search over
-        \(\{C \in [0.1,1,10,100]\}\), \(\gamma \in \{\mathrm{scale},\mathrm{auto},0.01,0.1\}\), and \(\{\kern-0.1em\mathrm{rbf},\mathrm{linear},\mathrm{poly}\}\) kernels, using 5-fold CV.
-  \item \textbf{Final Model:} Best‐estimator SVM retrained on full training set.
-\end{itemize}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{Images/Chapter3/features.png}
+  \caption{Importance of Top Features of The classification model}
+  \label{fig:features}
+\end{figure}
+
+% \subsection{SVM Model Training}
+% \begin{itemize}
+%   \item \textbf{Data Split:} 80\% training, 20\% test (stratified by grade).
+%   \item \textbf{Scaling:} Standardize features to zero mean and unit variance.
+%   \item \textbf{Hyperparameter Search:} Grid search over
+%         \(\{C \in [0.1,1,10,100]\}\), \(\gamma \in \{\mathrm{scale},\mathrm{auto},0.01,0.1\}\), and \(\{\kern-0.1em\mathrm{rbf},\mathrm{linear},\mathrm{poly}\}\) kernels, using 5-fold CV.
+%   \item \textbf{Final Model:} Best‐estimator SVM retrained on full training set.
+% \end{itemize}
 
 \subsection{Evaluation Metrics for Classification}
 We assess performance on the held‐out test set using:
@@ -375,12 +377,14 @@ The SVM classifier was optimized via grid search, yielding the following best hy
 \begin{itemize}
   \item \(C = 1\), \(\gamma = \text{scale}\), Kernel = \texttt{linear}
 \end{itemize}
-On the held‐out test set (74 patients), the model achieved an overall accuracy of 93.24\,\%.
 
+Table~\ref{tab:svm-report} summarizes the classification performance of the Support Vector Machine (SVM) model on the held-out test set. The model achieved an overall accuracy of 93.24\,\%, indicating strong generalization. High-grade gliomas (HGG) were classified with high precision (95\,\%) and recall (97\,\%), resulting in an F1-score of 96\,\%. In contrast, low-grade gliomas (LGG) achieved slightly lower metrics, with an F1-score of 83\,\%, reflecting a minor challenge in capturing the more subtle features associated with LGG.
+
+The macro average shows a balanced view of precision and recall across both classes, with scores around 88–90\,\%, while the weighted average—which takes class support into account—remains consistent at 93\,\%. These results confirm the SVM model's reliability and effectiveness in brain tumor grade classification, particularly in detecting HGG, which typically has more distinct patterns and features.
 
 \begin{table}[ht]
   \centering
-  \caption{Classification report}
+  \caption{Performance Metrics of SVM Classifier on the Test Set}
   \label{tab:svm-report}
   \begin{tabular}{lcccc}
     \hline
