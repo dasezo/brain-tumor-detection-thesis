@@ -1,13 +1,31 @@
 \chapter*{General Conclusion}
+\addcontentsline{toc}{chapter}{General Conclusion}
 
-This thesis has explored the development of a hybrid framework for automated brain tumor detection and classification using Magnetic Resonance Imaging (MRI). By integrating deep learning and classical machine learning techniques, we have demonstrated a robust and effective approach to addressing the challenges of brain tumor analysis.
+This thesis has explored the development of a hybrid framework for automated brain tumor detection and classification using Magnetic Resonance Imaging (MRI). By integrating deep learning and classical machine learning techniques, we have demonstrated a robust and effective approach to addressing the challenges of brain tumor analysis in neuro-oncology.
 
-The study began with a comprehensive review of the theoretical foundations, including artificial intelligence, machine learning, and deep learning, with a particular focus on Convolutional Neural Networks (CNNs) and the U-Net architecture. These concepts provided the basis for the segmentation and classification modules of our framework.
+The study began with an examination of fundamental medical concepts related to brain anatomy, tissue types, and tumor classification, establishing the clinical context for our technical approach. We then built a solid theoretical foundation through a comprehensive review of artificial intelligence, machine learning, and deep learning concepts, with particular emphasis on Convolutional Neural Networks (CNNs), the specialized U-Net architecture for biomedical image segmentation, and Support Vector Machines (SVMs) for classification tasks.
 
-The methodology was built upon the BraTS dataset, a benchmark in brain tumor segmentation and classification. We employed a U-Net-based segmentation model to delineate tumor subregions and a Support Vector Machine (SVM) classifier to distinguish between high-grade and low-grade gliomas. The segmentation module achieved an impressive pixel-level accuracy of 99.3\%, a mean Intersection over Union (IoU) of 74.66\%, and an overall Dice coefficient of 58.98\%. These metrics highlight the model's ability to accurately and comprehensively detect tumor regions. The classification module demonstrated strong performance with an overall accuracy of 93.24\%.
+After reviewing the state-of-the-art methods in brain tumor detection—including approaches using transfer learning, wavelet features, hybrid architectures, and fine-tuning strategies—we identified opportunities to improve upon existing techniques through our hybrid methodology.
 
-A key contribution of this work is the integration of these modules into an end-to-end pipeline, capable of processing raw MRI slices to produce segmentation masks and tumor grade predictions. This pipeline was further encapsulated in a user-friendly demo application, showcasing its potential for real-world clinical use.
+Our framework was implemented using the BraTS2020 dataset, a benchmark in brain tumor segmentation and classification. The pipeline consists of two primary modules:
 
-Despite the promising results, challenges remain. The segmentation module, while accurate, could benefit from further optimization to improve the Dice coefficient and IoU for smaller tumor subregions. Similarly, the classification module could be enhanced by incorporating additional features or exploring alternative machine learning models. Future work could also focus on expanding the dataset to include more diverse cases, improving generalization across different MRI scanners, and integrating multimodal data for a more comprehensive analysis.
+First, a U-Net-based segmentation model was trained to delineate tumor subregions across multiple MRI modalities (T1, T1ce, T2, and FLAIR). This module achieved impressive pixel-level accuracy of 99.3\%, a mean Intersection over Union (IoU) of 74.66\%, and an overall Dice coefficient of 58.98\%. These metrics highlight the model's ability to accurately identify tumor boundaries while maintaining high specificity (99.79\%) to avoid false positives.
 
-In conclusion, this thesis has demonstrated the feasibility and effectiveness of combining deep learning and classical machine learning techniques for brain tumor analysis. The proposed framework not only advances the state of the art but also lays the groundwork for future research aimed at improving diagnostic accuracy and clinical outcomes in neuro-oncology.
+Second, a Support Vector Machine classifier was developed to distinguish between high-grade (HGG) and low-grade gliomas (LGG) based on features extracted from the segmented regions. Using a carefully selected set of volumetric, intensity, texture, shape, and heterogeneity features, the classifier demonstrated strong performance with an overall accuracy of 93.24\%. Notably, the model showed excellent capability in identifying high-grade gliomas (96\% F1-score), which is particularly valuable given their more aggressive nature and need for urgent intervention.
+
+A key contribution of this work is the integration of these modules into an end-to-end pipeline, capable of processing raw MRI slices to produce segmentation masks and tumor grade predictions with minimal human intervention. This pipeline was encapsulated in an intuitive, user-friendly demo application that allows medical professionals to upload patient images and rapidly receive diagnostic assistance, bridging the gap between research and clinical practice.
+
+Despite the promising results, several challenges and limitations remain. The segmentation module, while accurate, could benefit from further optimization to improve the Dice coefficient for smaller and more complex tumor subregions. The classification module might be enhanced by incorporating additional radiomics features or exploring ensemble learning approaches to boost performance on low-grade gliomas, which currently show a lower F1-score (83\%) compared to high-grade tumors.
+
+Future work could focus on:
+\begin{itemize}
+  \item Expanding the training dataset to include more diverse cases and rare tumor types
+  \item Implementing 3D segmentation to fully leverage volumetric information
+  \item Exploring attention mechanisms to improve feature localization
+  \item Incorporating longitudinal data to track tumor evolution and treatment response
+  \item Validating the framework on external datasets from different institutions and MRI scanners
+  \item Extending the classification to include other tumor types beyond gliomas
+  \item Developing explainable AI components to provide radiologists with insights into model decisions
+\end{itemize}
+
+In conclusion, this thesis has demonstrated the feasibility and effectiveness of combining deep learning and classical machine learning techniques for comprehensive brain tumor analysis. The proposed hybrid framework not only advances the state of the art in automated tumor detection and classification but also provides a practical tool that could potentially assist radiologists in clinical settings, reduce inter-observer variability, and improve diagnostic efficiency. As artificial intelligence continues to evolve in medical imaging, such approaches may ultimately contribute to improved patient outcomes through earlier and more accurate diagnoses.

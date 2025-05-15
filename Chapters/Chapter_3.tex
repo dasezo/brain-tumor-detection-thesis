@@ -249,10 +249,11 @@ The mean Intersection over Union (IoU) was calculated to assess the model's perf
 \\
 \\
 \subsubsection{Summary}
-Table~\ref{tab:segmentation-results} summarizes the quantitative performance, and Figure~\ref{fig:segmentation-example} shows a representative qualitative result.
+Table~\ref{tab:segmentation-results} summarizes the quantitative performance of the U-Net segmentation model. The overall accuracy of the model is 99.30\%, which is a measure of the proportion of correctly classified pixels. The mean IoU of 74.66\% indicates a good level of overlap between the predicted and true segmentation masks across all classes. The Dice coefficient of 58.98\% is a measure of the overlap between the predicted and true tumor regions. The precision of 99.37\% indicates a low number of false positives, while the sensitivity of 99.08\% indicates a low number of false negatives. The specificity of 99.79\% indicates that the model is effective at eliminating false positives. The results shown in Figure~\ref{fig:segmentation-example} provide a clear picture of the predicted tumor segmentation masks.
+
 \begin{table}[ht]
   \centering
-  \caption{Segmentation performance on the test set}
+  \caption{Performance Metrics for the U-Net Segmentation Model}
   \label{tab:segmentation-results}
   \begin{tabular}{l r}
     \hline
