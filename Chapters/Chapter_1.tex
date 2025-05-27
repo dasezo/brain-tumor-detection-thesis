@@ -35,47 +35,47 @@ Machine learning (\glsxtrshort{ml}) has emerged as a crucial area of study for o
   \label{fig:ml}
 \end{figure}
 
-\subsection{History of Machine Learning}
-\label{sec:ml_history}
-The history of machine learning represents a fascinating journey from theoretical concepts to practical implementations that have transformed various industries, including healthcare and medical imaging.
+% \subsection{History of Machine Learning}
+% \label{sec:ml_history}
+% The history of machine learning represents a fascinating journey from theoretical concepts to practical implementations that have transformed various industries, including healthcare and medical imaging.
 
-The foundations of machine learning can be traced back to the 1940s and 1950s, when early pioneers began exploring computational models that could learn from data:
+% The foundations of machine learning can be traced back to the 1940s and 1950s, when early pioneers began exploring computational models that could learn from data:
 
-\begin{itemize}
-  \item In 1943, Warren McCulloch and Walter Pitts proposed the first mathematical model of neural networks \cite{mcculloch1943logical}.
-  \item In 1950, Alan Turing introduced the "Turing Test" in his paper "Computing Machinery and Intelligence," proposing a test for machine intelligence \cite{turing1950computing}.
-  \item In 1952, Arthur Samuel developed the first computer learning program—a checkers game that improved through self-play \cite{samuel1959studies}.
-  \item In 1957, Frank Rosenblatt created the perceptron, an early algorithm for supervised learning of binary classifiers \cite{rosenblatt1958perceptron}.
-\end{itemize}
+% \begin{itemize}
+%   \item In 1943, Warren McCulloch and Walter Pitts proposed the first mathematical model of neural networks \cite{mcculloch1943logical}.
+%   \item In 1950, Alan Turing introduced the "Turing Test" in his paper "Computing Machinery and Intelligence," proposing a test for machine intelligence \cite{turing1950computing}.
+%   \item In 1952, Arthur Samuel developed the first computer learning program—a checkers game that improved through self-play \cite{samuel1959studies}.
+%   \item In 1957, Frank Rosenblatt created the perceptron, an early algorithm for supervised learning of binary classifiers \cite{rosenblatt1958perceptron}.
+% \end{itemize}
 
-The 1960s and 1970s saw both advances and setbacks:
-\begin{itemize}
-  \item The "nearest neighbor" algorithm was developed, forming the basis for pattern recognition systems \cite{cover1967nearest}.
-  \item Marvin Minsky and Seymour Papert's book "Perceptrons" \cite{minsky1969perceptrons} highlighted limitations of single-layer neural networks, contributing to reduced funding during the first "AI winter."
-\end{itemize}
+% The 1960s and 1970s saw both advances and setbacks:
+% \begin{itemize}
+%   \item The "nearest neighbor" algorithm was developed, forming the basis for pattern recognition systems \cite{cover1967nearest}.
+%   \item Marvin Minsky and Seymour Papert's book "Perceptrons" \cite{minsky1969perceptrons} highlighted limitations of single-layer neural networks, contributing to reduced funding during the first "AI winter."
+% \end{itemize}
 
-The resurgence began in the 1980s with several important developments:
-\begin{itemize}
-  \item Decision tree algorithms like ID3 by Ross Quinlan \cite{quinlan1986induction}.
-  \item The backpropagation algorithm for training multi-layer neural networks \cite{rumelhart1986learning}.
-  \item The development of the support vector machine (SVM) by Vladimir Vapnik and colleagues \cite{vapnik1995nature}.
-\end{itemize}
+% The resurgence began in the 1980s with several important developments:
+% \begin{itemize}
+%   \item Decision tree algorithms like ID3 by Ross Quinlan \cite{quinlan1986induction}.
+%   \item The backpropagation algorithm for training multi-layer neural networks \cite{rumelhart1986learning}.
+%   \item The development of the support vector machine (SVM) by Vladimir Vapnik and colleagues \cite{vapnik1995nature}.
+% \end{itemize}
 
-The 1990s and 2000s brought machine learning into mainstream applications:
-\begin{itemize}
-  \item Ensemble methods like Random Forests \cite{breiman2001random} and boosting algorithms \cite{freund1997decision}.
-  \item Practical applications in spam filtering, recommendation systems, and early computer vision.
-  \item The Netflix Prize competition (2006-2009) highlighted the power of collaborative filtering and ensemble methods.
-\end{itemize}
+% The 1990s and 2000s brought machine learning into mainstream applications:
+% \begin{itemize}
+%   \item Ensemble methods like Random Forests \cite{breiman2001random} and boosting algorithms \cite{freund1997decision}.
+%   \item Practical applications in spam filtering, recommendation systems, and early computer vision.
+%   \item The Netflix Prize competition (2006-2009) highlighted the power of collaborative filtering and ensemble methods.
+% \end{itemize}
 
-In medical imaging specifically, machine learning techniques began making significant impacts with:
-\begin{itemize}
-  \item Development of computer-aided detection (CAD) systems for mammography in the 1990s \cite{chan1990computer}.
-  \item Application of SVMs and random forests to tumor classification in the early 2000s \cite{zhang2004breast}.
-  \item The transition to deep learning approaches for medical image analysis starting around 2012.
-\end{itemize}
+% In medical imaging specifically, machine learning techniques began making significant impacts with:
+% \begin{itemize}
+%   \item Development of computer-aided detection (CAD) systems for mammography in the 1990s \cite{chan1990computer}.
+%   \item Application of SVMs and random forests to tumor classification in the early 2000s \cite{zhang2004breast}.
+%   \item The transition to deep learning approaches for medical image analysis starting around 2012.
+% \end{itemize}
 
-This historical progression has laid the groundwork for today's sophisticated machine learning systems that can detect subtle patterns in medical images, predict disease progression, and assist in treatment planning.
+% This historical progression has laid the groundwork for today's sophisticated machine learning systems that can detect subtle patterns in medical images, predict disease progression, and assist in treatment planning.
 
 \subsection{Why Machine Learning?}
 \label{sec:why_ml}
@@ -105,51 +105,17 @@ In brain tumor analysis specifically, machine learning offers the ability to pre
 \label{sec:ml_applications}
 Machine learning has been successfully applied across numerous domains, with particularly transformative impacts in healthcare and medical imaging:
 
-\textbf{Medical Imaging and Diagnostics}:
 \begin{itemize}
   \item \textbf{Tumor Detection and Classification}: ML algorithms can detect and classify brain tumors, lung nodules, and other cancerous lesions from imaging data \cite{wang2019machine}.
   \item \textbf{Disease Progression Monitoring}: Tracking changes in disease markers over time, such as multiple sclerosis lesion load or Alzheimer's-related brain atrophy \cite{mortaheb2019machine}.
   \item \textbf{Radiomics}: Extracting quantitative features from medical images to improve diagnostic and prognostic accuracy \cite{lambin2012radiomics}.
-  \item \textbf{Risk Stratification}: Predicting patient outcomes and treatment responses based on imaging biomarkers \cite{aerts2014decoding}.
-  \item \textbf{Quality Assurance}: Identifying suboptimal images that require retaking before diagnosis \cite{esses2018automated}.
-\end{itemize}
-
-\textbf{Clinical Decision Support}:
-\begin{itemize}
-  \item \textbf{Disease Prediction}: Models that predict disease likelihood based on patient history, genetic factors, and clinical measurements \cite{deo2015machine}.
-  \item \textbf{Treatment Recommendation}: Systems suggesting optimal treatment paths based on similar patient outcomes \cite{beam2018clinical}.
   \item \textbf{Resource Allocation}: Predicting hospital readmissions or length of stay to optimize resource allocation \cite{futoma2015comparison}.
-\end{itemize}
-
-\textbf{Financial Services}:
-\begin{itemize}
-  \item \textbf{Fraud Detection}: Identifying unusual patterns in transaction data that may indicate fraudulent activity \cite{bhattacharyya2011data}.
-  \item \textbf{Credit Scoring}: Assessing creditworthiness based on financial history and behavioral patterns \cite{khandani2010consumer}.
   \item \textbf{Algorithmic Trading}: Making trading decisions based on market data analysis \cite{treleaven2013algorithmic}.
-\end{itemize}
-
-\textbf{Marketing and Customer Relationship Management}:
-\begin{itemize}
-  \item \textbf{Customer Segmentation}: Grouping customers based on purchasing behavior for targeted marketing \cite{tsai2009customer}.
   \item \textbf{Recommendation Systems}: Suggesting products or content based on user preferences and behavior \cite{ricci2011introduction}.
   \item \textbf{Churn Prediction}: Identifying customers likely to discontinue services \cite{verbeke2012building}.
-\end{itemize}
-
-\textbf{Manufacturing and Industry}:
-\begin{itemize}
-  \item \textbf{Predictive Maintenance}: Forecasting equipment failures before they occur based on sensor data \cite{mobley2002introduction}.
-  \item \textbf{Quality Control}: Automatically detecting defects in manufactured products \cite{kumar2008computer}.
   \item \textbf{Supply Chain Optimization}: Predicting demand and optimizing inventory management \cite{carbonneau2008application}.
-\end{itemize}
-
-\textbf{Environmental Science}:
-\begin{itemize}
-  \item \textbf{Climate Modeling}: Predicting climate changes and extreme weather events \cite{reichstein2019deep}.
-  \item \textbf{Species Distribution Modeling}: Mapping and predicting habitat suitability for different species \cite{elith2006novel}.
   \item \textbf{Resource Management}: Optimizing water and energy resource allocation \cite{wu2014real}.
 \end{itemize}
-
-In the context of brain tumor analysis, machine learning applications range from automated tumor detection and segmentation to treatment response prediction and survival analysis, demonstrating the versatility and power of these techniques in addressing critical healthcare challenges.
 
 \subsection{Different Techniques and Algorithms in Machine Learning}
 \label{sec:ml_techniques}
@@ -211,77 +177,8 @@ Machine learning encompasses a diverse array of techniques and algorithms, each 
 
 In medical imaging analysis, combinations of these techniques are often employed, with feature extraction methods like radiomics providing inputs to classification or regression algorithms for diagnostic or prognostic modeling.
 
-\subsection{Hardware and Computing for Machine Learning}
-\label{sec:ml_hardware}
-Effective implementation of machine learning systems requires appropriate computing resources, with requirements varying based on the complexity of algorithms and data volume:
-
-\textbf{Computational Resources}:
-\begin{itemize}
-  \item \textbf{Central Processing Units (CPUs)}: Suitable for many traditional ML algorithms, especially with optimized libraries like Intel MKL. Multi-core processors can significantly accelerate training for algorithms that support parallelization.
-
-  \item \textbf{Graphics Processing Units (GPUs)}: While essential for deep learning, GPUs also accelerate certain machine learning algorithms, particularly those involving large matrix operations. Libraries like RAPIDS enable GPU-accelerated classic ML workflows.
-
-  \item \textbf{Field-Programmable Gate Arrays (FPGAs)}: Offer energy-efficient acceleration for specific ML algorithms in deployment scenarios where power consumption is a concern.
-
-  \item \textbf{Application-Specific Integrated Circuits (ASICs)}: Custom hardware solutions like Google's TPUs can be used for certain machine learning workloads, though they're more common in deep learning.
-\end{itemize}
-
-\textbf{Memory Requirements}:
-\begin{itemize}
-  \item \textbf{RAM}: Critical for data loading and processing, as many traditional ML algorithms require the entire dataset to be held in memory.
-
-  \item \textbf{Storage}: Fast SSD storage facilitates efficient data loading and feature extraction, particularly important for medical imaging datasets with large file sizes.
-
-  \item \textbf{Memory Optimization Techniques}: Out-of-core learning for datasets that exceed available RAM, using techniques like incremental learning or data chunking.
-\end{itemize}
-
-\textbf{Software Frameworks}:
-\begin{itemize}
-  \item \textbf{Scikit-learn}: Popular Python library for traditional machine learning algorithms \cite{pedregosa2011scikit}.
-
-  \item \textbf{XGBoost, LightGBM, CatBoost}: Optimized implementations of gradient boosting frameworks \cite{chen2016xgboost}.
-
-  \item \textbf{R and its packages}: Statistical computing environment with extensive ML capabilities.
-
-  \item \textbf{WEKA}: Java-based machine learning software with GUI for algorithm selection and visualization.
-
-  \item \textbf{MLlib}: Apache Spark's scalable machine learning library for distributed computing.
-\end{itemize}
-
-\textbf{Distributed Computing}:
-\begin{itemize}
-  \item \textbf{Cluster Computing}: Using multiple machines to train models on large datasets, with frameworks like Apache Spark or Dask.
-
-  \item \textbf{Cloud-Based Solutions}: Services like Amazon SageMaker, Google Cloud ML Engine, and Microsoft Azure ML provide scalable infrastructure for machine learning.
-
-  \item \textbf{Data Parallelism}: Splitting data across multiple compute nodes to accelerate training for larger datasets.
-\end{itemize}
-
-\textbf{Computing Considerations for Medical Imaging}:
-\begin{itemize}
-  \item \textbf{Feature Extraction}: Radiomics and other feature-based approaches require significant computational resources during the feature extraction phase.
-
-  \item \textbf{Storage Infrastructure}: Medical imaging datasets require robust storage solutions due to their size and privacy requirements.
-
-  \item \textbf{Parallel Processing}: Many feature extraction and model training steps can be parallelized across multiple cores or machines.
-
-  \item \textbf{Edge Computing}: Deploying trained models directly on medical imaging devices for real-time analysis without requiring data transfer to central servers.
-\end{itemize}
-
-\textbf{Hardware Selection Factors}:
-\begin{itemize}
-  \item \textbf{Algorithm Complexity}: More complex algorithms like random forests with many trees or SVMs with nonlinear kernels require more computational resources.
-
-  \item \textbf{Dataset Size}: Larger datasets necessitate more memory and possibly distributed computing solutions.
-
-  \item \textbf{Training vs. Inference}: While training might require powerful hardware, inference (making predictions with trained models) often has lower computational requirements.
-
-  \item \textbf{Real-time Requirements}: Applications requiring immediate results may need optimized hardware for fast inference.
-\end{itemize}
-
-While deep learning typically demands more specialized hardware, traditional machine learning algorithms can often deliver excellent performance on more conventional computing resources, making them accessible and practical for many medical imaging applications.
-
 \subsection{Machine Learning approachs}
+Machine learning algorithms can be categorized into three main categories: supervised learning, unsupervised learning, and reinforcement learning. In the following sections, we will explore each of these categories in more detail, highlighting their strengths and weaknesses, and providing examples of how they are used in medical imaging analysis.
 \subsubsection{Supervised Learning}
 In supervised learning, the algorithm learns from labeled training data, where each data point is associated with a corresponding label or target value as depicted in Figure \ref{fig:superml}. Examples of supervised learning algorithms include linear regression , decision trees , random forests , support vector machines , and neural networks.
 

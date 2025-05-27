@@ -3,9 +3,9 @@
 \section{Introduction}
 This chapter provides essential background information on the clinical and technological context of the thesis. We begin by describing the brain and its tissues from both macroscopic and microscopic perspectives. We then discuss brain tumors, which are the primary focus of this research. Next, we introduce the different types of medical imaging modalities and explain the importance of segmentation tasks in neuro-oncology. Finally, we delve deeper into the principles and components of Magnetic Resonance Imaging (MRI), which is the primary imaging modality used in this thesis.
 
-\section{Macroscopic and Microscopic Description of the Brain}
+\section{The Microscopic Description of the Brain}
 
-\subsection{Macroscopic Description}
+% \subsection{Macroscopic Description}
 The human brain is an irregular, ovoid organ with a large anteroposterior axis. Its average volume is approximately 1100\,cm\textsuperscript{3} in women and 1400\,cm\textsuperscript{3} in men, and it weighs between 1400\,g and 1800\,g. It occupies the cranial cavity but does not contact the bone directly, as it is suspended in cerebrospinal fluid inside a fluid chamber \cite{ref3}.
 
 The brain comprises four main regions: the cerebrum, cerebellum, brainstem, and diencephalon (Figure~\ref{fig:brain-regions}).
@@ -17,71 +17,71 @@ The brain comprises four main regions: the cerebrum, cerebellum, brainstem, and 
   \label{fig:brain-regions}
 \end{figure}
 
-\subsubsection{Cerebrum}
-The cerebrum is the largest part of the brain, representing about 83\% of its total volume. It is divided into right and left hemispheres connected by the corpus callosum. Each hemisphere controls the contralateral side of the body (Figure~\ref{fig:cerebrum}).
+\subsubsection*{Cerebrum}
+The cerebrum is the largest part of the brain, representing about 83\% of its total volume. It is divided into right and left hemispheres connected by the corpus callosum. Each hemisphere controls the contralateral side of the body.
 
-\begin{figure}[ht]
-  \centering
-  \includegraphics[width=0.7\textwidth]{Images/Chapter0/cerebrum.jpg}
-  \caption{Cerebrum brain structure from lateral and superior view outline diagram.\cite{freudenrich2013visualizing}.}
-  \label{fig:cerebrum}
-\end{figure}
+% \begin{figure}[ht]
+%   \centering
+%   \includegraphics[width=0.7\textwidth]{Images/Chapter0/cerebrum.jpg}
+%   \caption{Cerebrum brain structure from lateral and superior view outline diagram \cite{freudenrich2013visualizing}.}
+%   \label{fig:cerebrum}
+% \end{figure}
 
-Each hemisphere contains four lobes—frontal, parietal, occipital, and temporal—with distinct functions (Figure~\ref{fig:cerebrum}).
+% Each hemisphere contains four lobes—frontal, parietal, occipital, and temporal—with distinct functions (Figure~\ref{fig:cerebrum}).
 
 
 
-\paragraph{Frontal lobes}
-\begin{itemize}
-  \item Speech, language, reasoning, decision-making, personality, judgment, and voluntary movements.
-  \item Right frontal lobe controls left-side movements; left frontal lobe controls right-side movements.
-\end{itemize}
+% \paragraph{Frontal lobes}
+% \begin{itemize}
+%   \item Speech, language, reasoning, decision-making, personality, judgment, and voluntary movements.
+%   \item Right frontal lobe controls left-side movements; left frontal lobe controls right-side movements.
+% \end{itemize}
 
-\paragraph{Parietal lobes}
-\begin{itemize}
-  \item Reading, spatial and visual perception, touch, pain, and temperature sensation.
-  \item Right parietal lobe mediates left-side sensitivity; left parietal lobe mediates right-side sensitivity.
-\end{itemize}
+% \paragraph{Parietal lobes}
+% \begin{itemize}
+%   \item Reading, spatial and visual perception, touch, pain, and temperature sensation.
+%   \item Right parietal lobe mediates left-side sensitivity; left parietal lobe mediates right-side sensitivity.
+% \end{itemize}
 
-\paragraph{Occipital lobes}
-\begin{itemize}
-  \item Visual processing (color, light, movement).
-\end{itemize}
+% \paragraph{Occipital lobes}
+% \begin{itemize}
+%   \item Visual processing (color, light, movement).
+% \end{itemize}
 
-\paragraph{Temporal lobes}
-\begin{itemize}
-  \item Language comprehension, memory, and emotion processing.
-  \item Sequencing and organization.
-\end{itemize}
+% \paragraph{Temporal lobes}
+% \begin{itemize}
+%   \item Language comprehension, memory, and emotion processing.
+%   \item Sequencing and organization.
+% \end{itemize}
 
-\subsubsection{Cerebellum}
+\subsubsection*{Cerebellum}
 The cerebellum lies below the cerebrum and accounts for about 11\% of brain volume. It coordinates reflexes, movement, balance, and posture.
 
-\subsubsection{Brainstem}
+\subsubsection*{Brainstem}
 The brainstem connects the cerebrum and cerebellum to the spinal cord and controls vital functions such as eye movements, breathing, blood pressure, and heart rate.
 
-\subsubsection{Diencephalon}
+\subsubsection*{Diencephalon}
 Surrounded by the cerebral hemispheres, the diencephalon coordinates motor functions, maintains consciousness, regulates autonomic functions (eating, thirst, temperature, circadian rhythm) and interacts with both brain and cerebellum \cite{ref4}.
-\subsection{Microscopic Description}
-From a microscopic point of view, the nervous tissue consists of nerve
-cells (neurons) and glial cells (support and protective cells) that derive
-from the ectoderm. Vessels and meninges do not belong to the nervous
-tissue and are derived from the mesoderm.
-The neuron is the cell that constitutes the functional unit of the
-neuroaxis. Neurons are 10 to 50 times more numerous than glial cells.
-The human nervous system comprises about 100 billion neurons. Neurons
-transmit a signal or what we call nerve impulses \cite{ref3}.
+% \subsection{Microscopic Description}
+% From a microscopic point of view, the nervous tissue consists of nerve
+% cells (neurons) and glial cells (support and protective cells) that derive
+% from the ectoderm. Vessels and meninges do not belong to the nervous
+% tissue and are derived from the mesoderm.
+% The neuron is the cell that constitutes the functional unit of the
+% neuroaxis. Neurons are 10 to 50 times more numerous than glial cells.
+% The human nervous system comprises about 100 billion neurons. Neurons
+% transmit a signal or what we call nerve impulses \cite{ref3}.
 
 \section{Brain Tissue}
-Accurate segmentation of brain tissues in MRI is critical for diagnosis and treatment planning. Anatomical structures can be divided into hemispheres and lobes, but for imaging, we often classify voxels as gray matter, white matter, or cerebrospinal fluid \cite{ref1}.
+The brain's anatomical structures can be divided into hemispheres and lobes, but in medical imaging, voxels are typically classified into three main tissue types: gray matter, white matter, and cerebrospinal fluid (CSF) \cite{ref1}.
 
-\subsection{Gray Matter}
+\subsection*{Gray Matter}
 Gray matter contains neuronal cell bodies (soma), axon tracts, glial cells, capillary blood vessels, and neuropil (dendrites, unmyelinated axons, glia) \cite{ref5}.
 
-\subsection{White Matter}
+\subsection*{White Matter}
 White matter consists primarily of myelinated axons (tracts), oligodendrocytes, and astrocytes, forming the brain’s long-range connections \cite{ref5}.
 
-\subsection{Cerebrospinal Fluid}
+\subsection*{Cerebrospinal Fluid}
 Cerebrospinal fluid (CSF) cushions the brain and spinal cord, removes metabolic waste, and maintains proper central nervous system function \cite{ref6}.
 
 \begin{figure}[ht]
@@ -108,7 +108,7 @@ Malignant tumors (WHO Grade III–IV) are characterized by rapid growth, high mi
 \section{Common Intracranial Tumor Types}
 \label{sec:common-tumor-types}
 
-The three most frequent primary brain tumors in adults are:
+The three most frequent primary brain tumors in adults are \cite{naser2020lgmi}:
 
 \begin{itemize}
   \item \textbf{Meningioma.}
@@ -121,7 +121,7 @@ The three most frequent primary brain tumors in adults are:
         Gliomas arise from glial cells and represent the majority of malignant primary \glsxtrshort{cns} tumors. They are graded by WHO as:
         \begin{itemize}
           \item \emph{Low-Grade Glioma (LGG, Grades I–II).} Slow‐growing, with diffuse infiltration but relatively favorable prognosis.
-          \item \emph{High-Grade Glioma (HGG, Grades III–IV).} Aggressive, with high proliferative index and poor survival; includes anaplastic astrocytoma (Grade III) and glioblastoma multiforme (Grade IV) \cite{naser2020lgmi}.
+          \item \emph{High-Grade Glioma (HGG, Grades III–IV).} Aggressive, with high proliferative index and poor survival; includes anaplastic astrocytoma (Grade III) and glioblastoma multiforme (Grade IV).
         \end{itemize}
 \end{itemize}
 
@@ -155,54 +155,54 @@ This examination is based on imaging techniques such as MRI and computed tomogra
 
 \section{Medical Imaging in Brain Tumor Diagnosis}
 
-Magnetic Resonance Imaging (MRI) has emerged as the gold standard for brain tumor diagnosis due to its superior soft tissue contrast, high spatial resolution, and non-invasive nature \cite{Bauer2013}. Unlike other imaging modalities such as CT scans, MRI provides detailed structural information without exposing patients to ionizing radiation, making it particularly valuable for serial monitoring and treatment planning \cite{Menze2015}.
+Magnetic Resonance Imaging (MRI) has emerged as the gold standard for brain tumor diagnosis due to its superior soft tissue contrast, high spatial resolution, and non-invasive nature. Unlike other imaging modalities such as CT scans, MRI provides detailed structural information without exposing patients to ionizing radiation, making it particularly valuable for serial monitoring and treatment planning \cite{Menze2015}.
 
-The multimodal nature of MRI is especially useful in brain tumor assessment, with each sequence highlighting different aspects of the tumor \cite{Bakas2018}:
+The multimodal nature of MRI is especially useful in brain tumor assessment, with each sequence highlighting different aspects of the tumor:
 
 \begin{itemize}
   \item \textbf{T1-weighted (T1)}: Provides excellent anatomical detail and clearly delineates boundaries between gray and white matter. Tumors typically appear hypointense (darker) compared to surrounding tissue.
 
-        \begin{minipage}{\linewidth}
-          \centering
-          \includegraphics[width=0.4\textwidth]{./Images/Chapter2/t1.png}
-          \captionsetup{hypcap=false}
-          \captionof{figure}{Example of T1-weighted MRI sequence.}
-          \label{fig:t1}
-        \end{minipage}
-        \vspace{\baselineskip}
+        % \begin{minipage}{\linewidth}
+        %   \centering
+        %   \includegraphics[width=0.4\textwidth]{./Images/Chapter2/t1.png}
+        %   \captionsetup{hypcap=false}
+        %   \captionof{figure}{Example of T1-weighted MRI sequence.}
+        %   \label{fig:t1}
+        % \end{minipage}
+        % \vspace{\baselineskip}
 
   \item \textbf{T1 with contrast enhancement (T1ce)}: After gadolinium administration, areas with disrupted blood-brain barrier (characteristic of high-grade tumors) enhance, appearing hyperintense and revealing the active tumor core.
 
-        \begin{minipage}{\linewidth}
-          \centering
-          \includegraphics[width=0.4\textwidth]{./Images/Chapter2/t1ce.png}
-          \captionsetup{hypcap=false}
-          \captionof{figure}{Example of T1-weighted contrast-enhanced MRI sequence.}
-          \label{fig:t1ce}
-        \end{minipage}
-        \vspace{\baselineskip}
+        % \begin{minipage}{\linewidth}
+        %   \centering
+        %   \includegraphics[width=0.4\textwidth]{./Images/Chapter2/t1ce.png}
+        %   \captionsetup{hypcap=false}
+        %   \captionof{figure}{Example of T1-weighted contrast-enhanced MRI sequence.}
+        %   \label{fig:t1ce}
+        % \end{minipage}
+        % \vspace{\baselineskip}
 
   \item \textbf{T2-weighted (T2)}: Highlights areas with increased water content, making it valuable for identifying edema and infiltrative tumor components. Tumors and surrounding edema appear hyperintense.
 
-        \begin{minipage}{\linewidth}
-          \centering
-          \includegraphics[width=0.4\textwidth]{./Images/Chapter2/t2.png}
-          \captionsetup{hypcap=false}
-          \captionof{figure}{Example of T2-weighted MRI sequence.}
-          \label{fig:t2}
-        \end{minipage}
-        \vspace{\baselineskip}
+        % \begin{minipage}{\linewidth}
+        %   \centering
+        %   \includegraphics[width=0.4\textwidth]{./Images/Chapter2/t2.png}
+        %   \captionsetup{hypcap=false}
+        %   \captionof{figure}{Example of T2-weighted MRI sequence.}
+        %   \label{fig:t2}
+        % \end{minipage}
+        % \vspace{\baselineskip}
 
   \item \textbf{Fluid-Attenuated Inversion Recovery (FLAIR)}: Suppresses cerebrospinal fluid signals, enhancing the visibility of periventricular lesions and edema associated with tumors.
 
-        \begin{minipage}{\linewidth}
-          \centering
-          \includegraphics[width=0.4\textwidth]{./Images/Chapter2/flair.png}
-          \captionsetup{hypcap=false}
-          \captionof{figure}{Example of FLAIR MRI sequence.}
-          \label{fig:t2-flair}
-        \end{minipage}
-        \vspace{\baselineskip}
+        % \begin{minipage}{\linewidth}
+        %   \centering
+        %   \includegraphics[width=0.4\textwidth]{./Images/Chapter2/flair.png}
+        %   \captionsetup{hypcap=false}
+        %   \captionof{figure}{Example of FLAIR MRI sequence.}
+        %   \label{fig:t2-flair}
+        % \end{minipage}
+        % \vspace{\baselineskip}
 \end{itemize}
 
 
