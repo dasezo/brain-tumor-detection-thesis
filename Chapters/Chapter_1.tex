@@ -31,7 +31,7 @@ Machine learning (\glsxtrshort{ml}) has emerged as a crucial area of study for o
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{Images/Chapter1/ml.png}
-  \caption{Illustration of the Machine Learning Process. \cite{alltius2025deeplearning}}
+  \caption{Illustration of the Machine Learning Process \cite{alltius2025deeplearning}}
   \label{fig:ml}
 \end{figure}
 
@@ -99,11 +99,9 @@ Machine learning offers several compelling advantages that have driven its adopt
   \item \textbf{Cost-Effectiveness}: By improving diagnostic accuracy and efficiency, machine learning can reduce unnecessary tests, treatments, and hospitalizations, potentially lowering healthcare costs.
 \end{itemize}
 
-In brain tumor analysis specifically, machine learning offers the ability to precisely delineate tumor boundaries, distinguish between tumor types and grades, differentiate tumor from surrounding edema, and monitor treatment response with greater objectivity and consistency than visual assessment alone.
-
 \subsection{Machine Learning Application Examples}
 \label{sec:ml_applications}
-Machine learning has been successfully applied across numerous domains, with particularly transformative impacts in healthcare and medical imaging:
+Machine learning has been successfully applied across numerous domains, with far-reaching impacts in areas such as computer vision, natural language processing, and recommender systems:
 
 \begin{itemize}
   \item \textbf{Tumor Detection and Classification}: ML algorithms can detect and classify brain tumors, lung nodules, and other cancerous lesions from imaging data \cite{wang2019machine}.
@@ -119,13 +117,11 @@ Machine learning has been successfully applied across numerous domains, with par
 
 \subsection{Different Techniques and Algorithms in Machine Learning}
 \label{sec:ml_techniques}
-Machine learning encompasses a diverse array of techniques and algorithms, each with unique strengths for specific types of problems:
+Machine learning encompasses a diverse array of techniques and algorithms, each with unique strengths for specific types of problems, we mention some of them:
 
 \textbf{Classification Algorithms}:
 \begin{itemize}
-  \item \textbf{Logistic Regression}: A statistical method for binary or multinomial classification that models the probability of class membership \cite{hosmer2013applied}.
   \item \textbf{Support Vector Machines (SVMs)}: Algorithms that find the optimal hyperplane to separate classes in high-dimensional space \cite{cortes1995support}.
-  \item \textbf{Decision Trees}: Tree-like models of decisions based on feature values \cite{quinlan1986induction}.
   \item \textbf{Random Forests}: Ensemble learning methods that construct multiple decision trees and output the class that is the mode of the classes of individual trees \cite{breiman2001random}.
   \item \textbf{Naive Bayes}: Probabilistic classifiers based on applying Bayes' theorem with strong independence assumptions \cite{rish2001empirical}.
   \item \textbf{k-Nearest Neighbors (k-NN)}: Instance-based learning where an object is classified by a majority vote of its neighbors \cite{cover1967nearest}.
@@ -134,10 +130,7 @@ Machine learning encompasses a diverse array of techniques and algorithms, each 
 \textbf{Regression Algorithms}:
 \begin{itemize}
   \item \textbf{Linear Regression}: Modeling the relationship between a dependent variable and independent variables using a linear approach \cite{montgomery2021introduction}.
-  \item \textbf{Ridge Regression}: Linear regression with L2 regularization to prevent overfitting \cite{hoerl1970ridge}.
   \item \textbf{Lasso Regression}: Linear regression with L1 regularization that can perform feature selection \cite{tibshirani1996regression}.
-  \item \textbf{Elastic Net}: Combines the penalties of ridge and lasso regression \cite{zou2005regularization}.
-  \item \textbf{Regression Trees}: Decision trees applied to regression problems \cite{breiman1984classification}.
   \item \textbf{Gaussian Process Regression}: A non-parametric approach using Gaussian processes for modeling \cite{rasmussen2003gaussian}.
 \end{itemize}
 
@@ -145,47 +138,17 @@ Machine learning encompasses a diverse array of techniques and algorithms, each 
 \begin{itemize}
   \item \textbf{K-Means}: Partitioning observations into k clusters based on the nearest mean \cite{macqueen1967some}.
   \item \textbf{Hierarchical Clustering}: Building a hierarchy of clusters either through agglomerative or divisive approaches \cite{johnson1967hierarchical}.
-  \item \textbf{DBSCAN}: Density-based clustering that can find arbitrarily shaped clusters and identify noise points \cite{ester1996density}.
-  \item \textbf{Gaussian Mixture Models}: Probabilistic models that assume data points are generated from a mixture of Gaussian distributions \cite{reynolds2009gaussian}.
-  \item \textbf{Spectral Clustering}: Using eigenvalues of similarity matrices to reduce dimensionality before clustering \cite{ng2002spectral}.
 \end{itemize}
-
-\textbf{Dimensionality Reduction}:
-\begin{itemize}
-  \item \textbf{Principal Component Analysis (PCA)}: Linear transformation that projects data onto lower-dimensional space \cite{jolliffe2016principal}.
-  \item \textbf{t-Distributed Stochastic Neighbor Embedding (t-SNE)}: Non-linear technique for dimensionality reduction particularly suited for visualization \cite{maaten2008visualizing}.
-  \item \textbf{Uniform Manifold Approximation and Projection (UMAP)}: Manifold learning technique for dimension reduction \cite{mcinnes2018umap}.
-  \item \textbf{Linear Discriminant Analysis (LDA)}: Finds linear combinations of features that characterize or separate classes \cite{fisher1936use}.
-  \item \textbf{Autoencoders}: Neural network-based approach to dimensionality reduction \cite{hinton2006reducing}.
-\end{itemize}
-
-\textbf{Ensemble Methods}:
-\begin{itemize}
-  \item \textbf{Bagging}: Building multiple models on different subsets of data and averaging their predictions \cite{breiman1996bagging}.
-  \item \textbf{Boosting}: Sequential building of models where each tries to correct errors of the previous one \cite{freund1997decision}.
-  \item \textbf{Stacking}: Combining predictions from multiple models as input to a meta-learner \cite{wolpert1992stacked}.
-  \item \textbf{Voting}: Combining predictions from multiple models through voting mechanisms \cite{dietterich2000ensemble}.
-\end{itemize}
-
-\textbf{Specialized Techniques}:
-\begin{itemize}
-  \item \textbf{Anomaly Detection}: Identifying rare items, events or observations that differ significantly from the majority \cite{chandola2009anomaly}.
-  \item \textbf{Association Rule Learning}: Discovering relations between variables in large databases \cite{agrawal1993mining}.
-  \item \textbf{Bayesian Networks}: Probabilistic graphical models representing variables and their conditional dependencies \cite{pearl1988probabilistic}.
-  \item \textbf{Genetic Algorithms}: Optimization techniques inspired by natural selection \cite{holland1992adaptation}.
-\end{itemize}
-
-In medical imaging analysis, combinations of these techniques are often employed, with feature extraction methods like radiomics providing inputs to classification or regression algorithms for diagnostic or prognostic modeling.
 
 \subsection{Machine Learning approachs}
 Machine learning algorithms can be categorized into three main categories: supervised learning, unsupervised learning, and reinforcement learning. In the following sections, we will explore each of these categories in more detail, highlighting their strengths and weaknesses, and providing examples of how they are used in medical imaging analysis.
 \subsubsection{Supervised Learning}
-In supervised learning, the algorithm learns from labeled training data, where each data point is associated with a corresponding label or target value as depicted in Figure \ref{fig:superml}. Examples of supervised learning algorithms include linear regression , decision trees , random forests , support vector machines , and neural networks.
+In supervised learning, the algorithm learns from labeled training data, where each data point is associated with a corresponding label or target value as depicted in Figure \ref{fig:superml}. Examples of supervised learning algorithms include linear regression , decision trees , random forests , support vector machines.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{Images/Chapter1/superml.png}
-  \caption{Illustration of the Supervised learning process. \cite{geeksforgeeks2025supervised}}
+  \caption{Illustration of the Supervised learning process \cite{geeksforgeeks2025supervised}}
   \label{fig:superml}
 \end{figure}
 
@@ -197,7 +160,7 @@ and t-distributed stochastic neighbor embedding,  Figure \ref{fig:unsuperml}
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{Images/Chapter1/unsuperml.png}
-  \caption{Illustration of the Unsupervised learning process.\cite{geeksforgeeks2025supervised} }
+  \caption{Illustration of the Unsupervised learning process \cite{geeksforgeeks2025supervised} }
   \label{fig:unsuperml}
 \end{figure}
 
@@ -206,16 +169,16 @@ Reinforcement learning is a type of machine learning where an agent learns to ma
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{Images/Chapter1/reinforcement.png}
-  \caption{Illustration of the Reinforcement learning process.\cite{geeksforgeeks2025supervised} }
+  \caption{Illustration of the Reinforcement learning process \cite{geeksforgeeks2025supervised} }
   \label{fig:reinforcement}
 \end{figure}
 
 
 \section{Deep Learning}
 \label{sec:dl}
-Deep learning has emerged as a powerful approach for modeling complex data through intricate architectures that incorporate non-linear transformations. Neural networks, including deep neural networks, serve as the fundamental components of deep learning. These techniques have achieved remarkable progress in various domains such as sound and image processing, enabling tasks like facial recognition, speech recognition, computer vision, language processing, and text classification. The potential applications of deep learning are vast and continue to expand.
+Deep learning has emerged as a powerful approach for modeling complex data through architectures that incorporate non-linear transformations. Neural networks, including deep neural networks, serve as the fundamental components of deep learning. These techniques have achieved remarkable progress in various domains such as sound and image processing, enabling tasks like facial recognition, speech recognition, computer vision, language processing, and text classification. The potential applications of deep learning are vast and continue to expand.
 
-Different types of neural network architectures, such as multilayer perceptrons, Convolutional Neural Networks (\glsxtrshort{cnn}s), and recurrent neural networks, cater to specific data types and tasks. These architectures are characterized by deep layers organized in a cascading manner. Successful implementation of deep learning requires well-designed stochastic optimization algorithms, appropriate initialization techniques, and thoughtful structure selection.
+Different types of neural network architectures, such as multilayer perceptrons, Convolutional Neural Networks (\glsxtrshort{cnn}s), and recurrent neural networks, cater to specific data types and tasks. These architectures are characterized by deep layers organized in a cascading manner.
 
 \begin{figure}[H]
   \centering
@@ -224,88 +187,59 @@ Different types of neural network architectures, such as multilayer perceptrons,
   \label{fig:dl}
 \end{figure}
 
-\subsection{History of Deep Learning}
-\label{sec:dl_history}
-The history of deep learning spans several decades, with key developments occurring in distinct waves of innovation. The foundational concept of artificial neural networks dates back to 1943 when Warren McCulloch and Walter Pitts proposed a computational model of neurons \cite{mcculloch1943logical}. The field progressed with Frank Rosenblatt's introduction of the perceptron in the late 1950s, which demonstrated the ability to perform simple pattern recognition \cite{rosenblatt1958perceptron}.
+% \subsection{History of Deep Learning}
+% \label{sec:dl_history}
+% The history of deep learning spans several decades, with key developments occurring in distinct waves of innovation. The foundational concept of artificial neural networks dates back to 1943 when Warren McCulloch and Walter Pitts proposed a computational model of neurons \cite{mcculloch1943logical}. The field progressed with Frank Rosenblatt's introduction of the perceptron in the late 1950s, which demonstrated the ability to perform simple pattern recognition \cite{rosenblatt1958perceptron}.
 
-However, the field faced significant challenges in the 1970s after Marvin Minsky and Seymour Papert published "Perceptrons" \cite{minsky1969perceptrons}, highlighting the limitations of single-layer neural networks. This initiated what is now known as the "AI winter," a period of reduced funding and interest in neural network research.
+% However, the field faced significant challenges in the 1970s after Marvin Minsky and Seymour Papert published "Perceptrons" \cite{minsky1969perceptrons}, highlighting the limitations of single-layer neural networks. This initiated what is now known as the "AI winter," a period of reduced funding and interest in neural network research.
 
-The 1980s saw a resurgence with the development of backpropagation by Geoffrey Hinton, David Rumelhart, and Ronald Williams \cite{rumelhart1986learning}, enabling effective training of multi-layer networks. However, computational limitations prevented widespread adoption of deeper architectures.
+% The 1980s saw a resurgence with the development of backpropagation by Geoffrey Hinton, David Rumelhart, and Ronald Williams \cite{rumelhart1986learning}, enabling effective training of multi-layer networks. However, computational limitations prevented widespread adoption of deeper architectures.
 
-The modern era of deep learning began in the 2000s with several breakthrough developments:
-\begin{itemize}
-  \item In 2006, Geoffrey Hinton introduced deep belief networks with an effective layer-by-layer pre-training method \cite{hinton2006fast}.
-  \item In 2012, AlexNet, developed by Alex Krizhevsky, Ilya Sutskever, and Geoffrey Hinton, dramatically outperformed traditional computer vision algorithms in the ImageNet competition \cite{krizhevsky2012imagenet}.
-  \item Subsequent years saw the development of increasingly sophisticated architectures such as VGGNet, GoogLeNet/Inception, and ResNet, each advancing the state-of-the-art in various tasks.
-\end{itemize}
+% The modern era of deep learning began in the 2000s with several breakthrough developments:
+% \begin{itemize}
+%   \item In 2006, Geoffrey Hinton introduced deep belief networks with an effective layer-by-layer pre-training method \cite{hinton2006fast}.
+%   \item In 2012, AlexNet, developed by Alex Krizhevsky, Ilya Sutskever, and Geoffrey Hinton, dramatically outperformed traditional computer vision algorithms in the ImageNet competition \cite{krizhevsky2012imagenet}.
+%   \item Subsequent years saw the development of increasingly sophisticated architectures such as VGGNet, GoogLeNet/Inception, and ResNet, each advancing the state-of-the-art in various tasks.
+% \end{itemize}
 
-In the medical imaging domain, a significant milestone was the introduction of U-Net in 2015 by Ronneberger et al. \cite{ronneberger2015unet}, specifically designed for biomedical image segmentation, demonstrating deep learning's capacity to address specialized healthcare challenges.
+% In the medical imaging domain, a significant milestone was the introduction of U-Net in 2015 by Ronneberger et al. \cite{ronneberger2015unet}, specifically designed for biomedical image segmentation, demonstrating deep learning's capacity to address specialized healthcare challenges.
 
 \subsection{Why Deep Learning?}
 \label{sec:why_dl}
+
 Deep learning offers several distinct advantages that have fueled its adoption across numerous domains, particularly in medical imaging:
 
 \begin{itemize}
-  \item \textbf{Automatic Feature Extraction}: Unlike traditional machine learning that relies on handcrafted features, deep learning automatically discovers relevant features from raw data, eliminating the need for domain-specific expertise in feature engineering.
+  \item \textbf{Automatic Feature Extraction}: Unlike traditional machine learning that relies on handcrafted features, deep learning automatically discovers relevant features from raw data, eliminating the need for domain-specific expertise in feature engineering \cite{shen2017deep}.
 
-  \item \textbf{Hierarchical Feature Learning}: Deep networks learn representations at multiple levels of abstraction. Lower layers capture basic patterns (e.g., edges in images), while higher layers combine these to represent complex concepts (e.g., textures, objects, or tumor characteristics).
+  \item \textbf{Hierarchical Feature Learning}: Deep networks learn representations at multiple levels of abstraction. Lower layers capture basic patterns (e.g., edges in images), while higher layers combine these to represent complex concepts (e.g., textures, objects, or tumor characteristics) \cite{shen2017deep}.
 
-  \item \textbf{Scalability with Data}: Deep learning models continue to improve as more data becomes available, unlike many traditional algorithms that plateau in performance. This is particularly relevant in medical imaging as dataset sizes continue to grow.
+  \item \textbf{Scalability with Data}: Deep learning models continue to improve as more data becomes available, unlike many traditional algorithms that plateau in performance. This is particularly relevant in medical imaging as dataset sizes continue to grow \cite{shen2017deep}.
 
-  \item \textbf{Transfer Learning}: Knowledge gained from one task can be transferred to another, reducing the need for large amounts of labeled data for each new application—crucial in medical domains where annotated data is often scarce.
+  \item \textbf{Transfer Learning}: Knowledge gained from one task can be transferred to another, reducing the need for large amounts of labeled data for each new application—crucial in medical domains where annotated data is often scarce \cite{tajbakhsh2016convolutional}.
 
-  \item \textbf{End-to-End Learning}: Deep learning can learn directly from raw input to desired output, eliminating intermediate processing steps that might introduce biases or errors.
+  \item \textbf{End-to-End Learning}: Deep learning can learn directly from raw input to desired output, eliminating intermediate processing steps that might introduce biases or errors \cite{nguyen2020end}.
 
-  \item \textbf{Handling Unstructured Data}: Medical images, natural language reports, and other unstructured data that constitute most healthcare data are particularly well-suited for deep learning approaches.
+  \item \textbf{Handling Unstructured Data}: Medical images, natural language reports, and other unstructured data that constitute most healthcare data are particularly well-suited for deep learning approaches \cite{shen2017deep}.
 \end{itemize}
-
-In the context of brain tumor analysis, deep learning excels at identifying subtle patterns in MRI images that might be imperceptible to human observers, potentially leading to earlier detection and more precise characterization of pathologies.
 
 \subsection{Deep Learning Application Examples}
 \label{sec:dl_applications}
 Deep learning has revolutionized numerous fields with successful applications across diverse domains:
 
-\textbf{Medical Imaging and Healthcare}:
 \begin{itemize}
-  \item Brain tumor segmentation and classification from MRI scans \cite{havaei2017brain}
-  \item Retinal disease detection from optical coherence tomography (OCT) \cite{de2018clinically}
-  \item Lung cancer detection and classification from CT scans \cite{ardila2019end}
-  \item Skin lesion classification for melanoma detection \cite{esteva2017dermatologist}
-  \item Breast cancer detection in mammography \cite{mckinney2020international}
-\end{itemize}
-
-\textbf{Computer Vision}:
-\begin{itemize}
+  \item Retinal disease detection from optical coherence tomography
+  \item Lung cancer detection and classification from CT scans
+  \item Skin lesion classification for melanoma detection
+  \item Breast cancer detection in mammography
   \item Object detection and recognition in images and video
   \item Facial recognition and emotion detection
-  \item Autonomous driving perception systems
-  \item Video surveillance and anomaly detection
-\end{itemize}
-
-\textbf{Natural Language Processing}:
-\begin{itemize}
-  \item Machine translation between languages
   \item Sentiment analysis in social media and customer feedback
-  \item Question answering systems and chatbots
   \item Text summarization and content generation
-\end{itemize}
-
-\textbf{Speech and Audio Processing}:
-\begin{itemize}
   \item Speech recognition and transcription
-  \item Voice synthesis and generation
-  \item Speaker identification and verification
-  \item Music generation and recommendation
 \end{itemize}
 
-\textbf{Game Playing and Simulation}:
-\begin{itemize}
-  \item AlphaGo and AlphaZero defeating world champions in Go, chess, and shogi
-  \item Game-playing agents in complex video games
-  \item Physics simulations and molecular dynamics
-\end{itemize}
-
-These examples illustrate deep learning's versatility and transformative impact across domains. In medical imaging specifically, deep learning applications continue to expand, with potential to dramatically improve diagnostic accuracy, reduce interpretation time, and enable personalized treatment planning.
+These few mentioned examples illustrate deep learning's versatility and transformative impact across domains.
 
 \subsection{Different Architectures of Deep Learning}
 \label{sec:dl_architectures}
@@ -346,51 +280,49 @@ Introduced in the paper "Attention Is All You Need" \cite{vaswani2017attention},
 \textbf{Hybrid Architectures}:
 Many modern deep learning solutions combine elements from different architectural paradigms to leverage their respective strengths. For example, CNN-LSTM networks for video analysis or attention-augmented CNNs for improved image recognition.
 
-In medical imaging analysis, specialized architectures like U-Net and its derivatives have become particularly important due to their effectiveness in segmentation tasks, while various CNN architectures excel at classification and detection problems.
+% \subsection{Hardware Used in Deep Learning}
+% \label{sec:dl_hardware}
+% The computational demands of deep learning models have driven significant developments in specialized hardware. The following components and systems are crucial for effective deep learning implementation:
 
-\subsection{Hardware Used in Deep Learning}
-\label{sec:dl_hardware}
-The computational demands of deep learning models have driven significant developments in specialized hardware. The following components and systems are crucial for effective deep learning implementation:
+% \textbf{Graphics Processing Units (GPUs)}:
+% GPUs have revolutionized deep learning by enabling massive parallelization of matrix operations. NVIDIA's CUDA-capable GPUs have become the standard for deep learning research and development, with specialized architectures including:
+% \begin{itemize}
+%   \item Consumer GPUs (e.g., GeForce RTX series)
+%   \item Professional GPUs (e.g., Quadro series)
+%   \item Data center GPUs (e.g., Tesla V100, A100, H100)
+% \end{itemize}
 
-\textbf{Graphics Processing Units (GPUs)}:
-GPUs have revolutionized deep learning by enabling massive parallelization of matrix operations. NVIDIA's CUDA-capable GPUs have become the standard for deep learning research and development, with specialized architectures including:
-\begin{itemize}
-  \item Consumer GPUs (e.g., GeForce RTX series)
-  \item Professional GPUs (e.g., Quadro series)
-  \item Data center GPUs (e.g., Tesla V100, A100, H100)
-\end{itemize}
+% \textbf{Tensor Processing Units (TPUs)}:
+% Developed by Google, TPUs are application-specific integrated circuits (ASICs) designed specifically for machine learning workloads. They excel at matrix operations and are available through Google Cloud services in various configurations (v2, v3, v4).
 
-\textbf{Tensor Processing Units (TPUs)}:
-Developed by Google, TPUs are application-specific integrated circuits (ASICs) designed specifically for machine learning workloads. They excel at matrix operations and are available through Google Cloud services in various configurations (v2, v3, v4).
+% \textbf{Neural Processing Units (NPUs)}:
+% Specialized processors designed for neural network computations, often integrated into mobile devices and edge computing platforms to enable on-device AI capabilities with lower power consumption.
 
-\textbf{Neural Processing Units (NPUs)}:
-Specialized processors designed for neural network computations, often integrated into mobile devices and edge computing platforms to enable on-device AI capabilities with lower power consumption.
+% \textbf{Field-Programmable Gate Arrays (FPGAs)}:
+% Reconfigurable hardware offering flexibility and energy efficiency for specific deep learning applications, particularly in edge and embedded systems.
 
-\textbf{Field-Programmable Gate Arrays (FPGAs)}:
-Reconfigurable hardware offering flexibility and energy efficiency for specific deep learning applications, particularly in edge and embedded systems.
+% \textbf{High-Performance Computing (HPC) Clusters}:
+% For large-scale training and inference, distributed systems with multiple GPUs/TPUs connected via high-speed interconnects (e.g., NVLink, InfiniBand) are essential.
 
-\textbf{High-Performance Computing (HPC) Clusters}:
-For large-scale training and inference, distributed systems with multiple GPUs/TPUs connected via high-speed interconnects (e.g., NVLink, InfiniBand) are essential.
+% \textbf{Memory Considerations}:
+% \begin{itemize}
+%   \item High-bandwidth memory (HBM) for accelerators
+%   \item Large RAM requirements for data loading and processing
+%   \item Fast storage systems (NVMe SSDs) for data access
+% \end{itemize}
 
-\textbf{Memory Considerations}:
-\begin{itemize}
-  \item High-bandwidth memory (HBM) for accelerators
-  \item Large RAM requirements for data loading and processing
-  \item Fast storage systems (NVMe SSDs) for data access
-\end{itemize}
+% \textbf{Cloud Computing Platforms}:
+% Major cloud providers offer specialized infrastructure for deep learning:
+% \begin{itemize}
+%   \item Amazon Web Services (AWS) with EC2 GPU instances
+%   \item Google Cloud Platform (GCP) with TPU access
+%   \item Microsoft Azure with GPU-enabled virtual machines
+%   \item Specialized platforms like Lambda Labs and Paperspace
+% \end{itemize}
 
-\textbf{Cloud Computing Platforms}:
-Major cloud providers offer specialized infrastructure for deep learning:
-\begin{itemize}
-  \item Amazon Web Services (AWS) with EC2 GPU instances
-  \item Google Cloud Platform (GCP) with TPU access
-  \item Microsoft Azure with GPU-enabled virtual machines
-  \item Specialized platforms like Lambda Labs and Paperspace
-\end{itemize}
+% In medical imaging applications, hardware requirements are often substantial due to the high resolution and dimensionality of imaging data (e.g., 3D MRI volumes). Research institutions and hospitals increasingly rely on dedicated GPU clusters or cloud resources to develop and deploy deep learning models for clinical applications.
 
-In medical imaging applications, hardware requirements are often substantial due to the high resolution and dimensionality of imaging data (e.g., 3D MRI volumes). Research institutions and hospitals increasingly rely on dedicated GPU clusters or cloud resources to develop and deploy deep learning models for clinical applications.
-
-The hardware landscape continues to evolve rapidly, with emerging technologies like neuromorphic computing and photonic computing promising even greater efficiency for neural network computations in the future.
+% The hardware landscape continues to evolve rapidly, with emerging technologies like neuromorphic computing and photonic computing promising even greater efficiency for neural network computations in the future.
 
 \subsection{Convolutional Neural Networks (CNNs)}
 \label{sec:cnn}
@@ -404,21 +336,14 @@ The output of the convolutional layer, the CNN code, is the input to the second 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{Images/Chapter1/cnn.png}
-  \caption{Convolutional Neural Network.}
+  \caption{Convolutional Neural Network Architecture \cite{phung2019high}}
   \label{fig:cnn}
 \end{figure}
 
 \subsubsection{Convolutional Layer}
 \label{sec:conv}
 
-The convolutional layer is the most important layer and usually the first layer in a CNN. It consists of three main elements involved in the convolution operation:
-\begin{itemize}
-  \item \textbf{Input image} ($f$)
-  \item \textbf{Feature detector (filter)} ($h$)
-  \item \textbf{Feature map (output)} ($G$)
-\end{itemize}
-
-A convolution takes an image and a filter as input and applies the convolution operation to produce a new image, called the activation map or feature map.
+The convolutional layer is the most important layer and usually the first layer in a CNN. It takes an image and a filter as input and applies the convolution operation to produce a new image, called the activation map or feature map.
 
 The activation map values are calculated using the following formula:
 \begin{equation}
@@ -434,7 +359,7 @@ where
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.6\textwidth]{Images/Chapter1/conv.png}
-  \caption{Convolution Layer.}
+  \caption{Convolution Layer in a Convolutional Neural Network \cite{oulmi2018classification}}
   \label{fig:conv}
 \end{figure}
 
@@ -478,4 +403,4 @@ after the convolution and pooling layers, the high-level reasoning in the neural
 \section{Conclusion}
 \label{sec:conclusion}
 
-In this chapter, we established the theoretical foundation necessary for our study on brain tumor analysis using artificial intelligence techniques. We began by exploring the fundamental concepts of artificial intelligence, machine learning, and deep learning, highlighting their evolutionary development and significance in the medical imaging domain. We examined various machine learning approaches and algorithms, with particular emphasis on supervised learning methods and Support Vector Machines (SVMs) for classification tasks. The chapter then delved into deep learning methodologies, focusing on the architecture and operational principles of Convolutional Neural Networks (CNNs) and their key components—convolutional layers, pooling mechanisms, and fully connected layers. Finally, we presented the U-Net architecture, a specialized CNN model designed specifically for biomedical image segmentation, which forms a crucial component in the segmentation phase of our proposed hybrid approach. This comprehensive theoretical background provides the necessary context for understanding the practical implementation and performance evaluation of our models in the subsequent chapters.
+In this chapter, we established the core concepts and distinctions between AI, machine learning, and deep learning, reviewed key algorithms and architectures—from SVMs and decision forests to CNNs, transformers, and U‑Nets—and illustrated how these methods enable robust pattern recognition, automated analysis, and end‑to‑end learning on complex medical imaging data; this theoretical foundation directly supports our subsequent work on brain tumor segmentation and classification, where we will detail data preprocessing, the U‑Net implementation, and model evaluation against clinical standards.

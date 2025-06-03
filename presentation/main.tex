@@ -1,0 +1,204 @@
+% Use the `standard` option to get 4x3 aspect ratio.
+% Use the `noul` option if there is a conflict with the `\ul` command.
+\documentclass{antclass}
+\newif\ifshow\showtrue
+
+\pretitle{Version 2.2}
+\title{Center for Discovery of Aquatic Life on Mars}
+\subtitle{2021 Hitch Hiker's Guide to Space Travel}
+\author{Dr. John Smith\\ Dr. Joe Shmoe}
+
+\begin{document}
+\maketitle
+
+\chapter{Introduction}
+
+\section{Single Column}
+
+For 4-by-3 aspect ratio slides, specify \verb|standard| as an option to the
+document class. Write your presentation like a normal \LaTeX\ file with a
+\verb|\maketitle| command and \verb|\chapter| and \verb|\section| headings. The
+\verb|\maketitle| contents are defined by the following macros:
+\begin{center}
+  \begin{tabular}{l@{\qquad}l}
+    \verb|\pretitle| &
+    \verb|\author|     \\
+    \verb|\title|    &
+    \verb|\subtitle|
+  \end{tabular}
+\end{center}
+The \verb|\chapter| heading creates a slide with just the chapter name, and the
+\verb|\section| heading sets the title of a new slide. However, if no text
+follows the section, no slide will be created. Text which does not fit on one
+slide will flow onto the next slide automatically.asdaSDAheading creates a slide with just the chapter name, and the
+\verb|\section| heading sets the title of a new slide. However, if no text
+follows the section, no slide will be created. Text which does not fit on one
+slide will flow onto the next slide automatically.asdaSDA
+
+\section{Double Column}\twocolumn\raggedright
+
+Use the \verb|\twocolumn| and \verb|\onecolumn| commands right after the section
+heading to control the number of columns. Text will flow from the left column to
+the right.
+\begin{itemize}
+  \item Point one
+  \item Point two
+  \item Point three
+  \item Point four
+  \item Point five
+  \item Point six
+  \item Point seven
+  \item Point eight
+  \item Point nine
+  \item Point ten
+  \item Point eleven
+  \item Point twelve
+\end{itemize}
+You can use \verb|\pagebreak| to force text onto the next column \cite{exampleCitation}.
+
+\section{Table of Stuff}
+
+You can create any variety of subdivisions on your slide by using the
+\verb|tabular| environment.
+\begin{center}
+  \begin{tabular}{C{0.25\textwidth}cC{0.25\textwidth}cC{0.25\textwidth}}
+    \cellcolor{colorH}\textcolor{white}{Primary}\strut   &  &
+    \cellcolor{colorH}\textcolor{white}{Secondary}\strut &  &
+    \cellcolor{colorH}\textcolor{white}{Tertiary}\strut                           \\
+    First                                                &  & Second &  & Third   \\
+    One                                                  &  & Two    &  & Three   \\[1em]
+    \cellcolor{colorH}\textcolor{white}{Alpha}\strut     &  &
+    \cellcolor{colorH}\textcolor{white}{Beta}\strut      &  &
+    \cellcolor{colorH}\textcolor{white}{Gamma}\strut                              \\
+    Green                                                &  & Blue   &  & Red     \\
+    Cyan                                                 &  & Yellow &  & Magenta
+  \end{tabular}
+\end{center}
+The \verb|\cellcolor| command sets the background color of a table cell.
+
+\section{Centering}
+
+\begin{Center}
+  \Large Use the \texttt{Center} environment \\
+  to center horizontally \emph{and} vertically.
+\end{Center}
+
+\chapter{Explicit Code}
+
+\section{Python}\onecolumn
+
+\ifshow
+  Use the \verb|python| environment for Python code.
+  \begin{python}
+    def write_list(fid, x, level):
+    ind = '  '*level
+    xs = '0' if abs(x[0]) < 1e-3 else "%.3f"
+    txt = '\n%svalues=\"%s' % (ind, xs)
+    for n in range(1, len(x)):
+    xs = '0' if abs(x[n]) < 1e-3 else "%.3f"
+    if len(txt) + 3 + len(xs) >= 80:
+    fid.write(txt + ';\n')
+    txt = ind + '  ' + xs
+    else:
+    txt += '; ' + xs
+    fid.write(txt + '\"')
+  \end{python}
+  \pagebreak\addtocounter{page}{-1}
+\fi
+You can use the \verb|`\HL`| command to highlight a line of code.
+\begin{python}
+  def write_list(fid, x, level):
+  ind = '  '*level
+  xs = '0' if abs(x[0]) < 1e-3 else "%.3f"
+  txt = '\n%svalues=\"%s' % (ind, xs)
+  for n in range(1, len(x)):
+  xs = '0' if abs(x[n]) < 1e-3 else "%.3f"
+  if len(txt) + 3 + len(xs) >= 80:
+  `\HL`            fid.write(txt + ';\n')
+  txt = ind + '  ' + xs
+  else:
+  txt += '; ' + xs
+  fid.write(txt + '\"')
+\end{python}
+
+\section{MATLAB}
+
+Use the \verb|matlab| environment for MATLAB code.
+\begin{matlab}
+  function savepdf(name, width, height)
+  % name is the file name including ".pdf".
+  % Both width and height are in (cm).
+  set(gcf, 'units', 'centimeters', ...
+  'position', [0, 0, width, height])
+  set(gca, 'FontSize', 9);
+  set(gca, 'FontName', 'Times New Roman');
+  exportgraphics(gcf, name, ...
+  'ContentType', 'vector');
+  end
+\end{matlab}
+
+\section{R Language}
+
+Use the \verb|rlang| environment for R code.
+\begin{rlang}
+  factorial <- function(n) {
+      if (n == 0 || n == 1) {
+          return(1)
+        } else {
+          return(n * factorial(n - 1))
+        }
+    }
+\end{rlang}
+
+\section{Pseudocode}
+
+Use the \verb|pseudocode| environment for non-language-specific code.
+\begin{pseudocode}
+  function add_arrays($a$, $b$, $N$)
+  $c \gets zeros(N)$
+  for $n$ in $0:N-1$
+  if $a_n$ and $b_n$ are real
+  $c_n = a_n + b_n$
+  end if
+  end for
+  return $c$
+  end function
+\end{pseudocode}
+
+% You can create blank pages for placing full-page graphics or text with the
+% `\blankpage` command.
+\blankpage
+% You can place images and text at arbitrary locations with the `\pos` command.
+\pos{0pt}{0pt}{\tikz{
+    \newcounter{density}\setcounter{density}{10}
+    \def\mainColor{colorH}
+    \path[coordinate] (0,0) coordinate(A)
+    ++(\paperwidth,0) coordinate(B)
+    ++(0,-\paperheight) coordinate(C)
+    ++(-\paperwidth,0) coordinate(D);
+    \fill[\mainColor!\thedensity]
+    (A) -- (B) -- (C) -- (D) -- cycle;
+    \foreach \x in {1,...,18}{%
+        \pgfmathsetcounter{density}{\thedensity+5}
+        \setcounter{density}{\thedensity}
+        \path[coordinate] coordinate(X) at (A){};
+        \path[coordinate] (A)
+        -- (B) coordinate[pos=0.15](A)
+        -- (C) coordinate[pos=0.15](B)
+        -- (D) coordinate[pos=0.15](C)
+        -- (X) coordinate[pos=0.15](D);
+        \draw[\mainColor!80!black, fill=\mainColor!\thedensity]
+        (A) -- (B) -- (C) -- (D) -- cycle;
+      }
+  }}
+\pos[6cm]{0.125\textwidth}{2cm}{
+  \raggedright\large Blank pages with the ``\texttt{\textbackslash
+    blankpage}'' command.
+}
+\pos[6cm]{0.6\textwidth}{6cm}{
+  \raggedright\large Arbitrary positioning with the ``\texttt{\textbackslash
+    pos}'' command.
+}
+
+\closing
+\end{document}

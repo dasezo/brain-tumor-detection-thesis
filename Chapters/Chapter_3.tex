@@ -3,14 +3,9 @@
 \section{Introduction}
 \label{sec:contribution-introduction}
 
-In this chapter, we present the core contributions of our work on automated brain tumor detection in magnetic resonance images. Building upon the BraTS benchmark dataset \cite{Menze2015}, our pipeline integrates a deep learning–based segmentation module with a classical machine learning classifier and culminates in a user‐friendly demo application. The main objectives of this chapter are:
-\begin{itemize}
-  \item To describe a tailored U-Net–based segmentation pipeline for delineating tumor subregions in MRI slices.
-  \item To detail a feature‐extraction and SVM classification scheme that distinguishes high‐grade from low‐grade gliomas using volumetric, intensity, texture, and shape descriptors.
-  \item To demonstrate the integration of these modules within an end-to-end application for streamlined inference on new patient data.
-\end{itemize}
+In this chapter, we present the core contributions of our work on automated brain tumor detection in MRIs. Building upon the BraTS dataset \cite{Menze2015}, our pipeline integrates a deep learning–based segmentation module with a classical machine learning classifier and culminates in a user‐friendly demo application.
 
-The remainder of this chapter is organized as follows. In Section~\ref{sec:contribution-dataset}, we introduce the dataset and preprocessing steps. Section~\ref{sec:contribution-segmentation} details the U-Net segmentation module, including architecture and training protocol. Section~\ref{sec:contribution-classification} covers the feature engineering and SVM classification. Section~\ref{sec:contribution-demo} presents the design and functionality of our demo application. We conclude with a discussion of key findings and future directions.
+% The remainder of this chapter is organized as follows. In Section~\ref{sec:contribution-dataset}, we introduce the dataset and preprocessing steps. Section~\ref{sec:contribution-segmentation} details the U-Net segmentation module, including architecture and training protocol. Section~\ref{sec:contribution-classification} covers the feature engineering and SVM classification. Section~\ref{sec:contribution-demo} presents the design and functionality of our demo application. We conclude with a discussion of key findings and future directions.
 
 \section{Proposed Framework Overview}
 \label{sec:contribution-framework}
@@ -24,10 +19,69 @@ The purpose of our project is to have an end-to-end inference pipeline accepts a
   \caption{Overview of the end-to-end inference pipeline.}
   \label{fig:pipeline}
 \end{figure}
+The selection of U-Net for tumor segmentation and Support Vector Machine (SVM) for tumor grade classification in our end-to-end inference pipeline is grounded in their proven efficacy in medical image analysis, particularly in brain tumor applications.
 
+\subsubsection{U-Net for Tumor Segmentation}
+U-Net is a convolutional neural network architecture specifically designed for biomedical image segmentation. Its encoder-decoder structure with skip connections allows for precise localization and context capture, making it highly effective for segmenting complex structures like brain tumors. Studies have demonstrated that U-Net and its variants achieve high accuracy in delineating tumor boundaries in MRI images, even with limited training data \cite{dong2017automatic, walsh2022using}.
 
-\subsection{Model Training Workflow}
-As shown in Figure~\ref{fig:training}, The training workflow begins with the BraTS dataset. After preprocessing and augmentation, the data is split into training, validation, and test sets. We then train the U-Net segmentation model in parallel with feature extraction followed by SVM classifier training, yielding two standalone models for inference.
+Introduced by Ronneberger et al. in 2015, U-Net features a symmetric encoder-decoder structure: the contracting path (encoder) captures image context through successive convolution and pooling operations, while the expansive path (decoder) enables precise localization via upsampling and concatenation with high-resolution features from the encoder. This architecture allows U-Net to achieve accurate segmentation even with limited annotated data by leveraging extensive data augmentation. U-Net has demonstrated superior performance in various biomedical segmentation challenges, notably outperforming previous methods in tasks such as neuronal structure segmentation in electron microscopy images and cell tracking in light microscopy \cite{ronneberger2015u}.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{Images/Chapter1/unet.png}
+  \caption{U-Net Architecture Illustrating the Encoding and Decoding Arms with Skip Connections. \cite{ronneberger2015u}}
+  \label{fig:unet}
+\end{figure}
+
+\paragraph*{Key Components of a U-Net Architecture}
+
+\begin{itemize}
+  \item \textbf{Contracting Path (Encoder):} \\
+        This path is responsible for extracting contextual features from the input image. It consists of repeated blocks of two $3\times3$ convolutional layers (with ReLU activation), followed by a $2\times2$ max pooling operation for downsampling. With each downsampling step, the number of feature channels is doubled, allowing the network to capture increasingly abstract representations of the input.
+
+  \item \textbf{Bottleneck:} \\
+        Located at the deepest part of the network, the bottleneck consists of convolutional layers without pooling. It serves as the bridge between the encoder and decoder, capturing the most condensed and abstract features of the input.
+
+  \item \textbf{Expansive Path (Decoder):} \\
+        This path reconstructs the spatial resolution of the feature maps and enables precise localization. Each step in the decoder involves upsampling the feature map (often via transposed convolution or up-convolution), concatenating it with the corresponding feature map from the encoder (skip connection), and then applying two $3\times3$ convolutions (with ReLU activation). The number of feature channels is halved at each upsampling step.
+
+  \item \textbf{Skip Connections:} \\
+        At each level, feature maps from the encoder are concatenated with the upsampled feature maps in the decoder. These skip connections help retain high-resolution spatial information that might otherwise be lost during downsampling, improving the accuracy of segmentation boundaries.
+
+  \item \textbf{Final Output Layer:} \\
+        The last layer is typically a $1\times1$ convolution that maps each feature vector to the desired number of output classes, producing a pixel-wise classification map for segmentation tasks.
+\end{itemize}
+
+\subsubsection{SVM for Tumor Grade Classification}
+SVM is a supervised machine learning algorithm known for its robustness in classification tasks, especially with high-dimensional data. In the context of brain tumor classification, SVM has been successfully employed to differentiate between tumor grades based on features extracted from MRI images. Its ability to handle non-linear relationships through kernel functions makes it suitable for capturing the subtle differences between low-grade and high-grade tumors \cite{turk2022machine, barker2016automated}.
+
+The theoretical foundation of SVMs is based on the Structural Risk Minimization principle, which aims to minimize an upper bound on the generalization error, offering advantages over traditional Empirical Risk Minimization approaches. Originally developed by Vapnik and colleagues in the 1990s, SVMs have become popular due to their strong empirical performance and robustness to overfitting, especially in high-dimensional spaces \cite{Gunn1998SupportVM}.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\textwidth]{Images/Chapter1/svm.png}
+  \caption{Support Vector Machine (SVM) Decision Boundary Visualization}
+  \label{fig:svm}
+\end{figure}
+The fundamental formula defining the decision boundary of a Support Vector Machine (SVM) is a hyperplane expressed as:
+\begin{equation}
+  \mathbf{w}^\top \mathbf{x} + b = 0
+\end{equation}
+where $\mathbf{w}$ is the weight vector normal to the hyperplane, $\mathbf{x}$ is the input feature vector, and $b$ is the bias term.
+
+For binary classification with labels $y_i \in \{+1, -1\}$, the SVM enforces the following constraints on each training point $(\mathbf{x}_i, y_i)$:
+\begin{equation}
+  y_i \bigl(\mathbf{w}^\top \mathbf{x}_i + b\bigr) \;\ge\; 1,
+  \quad \forall\,i.
+\end{equation}
+
+The margin width (the distance between the closest points of each class to the hyperplane) is given by $\tfrac{2}{\|\mathbf{w}\|_2}$.  Maximizing this margin is therefore equivalent to minimizing $\|\mathbf{w}\|_2$, leading to the following convex optimization problem:
+
+\begin{align}
+  \min_{\mathbf{w},\,b} \quad & \frac{1}{2} \|\mathbf{w}\|_2^2,                             \\
+  \text{subject to} \quad     & y_i \bigl(\mathbf{w}^\top \mathbf{x}_i + b\bigr) \;\ge\; 1,
+  \quad \forall\,i.
+\end{align}
+\subsection{Models Training Workflow}
+In order to achieve the previous objectives, we followed a step-by-step approach. As shown in Figure~\ref{fig:training}, The training workflow begins with the BraTS dataset. After preprocessing and augmentation, the data is split into training, validation, and test sets. We then train the U-Net segmentation model  in the other hand (separately) we train SVM classifier training, yielding two standalone models for inference that can be combined to form a hybrid model.
 
 \begin{figure}[H]
   \centering
@@ -115,94 +169,116 @@ Before feeding MR volumes into our models, we apply a series of standardized pre
         \end{itemize}
 \end{enumerate}
 
-These preprocessing routines standardize input dimensions, normalize intensity distributions, and inject variability—laying a solid foundation for both segmentation and classification tasks.
 
-\section{Segmentation Module}
-\label{sec:contribution-segmentation}
+\section{Evaluation Metrics}
+\label{sec:evaluation-metrics}
 
-The segmentation module is responsible for delineating tumor subregions in MR slices. It consists of a U-Net–based convolutional network for mask prediction.
-
-
-\subsection{U-Net Architecture}
-U-Net is a convolutional neural network architecture specifically designed for biomedical image segmentation. Introduced by Ronneberger et al. in 2015, U-Net features a symmetric encoder-decoder structure: the contracting path (encoder) captures image context through successive convolution and pooling operations, while the expansive path (decoder) enables precise localization via upsampling and concatenation with high-resolution features from the encoder. This architecture allows U-Net to achieve accurate segmentation even with limited annotated data by leveraging extensive data augmentation. U-Net has demonstrated superior performance in various biomedical segmentation challenges, notably outperforming previous methods in tasks such as neuronal structure segmentation in electron microscopy images and cell tracking in light microscopy \cite{ronneberger2015u}.
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.8\textwidth]{Images/Chapter1/unet2.png}
-  \caption{U-Net Architecture Illustrating the Encoding and Decoding Arms with Skip Connections. \cite{zefs}}
-  \label{fig:unet}
-\end{figure}
-
-\paragraph*{Key Components of a U-Net Architecture}
+To quantify the performance of our segmentation and classification models, we use a suite of metrics that assess accuracy, robustness, and specificity:
 
 \begin{itemize}
-  \item \textbf{Contracting Path (Encoder):} \\
-        This path is responsible for extracting contextual features from the input image. It consists of repeated blocks of two $3\times3$ convolutional layers (with ReLU activation), followed by a $2\times2$ max pooling operation for downsampling. With each downsampling step, the number of feature channels is doubled, allowing the network to capture increasingly abstract representations of the input.
+  \item \textbf{Accuracy}
+        \[
+          \text{Accuracy} \;=\; \frac{\text{TP} + \text{TN}}{\text{TP} + \text{TN} + \text{FP} + \text{FN}}
+        \]
+        \begin{itemize}
+          \item \emph{Segmentation:} Proportion of correctly classified pixels (tumor vs.\ non‐tumor).
+          \item \emph{Classification:} Proportion of correctly classified patients (LGG vs.\ HGG).
+        \end{itemize}
 
-  \item \textbf{Bottleneck:} \\
-        Located at the deepest part of the network, the bottleneck consists of convolutional layers without pooling. It serves as the bridge between the encoder and decoder, capturing the most condensed and abstract features of the input.
-
-  \item \textbf{Expansive Path (Decoder):} \\
-        This path reconstructs the spatial resolution of the feature maps and enables precise localization. Each step in the decoder involves upsampling the feature map (often via transposed convolution or up-convolution), concatenating it with the corresponding feature map from the encoder (skip connection), and then applying two $3\times3$ convolutions (with ReLU activation). The number of feature channels is halved at each upsampling step.
-
-  \item \textbf{Skip Connections:} \\
-        At each level, feature maps from the encoder are concatenated with the upsampled feature maps in the decoder. These skip connections help retain high-resolution spatial information that might otherwise be lost during downsampling, improving the accuracy of segmentation boundaries.
-
-  \item \textbf{Final Output Layer:} \\
-        The last layer is typically a $1\times1$ convolution that maps each feature vector to the desired number of output classes, producing a pixel-wise classification map for segmentation tasks.
-\end{itemize}
-
-
-\subsection{Evaluation Metrics for Segmentation}
-\label{sec:segmentation-metrics}
-
-In segmentation tasks, \emph{accuracy} measures the overall proportion of correctly classified pixels. However, in datasets like BraTS2020—where the background (non‐tumor) pixels vastly outnumber tumor pixels—accuracy can be misleading. Therefore, we employ the following metrics for a more balanced evaluation:
-
-\begin{itemize}
   \item \textbf{Precision} (Positive Predictive Value)
-        Measures the fraction of predicted tumor pixels that are truly tumor:
         \[
           \text{Precision} \;=\; \frac{\text{TP}}{\text{TP} + \text{FP}}
         \]
-        where
         \begin{itemize}
-          \item \(\text{TP}\) = number of true positive pixels,
-          \item \(\text{FP}\) = number of false positive pixels.
+          \item \emph{Segmentation:} Fraction of predicted tumor pixels that are actually tumor.
+          \item \emph{Classification:} Fraction of patients predicted as HGG who truly have HGG.
         \end{itemize}
 
-  \item \textbf{Sensitivity} (Recall or True Positive Rate)
-        Measures the fraction of actual tumor pixels correctly identified:
+  \item \textbf{Recall} (Sensitivity or True Positive Rate)
         \[
-          \text{Sensitivity} \;=\; \frac{\text{TP}}{\text{TP} + \text{FN}}
+          \text{Recall} \;=\; \frac{\text{TP}}{\text{TP} + \text{FN}}
         \]
-        where
         \begin{itemize}
-          \item \(\text{FN}\) = number of false negative pixels.
+          \item \emph{Segmentation:} Fraction of actual tumor pixels correctly identified.
+          \item \emph{Classification:} Fraction of actual HGG patients correctly identified.
         \end{itemize}
 
   \item \textbf{Specificity} (True Negative Rate)
-        Measures the fraction of non‐tumor pixels correctly classified:
         \[
           \text{Specificity} \;=\; \frac{\text{TN}}{\text{TN} + \text{FP}}
         \]
-        where
         \begin{itemize}
-          \item \(\text{TN}\) = number of true negative pixels.
+          \item \emph{Segmentation:} Fraction of non‐tumor pixels correctly classified as non‐tumor.
+          \item \emph{Classification:} Fraction of actual LGG patients correctly identified as LGG.
         \end{itemize}
-  \item \textbf{Intersection over Union (IoU)}
-        Also known as the Jaccard index, IoU measures overlap between prediction and ground truth:
-        \[
-          \text{IoU} \;=\; \frac{\text{TP}}{\text{TP} + \text{FP} + \text{FN}}.
-        \]
-        We report the \emph{mean IoU} (mIoU) averaged over the four classes.
 
-  \item \textbf{Dice Coefficient} (F1 Score)
-        The Dice coefficient emphasizes overlap and is defined as:
+  \item \textbf{F1‐Score}
         \[
-          \text{Dice} \;=\; \frac{2\,\text{TP}}{2\,\text{TP} + \text{FP} + \text{FN}}.
+          \text{F1} \;=\; \frac{2\,\text{TP}}{2\,\text{TP} + \text{FP} + \text{FN}}
         \]
-        We compute both the \emph{overall Dice} (averaged across classes) and \emph{per‐class Dice} for necrotic/core, edema, and enhancing tissue.
+        \begin{itemize}
+          \item \emph{Classification:} Harmonic mean of precision and recall for each class, then averaged.
+        \end{itemize}
+
+  \item \textbf{Intersection over Union (IoU)}
+        Also called Jaccard index:
+        \[
+          \text{IoU} \;=\; \frac{\text{TP}}{\text{TP} + \text{FP} + \text{FN}}
+        \]
+        \begin{itemize}
+          \item \emph{Segmentation:} Overlap between predicted and ground‐truth tumor masks, averaged over classes (mIoU).
+        \end{itemize}
+
+  \item \textbf{Dice Coefficient} (Segmentation F1)
+        \[
+          \text{Dice} \;=\; \frac{2\,\text{TP}}{2\,\text{TP} + \text{FP} + \text{FN}}
+        \]
+        \begin{itemize}
+          \item \emph{Segmentation:} Emphasizes overlap; computed overall and per‐class (necrotic, edema, enhancing).
+        \end{itemize}
+
+  \item \textbf{Confusion Matrix}
+        A contingency table of true vs.\ predicted labels:
+        \[
+          \begin{array}{c|cc}
+                                   & \text{Predicted Positive} & \text{Predicted Negative} \\ \hline
+            \text{Actual Positive} & \text{TP}                 & \text{FN}                 \\
+            \text{Actual Negative} & \text{FP}                 & \text{TN}                 \\
+          \end{array}
+        \]
+        \begin{itemize}
+          \item \emph{Classification:} Provides counts of TP, FP, FN, TN for LGG/HGG.
+        \end{itemize}
+
+  \item \textbf{ROC AUC} (Area Under the Receiver Operating Characteristic Curve)
+        \[
+          \text{AUC} \;=\; \frac{1}{2} \sum_{i=1}^{n} (\text{TPR}_{i} + \text{TPR}_{i-1}) \times (\text{FPR}_{i} - \text{FPR}_{i-1})
+        \]
+
+        \begin{itemize}
+          \item \emph{Classification:} Measures the trade‐off between sensitivity and specificity across thresholds.
+        \end{itemize}
+        \paragraph{knowing that:}
+        \begin{itemize}
+          \item \(\text{TP}\) = number of true positive cases (correctly predicted positive).
+          \item \(\text{TN}\) = number of true negative cases (correctly predicted negative).
+          \item \(\text{FP}\) = number of false positive cases (incorrectly predicted positive).
+          \item \(\text{FN}\) = number of false negative cases (incorrectly predicted negative).
+          \item \(\text{TPR}\) = true positive rate (recall): \(\text{TPR} = \frac{\text{TP}}{\text{TP} + \text{FN}}\).
+          \item \(\text{FPR}\) = false positive rate: \(\text{FPR} = \frac{\text{FP}}{\text{FP} + \text{TN}}\).
+          \item \(\text{TNR}\) = true negative rate (specificity): \(\text{TNR} = \frac{\text{TN}}{\text{TN} + \text{FP}}\).
+          \item \(\text{FNR}\) = false negative rate: \(\text{FNR} = \frac{\text{FN}}{\text{FN} + \text{TP}}\).
+        \end{itemize}
+
 \end{itemize}
+
+
+
+
+\section{Results and Discussion}
+
+
+
 
 \subsection{Segmentation Results}
 \label{sec:segmentation-results}
@@ -278,106 +354,8 @@ Table~\ref{tab:segmentation-results} summarizes the quantitative performance of 
 \end{figure}
 
 
-
-
-Overall, the model converged to a low loss (0.0231) and achieved excellent pixel‐level accuracy (99.3 \%), demonstrating strong background discrimination (specificity = 99.8 \%). The mean IoU of 74.7 \% and overall Dice of 59.0 \% indicate reliable overlap between prediction and ground truth also confirms that tumor regions are both accurately and comprehensively detected.
-
-
-\section{Classification Module}
-\label{sec:contribution-classification}
-
-The classification module distinguishes high‐grade gliomas (HGG) from low‐grade gliomas (LGG) using handcrafted features extracted from the segmented tumor regions and a support vector machine (SVM) classifier.
-\subsection{Support Vector Machines (SVM)}
-\label{sec:svm}
-Support Vector Machines (SVMs) are supervised machine learning models widely used for classification and regression tasks. The core idea of SVM is to find an optimal hyperplane that separates data points of different classes with the maximum possible margin, which enhances the model’s ability to generalize to unseen data. SVMs can efficiently handle both linear and non-linear classification problems by employing the kernel trick, which implicitly maps input data into a higher-dimensional feature space where a linear separation becomes possible. The theoretical foundation of SVMs is based on the Structural Risk Minimization (SRM) principle, which aims to minimize an upper bound on the generalization error, offering advantages over traditional Empirical Risk Minimization approaches. Originally developed by Vapnik and colleagues in the 1990s, SVMs have become popular due to their strong empirical performance and robustness to overfitting, especially in high-dimensional spaces \cite{Gunn1998SupportVM}.
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.5\textwidth]{Images/Chapter1/svm.png}
-  \caption{Support Vector Machine (SVM) Decision Boundary Visualization}
-  \label{fig:svm}
-\end{figure}
-The fundamental formula defining the decision boundary of a Support Vector Machine (SVM) is a hyperplane expressed as:
-\begin{equation}
-  \mathbf{w}^\top \mathbf{x} + b = 0
-\end{equation}
-where $\mathbf{w}$ is the weight vector normal to the hyperplane, $\mathbf{x}$ is the input feature vector, and $b$ is the bias term.
-
-For binary classification with labels $y_i \in \{+1, -1\}$, the SVM enforces the following constraints on each training point $(\mathbf{x}_i, y_i)$:
-\begin{equation}
-  y_i \bigl(\mathbf{w}^\top \mathbf{x}_i + b\bigr) \;\ge\; 1,
-  \quad \forall\,i.
-\end{equation}
-
-The margin width (the distance between the closest points of each class to the hyperplane) is given by $\tfrac{2}{\|\mathbf{w}\|_2}$.  Maximizing this margin is therefore equivalent to minimizing $\|\mathbf{w}\|_2$, leading to the following convex optimization problem:
-
-\begin{align}
-  \min_{\mathbf{w},\,b} \quad & \frac{1}{2} \|\mathbf{w}\|_2^2,                             \\
-  \text{subject to} \quad     & y_i \bigl(\mathbf{w}^\top \mathbf{x}_i + b\bigr) \;\ge\; 1,
-  \quad \forall\,i.
-\end{align}
-
-For non-linearly separable data, slack variables and kernel functions can be introduced, but the core formulation remains centered on maximizing the margin around this hyperplane.
-
-\subsection{Feature Extraction}
-From each segmented case, we compute the following feature categories:
-\begin{itemize}
-  \item \textbf{Volume Features:} Volumes of necrotic/core (NCR), edema (ED), enhancing tumor (ET), tumor core (TC), and whole tumor (WT), plus their ratios (e.g., TC/WT, ET/TC).
-  \item \textbf{Intensity Statistics:} Mean, standard deviation, minimum, maximum, median, 10th/90th percentiles, and range of voxel intensities for each modality (FLAIR, T1, T1CE, T2) within each tumor component.
-  \item \textbf{Texture Features:} Histogram of oriented gradients (HOG)–based descriptors computed on each component.
-  \item \textbf{Shape Features:} Extents along each axis, elongation, flatness, and sphericity of the whole tumor mask.
-  \item \textbf{Heterogeneity Features:} Contrast between core and edema, and between enhancing and necrotic regions for each modality.
-\end{itemize}
-
-\subsection{Feature Selection}
-\begin{itemize}
-  \item Fit a Random Forest classifier on the training split to compute feature importances.
-  \item Select the top 30 most important features for downstream classification.
-\end{itemize}
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.8\textwidth]{Images/Chapter3/features.png}
-  \caption{Importance of Top Features of The classification model}
-  \label{fig:features}
-\end{figure}
-
-% \subsection{SVM Model Training}
-% \begin{itemize}
-%   \item \textbf{Data Split:} 80\% training, 20\% test (stratified by grade).
-%   \item \textbf{Scaling:} Standardize features to zero mean and unit variance.
-%   \item \textbf{Hyperparameter Search:} Grid search over
-%         \(\{C \in [0.1,1,10,100]\}\), \(\gamma \in \{\mathrm{scale},\mathrm{auto},0.01,0.1\}\), and \(\{\kern-0.1em\mathrm{rbf},\mathrm{linear},\mathrm{poly}\}\) kernels, using 5-fold CV.
-%   \item \textbf{Final Model:} Best‐estimator SVM retrained on full training set.
-% \end{itemize}
-
-\subsection{Evaluation Metrics for Classification}
-We assess performance on the held‐out test set using:
-\begin{itemize}
-  \item \textbf{Accuracy:} Fraction of correctly classified patients.
-        \[
-          \text{Accuracy} \;=\; \frac{\text{TP} + \text{TN}}{\text{TP} + \text{TN} + \text{FP} + \text{FN}}
-        \]
-  \item \textbf{Precision, Recall, F1-Score:} Computed per class and averaged.
-        \[
-          \text{Precision} \;=\; \frac{\text{TP}}{\text{TP} + \text{FP}}, \qquad
-          \text{Recall} \;=\; \frac{\text{TP}}{\text{TP} + \text{FN}}, \qquad
-          \text{F1} \;=\; \frac{2 \cdot \text{TP}}{2 \cdot \text{TP} + \text{FP} + \text{FN}}
-        \]
-  \item \textbf{Confusion Matrix:} Counts of true vs.\ predicted labels.
-  \item \textbf{ROC AUC:} Area under the receiver operating characteristic curve.
-        \[
-          \text{AUC} \;=\; \frac{1}{2} \sum_{i=1}^{n} (\text{TPR}_{i} + \text{TPR}_{i-1}) \cdot (\text{FPR}_{i} - \text{FPR}_{i-1})
-        \]
-        where $n$ is the number of thresholds and $\text{TPR}_i$ and $\text{FPR}_i$ are the true positive and false positive rates at the $i$th threshold.
-\end{itemize}
-
 \subsection{Classification Results}
 \label{sec:classification-results}
-
-The SVM classifier was optimized via grid search, yielding the following best hyperparameters:
-\begin{itemize}
-  \item \(C = 1\), \(\gamma = \text{scale}\), Kernel = \texttt{linear}
-\end{itemize}
 
 Table~\ref{tab:svm-report} summarizes the classification performance of the Support Vector Machine (SVM) model on the held-out test set. The model achieved an overall accuracy of 93.24\,\%, indicating strong generalization. High-grade gliomas (HGG) were classified with high precision (95\,\%) and recall (97\,\%), resulting in an F1-score of 96\,\%. In contrast, low-grade gliomas (LGG) achieved slightly lower metrics, with an F1-score of 83\,\%, reflecting a minor challenge in capturing the more subtle features associated with LGG.
 

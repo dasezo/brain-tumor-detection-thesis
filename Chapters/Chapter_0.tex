@@ -11,10 +11,10 @@ The human brain is an irregular, ovoid organ with a large anteroposterior axis. 
 The brain comprises four main regions: the cerebrum, cerebellum, brainstem, and diencephalon (Figure~\ref{fig:brain-regions}).
 
 \begin{figure}[ht]
-  \centering
-  \includegraphics[width=0.5\textwidth]{Images/Chapter0/brain.jpg}
-  \caption{Brain main parts: cerebrum, cerebellum, brainstem, and diencephalon \cite{freudenrich2013visualizing}.}
-  \label{fig:brain-regions}
+      \centering
+      \includegraphics[width=0.5\textwidth]{Images/Chapter0/brain.jpg}
+      \caption{Brain main parts: cerebrum, cerebellum, brainstem, and diencephalon \cite{freudenrich2013visualizing}.}
+      \label{fig:brain-regions}
 \end{figure}
 
 \subsubsection*{Cerebrum}
@@ -85,10 +85,10 @@ White matter consists primarily of myelinated axons (tracts), oligodendrocytes, 
 Cerebrospinal fluid (CSF) cushions the brain and spinal cord, removes metabolic waste, and maintains proper central nervous system function \cite{ref6}.
 
 \begin{figure}[ht]
-  \centering
-  \includegraphics[width=0.7\textwidth]{Images/Chapter0/parts.png}
-  \caption{Segmentation of a brain MRI into gray matter (GM), white matter (WM), and CSF by Statistical Parametric Mapping (SPM) \cite{ref7}.}
-  \label{fig:spm-segmentation}
+      \centering
+      \includegraphics[width=0.7\textwidth]{Images/Chapter0/parts.png}
+      \caption{Segmentation of a brain MRI into gray matter (GM), white matter (WM), and CSF by Statistical Parametric Mapping (SPM) \cite{ref7}.}
+      \label{fig:spm-segmentation}
 \end{figure}
 
 \section{Classification of Brain Tumors}
@@ -111,18 +111,18 @@ Malignant tumors (WHO Grade III–IV) are characterized by rapid growth, high mi
 The three most frequent primary brain tumors in adults are \cite{naser2020lgmi}:
 
 \begin{itemize}
-  \item \textbf{Meningioma.}
-        Originating from the arachnoidal cap cells of the meninges, meningiomas are typically benign (\glsxtrshort{who} Grade I), slow‐growing, and extra‐axial. They often cause symptoms by mass effect rather than infiltration.
+      \item \textbf{Meningioma.}
+            Originating from the arachnoidal cap cells of the meninges, meningiomas are typically benign (\glsxtrshort{who} Grade I), slow‐growing, and extra‐axial. They often cause symptoms by mass effect rather than infiltration.
 
-  \item \textbf{Pituitary Adenoma.}
-        Arising in the anterior pituitary gland, these adenomas are usually benign but can lead to endocrine dysfunction and visual disturbances due to suprasellar extension.
+      \item \textbf{Pituitary Adenoma.}
+            Arising in the anterior pituitary gland, these adenomas are usually benign but can lead to endocrine dysfunction and visual disturbances due to suprasellar extension.
 
-  \item \textbf{Glioma.}
-        Gliomas arise from glial cells and represent the majority of malignant primary \glsxtrshort{cns} tumors. They are graded by WHO as:
-        \begin{itemize}
-          \item \emph{Low-Grade Glioma (LGG, Grades I–II).} Slow‐growing, with diffuse infiltration but relatively favorable prognosis.
-          \item \emph{High-Grade Glioma (HGG, Grades III–IV).} Aggressive, with high proliferative index and poor survival; includes anaplastic astrocytoma (Grade III) and glioblastoma multiforme (Grade IV).
-        \end{itemize}
+      \item \textbf{Glioma.}
+            Gliomas arise from glial cells and represent the majority of malignant primary \glsxtrshort{cns} tumors. They are graded by WHO as:
+            \begin{itemize}
+                  \item \emph{Low-Grade Glioma (LGG, Grades I–II).} Slow‐growing, with diffuse infiltration but relatively favorable prognosis.
+                  \item \emph{High-Grade Glioma (HGG, Grades III–IV).} Aggressive, with high proliferative index and poor survival; includes anaplastic astrocytoma (Grade III) and glioblastoma multiforme (Grade IV).
+            \end{itemize}
 \end{itemize}
 
 Accurate grading of gliomas (LGG vs.\ HGG) is critical for treatment planning and prognosis, and motivates the need for precise segmentation and classification pipelines.
@@ -156,53 +156,58 @@ This examination is based on imaging techniques such as MRI and computed tomogra
 \section{Medical Imaging in Brain Tumor Diagnosis}
 
 Magnetic Resonance Imaging (MRI) has emerged as the gold standard for brain tumor diagnosis due to its superior soft tissue contrast, high spatial resolution, and non-invasive nature. Unlike other imaging modalities such as CT scans, MRI provides detailed structural information without exposing patients to ionizing radiation, making it particularly valuable for serial monitoring and treatment planning \cite{Menze2015}.
-
+\begin{figure}[H]
+      \centering
+      \includegraphics[width=0.7\textwidth]{Images/Chapter1/mri.png}
+      \caption{Example of brain MRI image. \cite{sjra2023brainmri}}
+      \label{fig:mri}
+\end{figure}
 The multimodal nature of MRI is especially useful in brain tumor assessment, with each sequence highlighting different aspects of the tumor:
 
 \begin{itemize}
-  \item \textbf{T1-weighted (T1)}: Provides excellent anatomical detail and clearly delineates boundaries between gray and white matter. Tumors typically appear hypointense (darker) compared to surrounding tissue.
+      \item \textbf{T1-weighted (T1)}: Provides excellent anatomical detail and clearly delineates boundaries between gray and white matter. Tumors typically appear hypointense (darker) compared to surrounding tissue.
 
-        % \begin{minipage}{\linewidth}
-        %   \centering
-        %   \includegraphics[width=0.4\textwidth]{./Images/Chapter2/t1.png}
-        %   \captionsetup{hypcap=false}
-        %   \captionof{figure}{Example of T1-weighted MRI sequence.}
-        %   \label{fig:t1}
-        % \end{minipage}
-        % \vspace{\baselineskip}
+            % \begin{minipage}{\linewidth}
+            %   \centering
+            %   \includegraphics[width=0.4\textwidth]{./Images/Chapter2/t1.png}
+            %   \captionsetup{hypcap=false}
+            %   \captionof{figure}{Example of T1-weighted MRI sequence.}
+            %   \label{fig:t1}
+            % \end{minipage}
+            % \vspace{\baselineskip}
 
-  \item \textbf{T1 with contrast enhancement (T1ce)}: After gadolinium administration, areas with disrupted blood-brain barrier (characteristic of high-grade tumors) enhance, appearing hyperintense and revealing the active tumor core.
+      \item \textbf{T1 with contrast enhancement (T1ce)}: After gadolinium administration, areas with disrupted blood-brain barrier (characteristic of high-grade tumors) enhance, appearing hyperintense and revealing the active tumor core.
 
-        % \begin{minipage}{\linewidth}
-        %   \centering
-        %   \includegraphics[width=0.4\textwidth]{./Images/Chapter2/t1ce.png}
-        %   \captionsetup{hypcap=false}
-        %   \captionof{figure}{Example of T1-weighted contrast-enhanced MRI sequence.}
-        %   \label{fig:t1ce}
-        % \end{minipage}
-        % \vspace{\baselineskip}
+            % \begin{minipage}{\linewidth}
+            %   \centering
+            %   \includegraphics[width=0.4\textwidth]{./Images/Chapter2/t1ce.png}
+            %   \captionsetup{hypcap=false}
+            %   \captionof{figure}{Example of T1-weighted contrast-enhanced MRI sequence.}
+            %   \label{fig:t1ce}
+            % \end{minipage}
+            % \vspace{\baselineskip}
 
-  \item \textbf{T2-weighted (T2)}: Highlights areas with increased water content, making it valuable for identifying edema and infiltrative tumor components. Tumors and surrounding edema appear hyperintense.
+      \item \textbf{T2-weighted (T2)}: Highlights areas with increased water content, making it valuable for identifying edema and infiltrative tumor components. Tumors and surrounding edema appear hyperintense.
 
-        % \begin{minipage}{\linewidth}
-        %   \centering
-        %   \includegraphics[width=0.4\textwidth]{./Images/Chapter2/t2.png}
-        %   \captionsetup{hypcap=false}
-        %   \captionof{figure}{Example of T2-weighted MRI sequence.}
-        %   \label{fig:t2}
-        % \end{minipage}
-        % \vspace{\baselineskip}
+            % \begin{minipage}{\linewidth}
+            %   \centering
+            %   \includegraphics[width=0.4\textwidth]{./Images/Chapter2/t2.png}
+            %   \captionsetup{hypcap=false}
+            %   \captionof{figure}{Example of T2-weighted MRI sequence.}
+            %   \label{fig:t2}
+            % \end{minipage}
+            % \vspace{\baselineskip}
 
-  \item \textbf{Fluid-Attenuated Inversion Recovery (FLAIR)}: Suppresses cerebrospinal fluid signals, enhancing the visibility of periventricular lesions and edema associated with tumors.
+      \item \textbf{Fluid-Attenuated Inversion Recovery (FLAIR)}: Suppresses cerebrospinal fluid signals, enhancing the visibility of periventricular lesions and edema associated with tumors.
 
-        % \begin{minipage}{\linewidth}
-        %   \centering
-        %   \includegraphics[width=0.4\textwidth]{./Images/Chapter2/flair.png}
-        %   \captionsetup{hypcap=false}
-        %   \captionof{figure}{Example of FLAIR MRI sequence.}
-        %   \label{fig:t2-flair}
-        % \end{minipage}
-        % \vspace{\baselineskip}
+            % \begin{minipage}{\linewidth}
+            %   \centering
+            %   \includegraphics[width=0.4\textwidth]{./Images/Chapter2/flair.png}
+            %   \captionsetup{hypcap=false}
+            %   \captionof{figure}{Example of FLAIR MRI sequence.}
+            %   \label{fig:t2-flair}
+            % \end{minipage}
+            % \vspace{\baselineskip}
 \end{itemize}
 
 
