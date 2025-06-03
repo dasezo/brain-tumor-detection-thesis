@@ -5,8 +5,6 @@
 
 In this chapter, we present the core contributions of our work on automated brain tumor detection in MRIs. Building upon the BraTS dataset \cite{Menze2015}, our pipeline integrates a deep learning–based segmentation module with a classical machine learning classifier and culminates in a user‐friendly demo application.
 
-% The remainder of this chapter is organized as follows. In Section~\ref{sec:contribution-dataset}, we introduce the dataset and preprocessing steps. Section~\ref{sec:contribution-segmentation} details the U-Net segmentation module, including architecture and training protocol. Section~\ref{sec:contribution-classification} covers the feature engineering and SVM classification. Section~\ref{sec:contribution-demo} presents the design and functionality of our demo application. We conclude with a discussion of key findings and future directions.
-
 \section{Proposed Framework Overview}
 \label{sec:contribution-framework}
 In this section, we look at our proposed fremework from a systematic perspective. The framework is designed to perform end-to-end brain tumor segmentation and classification. We will discuss the design of the final pipeline and the training workflow to achieve the desired results.
@@ -52,7 +50,7 @@ Introduced by Ronneberger et al. in 2015, U-Net features a symmetric encoder-dec
 \end{itemize}
 
 \subsubsection{SVM for Tumor Grade Classification}
-SVM is a supervised machine learning algorithm known for its robustness in classification tasks, especially with high-dimensional data. In the context of brain tumor classification, SVM has been successfully employed to differentiate between tumor grades based on features extracted from MRI images. Its ability to handle non-linear relationships through kernel functions makes it suitable for capturing the subtle differences between low-grade and high-grade tumors \cite{turk2022machine, barker2016automated}.
+SVM is a supervised machine learning algorithm known for its robustness in classification tasks, especially with high-dimensional data. In the context of brain tumor classification, SVM has been successfully employed to differentiate between tumor grades based on features extracted from \glsxtrshort{mri} images. Its ability to handle non-linear relationships through kernel functions makes it suitable for capturing the subtle differences between low-grade and high-grade tumors \cite{turk2022machine, barker2016automated}.
 
 The theoretical foundation of SVMs is based on the Structural Risk Minimization principle, which aims to minimize an upper bound on the generalization error, offering advantages over traditional Empirical Risk Minimization approaches. Originally developed by Vapnik and colleagues in the 1990s, SVMs have become popular due to their strong empirical performance and robustness to overfitting, especially in high-dimensional spaces \cite{Gunn1998SupportVM}.
 \begin{figure}[H]
@@ -276,72 +274,63 @@ To quantify the performance of our segmentation and classification models, we us
 
 
 \section{Results and Discussion}
-
-
-
-
 \subsection{Segmentation Results}
 \label{sec:segmentation-results}
 In this section, we present the results of our U-Net segmentation model on the BraTS2020 dataset. The model was trained for 50 epochs with a batch size of 16, we will discuss the end results of the training and validation process, including loss and accuracy metrics.
 
 \subsubsection{Accuracy}
-The model achieved an impressive pixel-level accuracy of 99.3\%, indicating that the vast majority of pixels were correctly classified. This high accuracy is particularly important in medical imaging, where even small errors can have significant implications. The overall results shown in Figure~\ref{fig:unet-acc} provide a clear picture of the training and validation accuracy over the course of the training process.
+The model achieved a pixel-level accuracy of 99.3\%, demonstrating that the vast majority of pixels were correctly classified. The accuracy trend, illustrated in Figure~\ref{fig:unet-acc}, confirms stable and effective learning throughout the training process.
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.7\textwidth]{Images/Chapter3/unet_acc.png}
+  \includegraphics[width=0.6\textwidth]{Images/Chapter3/unet_acc.png}
   \caption{Training and Validation Accuracy over Epochs for the U-Net Segmentation Model}
   \label{fig:unet-acc}
 \end{figure}
-\\
-\\
+
 \subsubsection{Loss}
-The loss function used during training was the categorical cross-entropy loss, which measures the dissimilarity between the predicted and true distributions. The model converged to a low loss of 0.0231, indicating that the predictions were closely aligned with the ground truth. The loss curve shown in Figure~\ref{fig:unet-loss} provides a clear picture of the training and validation loss over the course of the training process.
+A final loss value of 0.0231 indicates a strong alignment between predictions and ground truth. As shown in Figure~\ref{fig:unet-loss}, the training and validation loss curves demonstrate smooth convergence, reflecting effective learning and minimal overfitting.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.7\textwidth]{Images/Chapter3/unet_loss.png}
+  \includegraphics[width=0.6\textwidth]{Images/Chapter3/unet_loss.png}
   \caption{Training and Validation Loss over Epochs for the U-Net Segmentation Model}
   \label{fig:unet-loss}
 \end{figure}
 
+
 \subsubsection{Dice Coefficient}
-The Dice coefficient is a measure of overlap between the predicted and true segmentation masks. The overall Dice coefficient achieved was 58.98\%, indicating a good level of agreement between the predicted and true tumor regions. The per-class Dice coefficients were also calculated, providing insights into the model's performance on different tumor subregions. The results shown in Figure~\ref{fig:unet-dice} provide a clear picture of the training and validation Dice Coefficient over the course of the training process.
+The model achieved an overall Dice score of 58.98\%, indicating a reasonable level of agreement between the predicted and ground truth tumor regions. Additionally, per-class Dice scores were computed to assess performance across specific tumor subregions. Figure~\ref{fig:unet-dice} illustrates the training and validation Dice coefficient trends throughout the learning process.
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.7\textwidth]{Images/Chapter3/unet_dice.png}
+  \includegraphics[width=0.6\textwidth]{Images/Chapter3/unet_dice.png}
   \caption{Training and Validation Dice Coefficient over Epochs for the U-Net Segmentation Model}
   \label{fig:unet-dice}
 \end{figure}
 
 
 \subsubsection{Mean IoU}
-The mean Intersection over Union (IoU) was calculated to assess the model's performance across all classes. The mean IoU achieved was 74.66\%, indicating a good level of overlap between the predicted and true segmentation masks. This metric is particularly useful in medical imaging, where accurate delineation of tumor boundaries is crucial for treatment planning. The results shown in Figure~\ref{fig:unet-iou} provide a clear picture of the training and validation Mean IoU over the course of the training process.
+The model achieved a mean Intersection over Union (\glsxtrshort{iou}) of 74.66\%, reflecting a solid overlap between predicted and actual segmentation masks. Figure~\ref{fig:unet-iou} illustrates the progression of training and validation IoU values, confirming consistent performance across classes.
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.7\textwidth]{Images/Chapter3/unet_iou.png}
+  \includegraphics[width=0.6\textwidth]{Images/Chapter3/unet_iou.png}
   \caption{Training and Validation Mean IoU over Epochs for the U-Net Segmentation Model}
   \label{fig:unet-iou}
 \end{figure}
-\\
-\\
-\subsubsection{Summary}
-Table~\ref{tab:segmentation-results} summarizes the quantitative performance of the U-Net segmentation model. The overall accuracy of the model is 99.30\%, which is a measure of the proportion of correctly classified pixels. The mean IoU of 74.66\% indicates a good level of overlap between the predicted and true segmentation masks across all classes. The Dice coefficient of 58.98\% is a measure of the overlap between the predicted and true tumor regions. The precision of 99.37\% indicates a low number of false positives, while the sensitivity of 99.08\% indicates a low number of false negatives. The specificity of 99.79\% indicates that the model is effective at eliminating false positives. The results shown in Figure~\ref{fig:segmentation-example} provide a clear picture of the predicted tumor segmentation masks.
-
 \begin{table}[ht]
   \centering
   \caption{Performance Metrics for the U-Net Segmentation Model}
   \label{tab:segmentation-results}
   \begin{tabular}{l r}
     \hline
-    \textbf{Metric}            & \textbf{Value} \\
+    \textbf{Metric}  & \textbf{Value} \\
     \hline
-    Loss                       & 0.0231         \\
-    Accuracy                   & 99.30\,\%      \\
-    Mean IoU                   & 74.66\,\%      \\
-    Dice Coefficient (overall) & 58.98\,\%      \\
-    Precision                  & 99.37\,\%      \\
-    Sensitivity                & 99.08\,\%      \\
-    Specificity                & 99.79\,\%      \\
+    Loss             & 0.0231         \\
+    Accuracy         & 99.30\,\%      \\
+    Mean IoU         & 74.66\,\%      \\
+    Dice Coefficient & 58.98\,\%      \\
+    Precision        & 99.37\,\%      \\
+    Sensitivity      & 99.08\,\%      \\
+    Specificity      & 99.79\,\%      \\
     \hline
   \end{tabular}
 \end{table}
@@ -353,7 +342,7 @@ Table~\ref{tab:segmentation-results} summarizes the quantitative performance of 
   \label{fig:segmentation-example}
 \end{figure}
 
-
+\newpage\
 \subsection{Classification Results}
 \label{sec:classification-results}
 
@@ -386,13 +375,6 @@ The macro average shows a balanced view of precision and recall across both clas
   \label{fig:confusion}
 \end{figure}
 
-\paragraph{Example Inference}
-On a new patient (ID 083), the pipeline predicted:
-\begin{itemize}
-  \item \textbf{Prediction:} HGG
-  \item \textbf{Probability of HGG:} 93.60\,\%
-  \item \textbf{Actual Grade:} HGG (correct)
-\end{itemize}
 
 \section{Application Demo}
 \label{sec:contribution-demo}
