@@ -239,50 +239,6 @@ Introduced in the paper "Attention Is All You Need" \cite{vaswani2017attention},
 \textbf{Hybrid Architectures}:
 Many modern deep learning solutions combine elements from different architectural paradigms to leverage their respective strengths. For example, CNN-LSTM networks for video analysis or attention-augmented CNNs for improved image recognition.
 
-% \subsection{Hardware Used in Deep Learning}
-% \label{sec:dl_hardware}
-% The computational demands of deep learning models have driven significant developments in specialized hardware. The following components and systems are crucial for effective deep learning implementation:
-
-% \textbf{Graphics Processing Units (GPUs)}:
-% GPUs have revolutionized deep learning by enabling massive parallelization of matrix operations. NVIDIA's CUDA-capable GPUs have become the standard for deep learning research and development, with specialized architectures including:
-% \begin{itemize}
-%   \item Consumer GPUs (e.g., GeForce RTX series)
-%   \item Professional GPUs (e.g., Quadro series)
-%   \item Data center GPUs (e.g., Tesla V100, A100, H100)
-% \end{itemize}
-
-% \textbf{Tensor Processing Units (TPUs)}:
-% Developed by Google, TPUs are application-specific integrated circuits (ASICs) designed specifically for machine learning workloads. They excel at matrix operations and are available through Google Cloud services in various configurations (v2, v3, v4).
-
-% \textbf{Neural Processing Units (NPUs)}:
-% Specialized processors designed for neural network computations, often integrated into mobile devices and edge computing platforms to enable on-device AI capabilities with lower power consumption.
-
-% \textbf{Field-Programmable Gate Arrays (FPGAs)}:
-% Reconfigurable hardware offering flexibility and energy efficiency for specific deep learning applications, particularly in edge and embedded systems.
-
-% \textbf{High-Performance Computing (HPC) Clusters}:
-% For large-scale training and inference, distributed systems with multiple GPUs/TPUs connected via high-speed interconnects (e.g., NVLink, InfiniBand) are essential.
-
-% \textbf{Memory Considerations}:
-% \begin{itemize}
-%   \item High-bandwidth memory (HBM) for accelerators
-%   \item Large RAM requirements for data loading and processing
-%   \item Fast storage systems (NVMe SSDs) for data access
-% \end{itemize}
-
-% \textbf{Cloud Computing Platforms}:
-% Major cloud providers offer specialized infrastructure for deep learning:
-% \begin{itemize}
-%   \item Amazon Web Services (AWS) with EC2 GPU instances
-%   \item Google Cloud Platform (GCP) with TPU access
-%   \item Microsoft Azure with GPU-enabled virtual machines
-%   \item Specialized platforms like Lambda Labs and Paperspace
-% \end{itemize}
-
-% In medical imaging applications, hardware requirements are often substantial due to the high resolution and dimensionality of imaging data (e.g., 3D MRI volumes). Research institutions and hospitals increasingly rely on dedicated GPU clusters or cloud resources to develop and deploy deep learning models for clinical applications.
-
-% The hardware landscape continues to evolve rapidly, with emerging technologies like neuromorphic computing and photonic computing promising even greater efficiency for neural network computations in the future.
-
 \subsection{Convolutional Neural Networks (CNNs)}
 \label{sec:cnn}
 A convolutional neural network (CNN) is a type of neural network with a topology similar to a grid, inspired by the human brain. It is commonly used for image processing tasks, as well as natural language processing.
@@ -355,7 +311,7 @@ Pooling layers are utilized to reduce the spatial dimensions of feature maps whi
 
 \subsubsection{Fully Connected Layer}
 
-after the convolution and pooling layers, the high-level reasoning in the neural network is done in fully connected layers. The output of flattening is the input of FC layers which are the same as artificial neural networks and carry out the same mathematical operations. The last fully-connected layer uses an activation function such as sigmoid or softmax to get probabilities of the outputs.
+After the convolution and pooling layers, the high-level reasoning in the neural network is done in fully connected layers. The output of flattening is the input of fully-connected layers which are the same as artificial neural networks and carry out the same mathematical operations. The last fully-connected layer uses an activation function such as sigmoid or softmax to get probabilities of the outputs.
 
 
 

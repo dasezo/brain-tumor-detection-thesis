@@ -58,12 +58,7 @@
                         </div>
                         
                         <div class="result-images">
-                            <div class="image-toggle">
-                                <button class="toggle-btn active" data-view="side-by-side">Side by Side</button>
-                                <button class="toggle-btn" data-view="overlay">Overlay View</button>
-                            </div>
-                            
-                            <div class="image-container side-by-side">
+                            <div class="image-container">
                                 <div class="image-card">
                                     <h4>Original Image</h4>
                                     <img src="{{ url_for('static', filename=original.replace('static/', '')) }}" alt="Original Brain Image" class="result-image">
@@ -72,10 +67,7 @@
                                     <h4>Tumor Segmentation</h4>
                                     <img src="{{ url_for('static', filename=segmented.replace('static/', '')) }}" alt="Segmented Tumor" class="result-image">
                                 </div>
-                            </div>
-                            
-                            <div class="image-container overlay hidden">
-                                <div class="image-card full-width">
+                                <div class="image-card">
                                     <h4>Tumor Overlay</h4>
                                     <img src="{{ url_for('static', filename=overlay.replace('static/', '')) }}" alt="Tumor Overlay" class="result-image">
                                 </div>
